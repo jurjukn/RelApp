@@ -5,7 +5,7 @@ import {RelappSearch} from "../components/RelappTextInput";
 import RouteStatistics from "./../historyComponents/RouteStatistics"
 
 
-export default function History () {
+export default function History (props) {
     return (
         <View style={styles.container}>
             <Space size = {30}/>

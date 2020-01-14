@@ -2,7 +2,7 @@ import {View, Text, StyleSheet, TextInput, TouchableOpacity} from "react-native"
 import React, {useState} from "react";
 import {IconsComponent, Space} from "../components/stylingComponents";
 
-export default function RouteItem(props)
+export function RouteItem(props)
 {
     const [text, setText] = useState("")
     const [favorite, isFavorite] = useState(false)
@@ -12,21 +12,21 @@ export default function RouteItem(props)
         if(favorite) return 'md-star'
         else return 'md-star-outline'
     }
-    
+
     return (
-        <View style={Styles.customView}>
-            <View style={Styles.mainView}>
+        <View style={RouteItemStyles.customView}>
+            <View style={RouteItemStyles.mainView}>
                 <TouchableOpacity   onPress={()=>{
                     props.callback()
                 }}>
-                    <Text style={Styles.textStyle} >Route I</Text>
+                    <Text style={RouteItemStyles.textStyle} >Route I</Text>
                 </TouchableOpacity>
             </View>
-            <View style={Styles.secondView}>
-                <View style={Styles.descriptionView}>
+            <View style={RouteItemStyles.secondView}>
+                <View style={RouteItemStyles.descriptionView}>
                     <Text>labas</Text>
                 </View>
-                <IconsComponent name = {selectIconName()} style={Styles.iconView} callback = {()=>{
+                <IconsComponent name = {selectIconName()} style={RouteItemStyles.iconView} callback = {()=>{
                     isFavorite(!favorite);
                     console.log("TouchableOpacity")
                 }}/>
@@ -35,7 +35,7 @@ export default function RouteItem(props)
     )
 }
 
-const Styles = StyleSheet.create({
+export const RouteItemStyles = StyleSheet.create({
     customView: {
         flex: 1,
         width: '95%',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions,StatusBar} from 'react-native';
 import {
-    createAppContainer,
+    createAppContainer, createSwitchNavigator,
 } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import {RelappLogo, TopSeparator} from "../components/stylingComponents";
@@ -10,9 +10,10 @@ import Profiles from "./Profiles";
 import History from "./History";
 import CreateRoute from "../routesComponents/CreateRoute";
 import {RoutesNavigation} from "../routesComponents/RoutesNavigation";
+import {RouteProgressNavigation} from "../routesComponents/routesProgress/RouteProgressNavigation";
 
 
-const TabScreen = createMaterialTopTabNavigator(
+const TabScreenNavigation = createMaterialTopTabNavigator(
     {
         History: { screen: History },
         Routes: { screen: RoutesNavigation },
@@ -42,7 +43,24 @@ const TabScreen = createMaterialTopTabNavigator(
     }
 );
 
-const TabNavigation = createAppContainer(TabScreen)
+const SwitchNavigation = createSwitchNavigator({
+    Login: {
+        screen: History,
+    },
+    Tabs: {
+        screen: TabScreenNavigation,
+    },
+    Progress: {
+        screen: RouteProgressNavigation,
+    },
+},
+{
+    initialRouteName:'Tabs',
+}
+);
+
+//const TabNavigation = createAppContainer(TabScreenNavigation)
+const TabNavigation = createAppContainer(SwitchNavigation);
 
 export default function Navigation() {
     return (

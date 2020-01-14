@@ -5,7 +5,6 @@ import Map from "../routesComponents/Map";
 import {
     Space
 } from "../components/stylingComponents";
-
 import {RouteAddress, RouteDescription, RouteStart, RouteStyles, RouteToolbar} from "./RoutesStyles";
 
 export default function Route(props)
@@ -16,6 +15,7 @@ export default function Route(props)
         if(favorite) return 'md-star'
         else return 'md-star-outline'
     }
+
 
     return (
         <View style={RouteStyles.container}>
@@ -29,7 +29,7 @@ export default function Route(props)
                 />
                 <Space size = {20}/>
                 <RouteStart
-                    callBack = {()=>{console.log("Start")}}
+                    callback = {()=>{props.navigation.navigate("Progress")}}
                     showComents =  {()=>{console.log("Start")}}
                    />
                 <Space size = {20}/>
