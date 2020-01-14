@@ -6,10 +6,10 @@ export async function getAllRoutes() {
   try {
     const routes = [];
     const routesSnapshot = await db.collection(Collections.routes).get();
-    const currentUser = await getCurrentUser();
+    //const currentUser = await getCurrentUser();
 
     routesSnapshot.forEach(doc => {
-      const route = formatRoute(doc.data(), currentUser.uid);
+      const route = formatRoute(doc.id, doc.data(), "");
       routes.push(route);
     });
 
@@ -23,8 +23,8 @@ export async function getAllRoutes() {
 export async function getRouteById(routeId) {
   try {
     const doc = await db.collection(Collections.routes).doc(routeId).get();
-    const currentUser = await getCurrentUser();
-    const route = formatRoute(doc.data(), currentUser.uid)
+    //const currentUser = await getCurrentUser();
+    const route = formatRoute(doc.id, doc.data(), "");
 
     return route;
   } catch (err) {
@@ -33,10 +33,10 @@ export async function getRouteById(routeId) {
   }
 }
 
-function formatRoute(data, userId) {
+function formatRoute(id, data, userId) {
   const isFavorite = data.userFavorite.includes(userId);
   const route = {
-    id: doc.id,
+    id: id,
     name: data.name,
     description: data.description,
     ownerId: data.ownerId,
