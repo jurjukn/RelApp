@@ -49,7 +49,7 @@ export function calculateHistoryStatistics(historyList) {
   historyList.forEach(history => {
     routeCount++;
     totalDistance += history.distance;
-    totalTime += history.minutes;
+    totalTime += history.duration;
   })
 
   const totalHours = totalTime / 60;
