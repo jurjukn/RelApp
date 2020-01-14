@@ -20,3 +20,39 @@ export async function getAverageRouteRating(routeId) {
     throw err;
   }
 }
+
+export async function getHistoryByUserId(userId) {
+  try {
+    const historyList = [];
+    const historySnapshot = await db.collection(Collections.history).where('userId', '==', userId).get();
+
+    historySnapshot.forEach(doc => {
+      const data = doc.data();
+      const history = {
+        id: doc.id,
+        ...data
+      };
+      historyList.push(history);
+    })
+
+    return historyList;
+  } catch (err) {
+
+  }
+}
+
+export function calculateHistoryStatistics(historyList) {
+  let routeCount = 0;
+  let totalDistance = 0;
+  let totalTime = 0;
+
+  historyList.forEach(history => {
+    routeCount++;
+    totalDistance += history.distance;
+    totalTime += history.duration;
+  })
+
+  const totalHours = totalTime / 60;
+
+  return { totalDistance, routeCount, totalHours }
+}
