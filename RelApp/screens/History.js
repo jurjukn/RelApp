@@ -3,7 +3,7 @@ import React from "react";
 import {BasicStyles} from "../components/stylingComponents";
 
 
-export default function History () {
+export default function History (props) {
     return (
         <View style={BasicStyles.container}>
             <Text>History</Text>

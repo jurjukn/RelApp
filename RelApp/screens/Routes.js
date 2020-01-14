@@ -2,7 +2,7 @@ import {View, ScrollView, StyleSheet, TextInput, TouchableOpacity, Text} from "r
 import React, {useState} from "react";
 import Map from "../routesComponents/Map";
 import {Space} from "../components/stylingComponents";
-import RouteItem from "../routesComponents/RouteItem";
+import {RouteItem} from "../routesComponents/RouteItem";
 import {RelappSearch} from "../components/RelappTextInput";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 
