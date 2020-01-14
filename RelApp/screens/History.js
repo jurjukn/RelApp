@@ -1,17 +1,19 @@
-import {View, Text, StyleSheet, ScrollView} from "react-native";
+import {View, StyleSheet, ScrollView} from "react-native";
 import React from "react";
 import {Space} from "../components/stylingComponents";
 import {RelappSearch} from "../components/RelappTextInput";
 import RouteStatistics from "./../historyComponents/RouteStatistics"
+import UserStatistics from "./../historyComponents/UserStatistics"
 
 
 export default function History () {
     return (
-        <View style={styles.container}>
-            <Space size = {30}/>
-            <RelappSearch onChangeText = {(text)=>{setText(text)}}/>
-            <Space size = {20}/>
-            <View style={styles.container2}>
+        <View style={styles.mainContainer}>
+            <View style={styles.searchBarContainer}>
+                <Space size = {30}/>
+                <RelappSearch onChangeText = {(text)=>{setText(text)}}/>
+            </View>
+            <View style={styles.listContainer}>
                 <ScrollView>
                     <RouteStatistics routeName={"Route I "} date={"2020-15-01"} time={"20:00"} difficulty={7} distance={8} myRate={4}/>
                     <Space size = {30}/>
@@ -19,23 +21,28 @@ export default function History () {
                     <Space size = {30}/>
                 </ScrollView>
             </View>
-            <Space size = {20}/>
-            <Text>CIA BUS STATISTIKA</Text>
-            <Space size = {20}/>
+            <View style={styles.userStatisticsContainer}>
+                <UserStatistics />
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    mainContainer: {
         flex: 1,
         backgroundColor: '#F0E6E6',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
     },
-    container2: {
-        flex: 1,
+    searchBarContainer: {
+        flex:1, 
+        width:"100%",
+        alignItems: 'center'
+    },
+    listContainer: {
+        flex: 4,
         left:10,
         width:'100%',
         backgroundColor: '#F0E6E6',
@@ -43,5 +50,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'column',
     },
+    userStatisticsContainer: {
+        flex:1
+    }
 })
 
