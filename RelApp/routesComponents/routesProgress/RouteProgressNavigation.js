@@ -1,26 +1,29 @@
 import {createSwitchNavigator} from "react-navigation";
 import {createStackNavigator} from "react-navigation-stack";
-import BlockingScreen from "./BlockingScreen";
 import Routes from "../../screens/Routes";
+
+import BlockingScreen from "./progressScreens/BlockingScreen";
+import GoingScreen from "./progressScreens/GoingScreen"
+import StatisticsScreen from "./progressScreens/StatisticsScreen"
+import RatingScreen from "./progressScreens/RatingScreen"
+import CommentScreen from "./progressScreens/CommentScreen"
+
 
 export const RouteProgressNavigation = createStackNavigator({
     BlockingScreen: {
         screen: BlockingScreen,
     },
     GoingScreen: {
-        screen: BlockingScreen,
-    },
-    FinishScreen: {
-        screen: BlockingScreen,
+        screen: GoingScreen,
     },
     StatisticsScreen: {
-        screen: BlockingScreen,
+        screen: StatisticsScreen,
     },
-    RankingScreen: {
-        screen: BlockingScreen,
+    RatingScreen: {
+        screen: RatingScreen,
     },
-    CommentsScreen: {
-        screen: BlockingScreen,
+    CommentScreen: {
+        screen: CommentScreen,
     },
     }, {
         headerMode: 'none',
