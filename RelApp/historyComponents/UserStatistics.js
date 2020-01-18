@@ -1,20 +1,30 @@
 import {View, Text, StyleSheet} from "react-native";
-import React from "react";
+import React, {useState, useEffect} from "react";
 
-export default function History () {
+import {calculateHistoryStatistics} from "./../databaseServices/HistoryService"
+
+export default function UserStatistics ({userHistory}) {
+
+    const [userStats, setUserStats] = useState(0)
+
+    useEffect(() => {
+        const temp = calculateHistoryStatistics(userHistory)
+        setUserStats(temp)
+    }, []);
+
     return (
         <View style={styles.statisticsContainer}>
             <View style={styles.circle} >
                 <Text>Total distance</Text>
-                <Text style={styles.statisticsTextFont}>13 km</Text>
+                <Text style={styles.statisticsTextFont}>{userStats.totalDistance} km</Text>
             </View>
             <View style={styles.circle} >
-                <Text>Average rate</Text>
-                <Text style={styles.statisticsTextFont}>4.66</Text>
+                <Text>Routes</Text>
+                <Text style={styles.statisticsTextFont}>{userStats.routeCount}</Text>
             </View>
             <View style={styles.circle} >
                 <Text>Total time</Text>
-                <Text style={styles.statisticsTextFont}>3.6 h</Text>
+                <Text style={styles.statisticsTextFont}>{userStats.totalHours} h</Text>
             </View>
         </View>
     )

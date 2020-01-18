@@ -1,12 +1,32 @@
-import {View, StyleSheet, ScrollView} from "react-native";
-import React from "react";
+import {View, StyleSheet} from "react-native";
+import React, {useEffect, useState} from "react";
+
 import {RelappLogo, Space} from "../components/stylingComponents";
 import {RelappSearch} from "../components/RelappTextInput";
-import RouteStatistics from "./../historyComponents/RouteStatistics"
 import UserStatistics from "./../historyComponents/UserStatistics"
+import RoutesList from "./../historyComponents/RoutesList"
+
+import {getHistoryByUserId} from './../databaseServices/HistoryService'
 
 
 export default function History (props) {
+
+    const [userHistory, setUserHistory] = useState([])
+
+    useEffect(() => {
+        try{ 
+        const fetchData = async () => {
+            const value = await getHistoryByUserId("UserId1")
+            if(value.length!==0){
+                setUserHistory(value)
+            }
+        };
+        fetchData();
+        } catch (error) {
+            alert("Error getting user history")
+        }
+    }, []);
+
     return (
         <View style={{flex: 1}}>
             <RelappLogo/>
@@ -16,15 +36,12 @@ export default function History (props) {
                     <RelappSearch onChangeText = {(text)=>{setText(text)}}/>
                 </View>
                 <View style={styles.listContainer}>
-                    <ScrollView>
-                        <RouteStatistics routeName={"Route I "} date={"2020-15-01"} time={"20:00"} difficulty={7} distance={8} myRate={4}/>
-                        <Space size = {30}/>
-                        <RouteStatistics routeName={"Route II "} date={"2019-12-25"} time={"15:00"} difficulty={9} distance={3} myRate={2}/>
-                        <Space size = {30}/>
-                    </ScrollView>
+                    <RoutesList userHistory={userHistory}/>
                 </View>
                 <View style={styles.userStatisticsContainer}>
-                    <UserStatistics />
+                    {userHistory.length !== 0 && 
+                        <UserStatistics userHistory={userHistory}/>
+                    }
                 </View>
             </View>
         </View>
