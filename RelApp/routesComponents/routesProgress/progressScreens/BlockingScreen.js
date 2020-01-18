@@ -1,10 +1,10 @@
 import {ScrollView, StyleSheet, Text, View} from "react-native";
-import {MainModal, TransparentModal} from "../ModalComponent";
-import {RelappHeader, RelappLogo, Space} from "../../components/stylingComponents";
-import {RelappSearch} from "../../components/RelappTextInput";
+import {MainModal, TransparentModal} from "../../ModalComponent";
+import {RelappHeader, RelappLogo, Space} from "../../../components/stylingComponents";
+import {RelappSearch} from "../../../components/RelappTextInput";
 import React, {useState} from "react";
-import {ButtonTypes, RelappButton} from "../../components/RelappButton";
-import ProgramItem, {ProgressToolbar} from "./RoutePregessStyles";
+import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
+import ProgramItem, {ProgressToolbar} from "../RoutePregessStyles";
 
 export default function BlockingScreen(props)
 {
@@ -31,7 +31,7 @@ export default function BlockingScreen(props)
                     </ScrollView>
                 </View>
                 <Space size = {25}/>
-                <RelappButton style = {ButtonTypes().mediumButton} text = "Done" callback = {()=>{props.navigation.navigate("Tabs")}}/>
+                <RelappButton style = {ButtonTypes().mediumButton} text = "Done" callback = {()=>{props.navigation.navigate("GoingScreen")}}/>
             </View>
         </View>
     )
