@@ -1,14 +1,19 @@
 import {View, Text, StyleSheet} from "react-native";
 import MapView from "react-native-maps";
 import React from "react";
-import {BasicStyles} from "../components/stylingComponents";
+import {BasicStyles, RelappLogo, RelappLogoForProfile} from "../components/stylingComponents";
 import Map from "../routesComponents/Map";
 
 
-export default function Profiles(){
+export default function Profiles(props){
     return (
-        <View style={BasicStyles.container}>
-            <Text>Profile</Text>
+        <View style={{flex: 1}}>
+            <RelappLogoForProfile help = {()=>{props.navigation.navigate("Tabs")}}
+                                  logOut = {()=>{props.navigation.navigate("Tabs")}}
+            />
+            <View style={BasicStyles.container}>
+                <Text>Profile</Text>
+            </View>
         </View>
     );
 }

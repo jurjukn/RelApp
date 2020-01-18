@@ -3,7 +3,7 @@ import MapView from "react-native-maps";
 import React, {useState} from "react";
 import Map from "../routesComponents/Map";
 import {
-    IconsComponent,
+    IconsComponent, RelappLogo,
     Space
 } from "../components/stylingComponents";
 import AddDescription from "./AddDescription";
@@ -24,42 +24,43 @@ export default function CreateRoute(props)
     const [descriptionModal, setDescriptionModal] = useState(false);
 
     return (
-        <View style={RouteStyles.container}>
-            <ScrollView>
-                <Space size = {20}/>
-                <CreateRouteToolbar
-                    goBack = {()=>props.navigation.goBack()}
-                />
-                <Space size = {20}/>
-                <View style={RouteStyles.centeredContainer}>
-                    <RelappMiniTextInput defaultValue = {"Country"}/>
-                    <HorizontalSpace size = {20}/>
-                    <RelappMiniTextInput defaultValue = {"Region"} />
-                </View>
-                <Space size = {20}/>
-                <RouteHeader text = {"Select route locations"}/>
-                <Space size = {20}/>
-                <View style={RouteStyles.centeredContainer}>
-                    <Map/>
-                </View>
-                <Space size = {20}/>
-                <CreationModalButtons
-                    descriptionCallback = {()=>{
-                        setDescriptionModal(!descriptionModal);
-                        console.log("Description")
-                    }}
-                    musicCallback = {()=>{
-                        setMusicModalModal(!musicModal);
-                        console.log("Select music")
-                    }}/>
-                <Space size = {20}/>
-                <View style={RouteStyles.centeredContainer}>
-                    <RelappButton style = {ButtonTypes().largeButton} text = "Create New" callback = {()=>{console.log("Search")}}/>
-                </View>
-                <Space size = {20}/>
-            </ScrollView>
-            <AddDescription setModalVisible = {descriptionModal}/>
-            <SelectMusic setModalVisible = {musicModal}/>
+        <View style={{flex: 1}}>
+            <RelappLogo callback = {()=>props.navigation.goBack()}/>
+            <View style={RouteStyles.container}>
+                <ScrollView>
+                    <Space size = {20}/>
+                    <RouteHeader text = {"Create new route"}/>
+                    <Space size = {20}/>
+                    <View style={RouteStyles.centeredContainer}>
+                        <RelappMiniTextInput defaultValue = {"Country"}/>
+                        <HorizontalSpace size = {20}/>
+                        <RelappMiniTextInput defaultValue = {"Region"} />
+                    </View>
+                    <Space size = {20}/>
+                    <RouteHeader text = {"Select route locations"}/>
+                    <Space size = {20}/>
+                    <View style={RouteStyles.centeredContainer}>
+                        <Map/>
+                    </View>
+                    <Space size = {20}/>
+                    <CreationModalButtons
+                        descriptionCallback = {()=>{
+                            setDescriptionModal(!descriptionModal);
+                            console.log("Description")
+                        }}
+                        musicCallback = {()=>{
+                            setMusicModalModal(!musicModal);
+                            console.log("Select music")
+                        }}/>
+                    <Space size = {20}/>
+                    <View style={RouteStyles.centeredContainer}>
+                        <RelappButton style = {ButtonTypes().largeButton} text = "Create New" callback = {()=>{console.log("Search")}}/>
+                    </View>
+                    <Space size = {20}/>
+                </ScrollView>
+                <AddDescription setModalVisible = {descriptionModal}/>
+                <SelectMusic setModalVisible = {musicModal}/>
+            </View>
         </View>
     )
 }

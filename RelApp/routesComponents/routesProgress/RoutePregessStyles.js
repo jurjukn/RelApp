@@ -9,8 +9,7 @@ export function ProgressToolbar (props)
     return(
         <View style = {styles.headerContainer}>
             <View style = {styles.centralizedContainer}>
-                <IconsComponent name = {"md-undo"} style={{...styles.iconView, right:'100%'}} callback = {props.goBack}/>
-                <Text style={{...styles.headerText, right:'30%'}} > {props.header} </Text>
+                <Text style={{...styles.headerText,}} > {props.header} </Text>
             </View>
             <View style = {styles.separationLine}/>
         </View>
