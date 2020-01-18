@@ -34,7 +34,7 @@ export async function getHistoryByUserId(userId) {
       };
       historyList.push(history);
     })
-
+    
     return historyList;
   } catch (err) {
 
