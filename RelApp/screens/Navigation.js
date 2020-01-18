@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Dimensions,StatusBar} from 'react-native';
 import {
     createAppContainer, createSwitchNavigator,
 } from 'react-navigation';
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import {createBottomTabNavigator, createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {RelappLogo, TopSeparator} from "../components/stylingComponents";
 import Routes from "./Routes";
 import Profiles from "./Profiles";
@@ -11,63 +11,69 @@ import History from "./History";
 import CreateRoute from "../routesComponents/CreateRoute";
 import {RoutesNavigation} from "../routesComponents/RoutesNavigation";
 import {RouteProgressNavigation} from "../routesComponents/routesProgress/RouteProgressNavigation";
+import {Ionicons} from "@expo/vector-icons";
 
+const getTabBarIcon = (navigation, focused, tintColor) => {
+    const { routeName } = navigation.state;
+    let IconComponent = Ionicons;
+    let iconName;
+    switch (routeName) {
+        case 'History':
+            iconName = `md-time`;
+            break
+        case 'Routes':
+            iconName = `md-map`;
+            break
+        case 'Profile':
+            iconName = `md-person`;
+            break
+        default:
+            break
+    }
+    return <IconComponent name={iconName} size={25} color={tintColor} />;
+};
 
-const TabScreenNavigation = createMaterialTopTabNavigator(
+const TabNavigation  = createBottomTabNavigator(
     {
         History: { screen: History },
         Routes: { screen: RoutesNavigation },
         Profile: { screen: Profiles },
     },
     {
-        tabBarPosition: 'top',
-        swipeEnabled: true,
-        animationEnabled: true,
+        defaultNavigationOptions: ({ navigation }) => ({
+            tabBarIcon: ({ focused, tintColor }) =>
+                getTabBarIcon(navigation, focused, tintColor),
+        }),
+        initialRouteName: "Routes",
         tabBarOptions: {
-            activeTintColor: '#FFFFFF',
-            inactiveTintColor: '#F8F8F8',
-            style: {
+            style:{
                 backgroundColor: '#F0E6E6',
+                borderTopColor: '#F0E6E6',
             },
-            labelStyle: {
-                textAlign: 'center',
-                color:'black',
-                textTransform:'capitalize',
-            },
-            indicatorStyle: {
-                borderBottomColor: 'gray',
-                borderBottomWidth: 2,
-
-            },
+            activeTintColor: 'black',
+            inactiveTintColor: 'gray',
         },
+    },
+)
+
+const TabNavigationContainer = createAppContainer(TabNavigation);
+
+const SwitchNavigation = createSwitchNavigator({
+        Login: {
+            screen: History,
+        },
+        Tabs: {
+            screen: TabNavigationContainer,
+        },
+        Progress: {
+            screen: RouteProgressNavigation,
+        },
+    },
+    {
+        initialRouteName:'Tabs',
     }
 );
 
-const SwitchNavigation = createSwitchNavigator({
-    Login: {
-        screen: History,
-    },
-    Tabs: {
-        screen: TabScreenNavigation,
-    },
-    Progress: {
-        screen: RouteProgressNavigation,
-    },
-},
-{
-    initialRouteName:'Tabs',
-}
-);
+const MainNavigation = createAppContainer(SwitchNavigation);
+export default MainNavigation;
 
-//const TabNavigation = createAppContainer(TabScreenNavigation)
-const TabNavigation = createAppContainer(SwitchNavigation);
-
-export default function Navigation() {
-    return (
-        <View style={{flex: 1}}>
-            <TopSeparator/>
-            <RelappLogo/>
-            <TabNavigation />
-        </View>
-    );
-}

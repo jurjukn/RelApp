@@ -4,34 +4,14 @@ import {Ionicons} from "@expo/vector-icons";
 import React from "react";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 
-export function CreateRouteToolbar (props)
-{
-    return(
-        <View style = {styles.locationContainer}>
-            <IconsComponent name = {"md-undo"} style={{...styles.iconView, right:'200%'}} callback = {props.goBack}/>
-            <Text style={{...styles.text, right:'50%'}} > Create new route</Text>
-        </View>
-    )
-}
-
-export function RouteToolbar (props)
-{
-    return(
-        <View style = {styles.locationContainer}>
-            <IconsComponent name = {"md-undo"} style={{...styles.iconView, right:'100%'}} callback = {props.goBack}/>
-            <Text style={{...styles.text,fontSize: 32,}} > {props.name} </Text>
-            <IconsComponent name = {props.iconName()} style={{...styles.iconView, left:'100%'}} callback = {props.setFavorite}/>
-        </View>
-    )
-}
-
-
 export function RouteStart (props)
 {
     return(
         <View style={{...styles.locationContainer, justifyContent: 'flex-start',}}>
             <RelappButton style = {ButtonTypes().smallButton} text = "Start"
                           callback = {props.callback}/>
+            <IconsComponent name = {props.favorite()} style={{...styles.iconView, left:'200%'}}
+                            callback = {props.isFavorite}/>
             <IconsComponent name = {"md-chatboxes"} style={{...styles.iconView, left:'300%'}}
                             callback = {props.showComents}/>
         </View>
@@ -142,4 +122,5 @@ const styles = StyleSheet.create({
 export const RouteStyles = StyleSheet.create({
     container: styles.container,
     centeredContainer: styles.locationContainer,
+    text: styles.text,
 })

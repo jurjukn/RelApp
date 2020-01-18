@@ -2,11 +2,18 @@ import {View, Text, StyleSheet, TextInput, TouchableOpacity} from "react-native"
 import React, {useState} from "react";
 import {IconsComponent, Space} from "../components/stylingComponents";
 
+// Object {
+//     "description": "Some random description",
+//         "id": "23Pofwb8jT15SenciHg6",
+//         "isFavorite": false,
+//         "name": "Amazing route 1",
+//         "ownerId": "User1",
+// }
+
+
 export function RouteItem(props)
 {
-    const [text, setText] = useState("")
     const [favorite, isFavorite] = useState(false)
-
     const selectIconName = () =>
     {
         if(favorite) return 'md-star'
@@ -19,16 +26,15 @@ export function RouteItem(props)
                 <TouchableOpacity   onPress={()=>{
                     props.callback()
                 }}>
-                    <Text style={RouteItemStyles.textStyle} >Route I</Text>
+                    <Text style={RouteItemStyles.textStyle} >Amazing route </Text>
                 </TouchableOpacity>
             </View>
             <View style={RouteItemStyles.secondView}>
                 <View style={RouteItemStyles.descriptionView}>
-                    <Text>labas</Text>
+                    <Text>Some random description</Text>
                 </View>
                 <IconsComponent name = {selectIconName()} style={RouteItemStyles.iconView} callback = {()=>{
                     isFavorite(!favorite);
-                    console.log("TouchableOpacity")
                 }}/>
             </View>
         </View>
