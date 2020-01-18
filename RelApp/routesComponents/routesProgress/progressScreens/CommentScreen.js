@@ -16,7 +16,7 @@ export default function CommentScreen(props)
             <View style={styles.container}>
                 <ProgressToolbar header = {"Route IV"}/> 
                 <Text>This is comment screen</Text>
-                <RelappButton style = {ButtonTypes().mediumButton} text = "Finish" callback = {()=>{alert("Take me to history tab")}}/>
+                <RelappButton style = {ButtonTypes().mediumButton} text = "Finish" callback = {()=>{props.navigation.navigate("Tabs")}}/>
             </View>
         </View>
     )
