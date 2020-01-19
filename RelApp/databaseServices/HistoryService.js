@@ -28,10 +28,14 @@ export async function getHistoryByUserId(userId) {
 
     historySnapshot.forEach(doc => {
       const data = doc.data();
+      const date = new Date(data.date * 1000);
+
       const history = {
         id: doc.id,
+        date: date,
         ...data
       };
+      
       historyList.push(history);
     })
     
