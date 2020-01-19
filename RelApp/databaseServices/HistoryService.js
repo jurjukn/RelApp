@@ -37,7 +37,15 @@ export async function getHistoryByUserId(userId) {
     
     return historyList;
   } catch (err) {
+    console.error(err);
+  }
+}
 
+export async function insertHistoryRecord(history) {
+  try {
+    await db.collection(Collections.history).doc().set(history);
+  } catch (err) {
+    console.err(err);
   }
 }
 
