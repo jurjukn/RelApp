@@ -1,22 +1,36 @@
-import {ScrollView, StyleSheet, Text, View, Button} from "react-native";
-// import {MainModal, TransparentModal} from "../ModalComponent";
-// import {RelappHeader, RelappLogo, Space} from "../../../components/stylingComponents";
-import {RelappHeader, RelappLogo, Space} from "../../../components/stylingComponents"
-// import {RelappSearch} from "../../components/RelappTextInput";
-import React, {useState} from "react";
+import React from "react";
+import {StyleSheet, View} from "react-native";
+import {AirbnbRating } from 'react-native-elements';
+
+import {RelappLogo} from "../../../components/stylingComponents"
+
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
-import ProgramItem, {ProgressToolbar} from "../RoutePregessStyles";
+import {ProgressToolbar} from "../RoutePregessStyles";
 
 export default function StatisticsScreen(props)
 {
-    const [text, setText] = useState("")
+    function ratingCompleted(rating) {
+        console.log("Rating is: " + rating)
+    }
     return (
         <View style={{flex:1}}>
             <RelappLogo callback = {()=>{props.navigation.navigate("StatisticsScreen")}}/> 
             <View style={styles.container}>
-                <ProgressToolbar header = {"Route IV"}/> 
-                <Text>This is rating screen</Text>
-                <RelappButton style = {ButtonTypes().mediumButton} text = "Next" callback = {()=>{props.navigation.navigate("CommentScreen")}}/>
+                <View style={{flex:1}}>
+                    <ProgressToolbar header = {"Route IV"}/> 
+                </View>
+                <View style={styles.innerContainer}>
+                    <AirbnbRating
+                    count={5}
+                    reviews={["Terrible ", "Bad ", "Good ", "Very Good ","Amazing "]}
+                    defaultRating={1}
+                    size={30}
+                    onFinishRating={ratingCompleted}
+                    />
+                </View>
+                <View style={styles.innerContainer}>
+                    <RelappButton style = {ButtonTypes().mediumButton} text = "Next" callback = {()=>{props.navigation.navigate("CommentScreen")}}/>
+                </View>
             </View>
         </View>
     )
@@ -30,19 +44,10 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         flexDirection: 'column',
     },
-    container2: {
-        flex: 1,
-        left:10,
-        backgroundColor: '#F0E6E6',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
+    innerContainer: {
+        flex:1, 
+        width:"100%", 
+        alignItems:"center", 
+        justifyContent:"center"
     },
-
-        separationLine: {
-            width:"100%",
-            borderWidth: 2,
-            borderRadius: 2,
-        },
-
 })
