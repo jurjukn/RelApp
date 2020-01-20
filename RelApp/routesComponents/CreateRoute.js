@@ -17,6 +17,7 @@ import {
     RouteHeader,
     RouteStyles,
 } from "./RoutesStyles";
+import InsertionMap from "./InsertionMap";
 
 export default function CreateRoute(props)
 {
@@ -40,7 +41,7 @@ export default function CreateRoute(props)
                     <RouteHeader text = {"Select route locations"}/>
                     <Space size = {20}/>
                     <View style={RouteStyles.centeredContainer}>
-                        <Map/>
+                        <InsertionMap/>
                     </View>
                     <Space size = {20}/>
                     <CreationModalButtons
