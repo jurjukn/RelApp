@@ -8,12 +8,29 @@ import {
 } from "../components/stylingComponents";
 import {RouteAddress, RouteDescription, RouteHeader, RouteStart, RouteStyles} from "./RoutesStyles";
 import {addRouteAsFavorite, getRouteById, removeRouteFromFavorites} from "../databaseServices/RouteService";
+import RouteCommentsModal from "./routeComments/RouteCommentsModal"
 
 export default function SingleRoute(props)
 {
     const [data, setData] = useState(null);
     const [address, setAddress] = useState(null);
     const [favorite, isFavorite] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false)
+    // here we should fetch comments and add to array, maybe fetch username?
+    const hardcodedUserComments = [
+        {
+            UserId: "Rapolas ", 
+            Comment: "Veri gud veri naisVeri gud veri naisVeri gud veri naisVeri gud veri naisVeri gud veri naisVeri gud veri nais "
+        }, 
+        {
+            UserId: "Leopoldas ", 
+            Comment: "Veri bad veri gud"
+        }
+    ]
+
+    function closeCommentsModal() {
+        setModalVisible(false)
+    }
 
     if(data===null)
     {
@@ -53,8 +70,17 @@ export default function SingleRoute(props)
                         callback = {()=>{props.navigation.navigate("Progress")}}
                         favorite = {selectIconName}
                         isFavorite = {()=>{isFavorite(!favorite)}}
-                        showComents =  {()=>{console.log("Start")}}
+                        showComents =  {()=>{setModalVisible(true)}}
                        />
+                    {modalVisible === true && 
+                        <View style={{width:"100%"}}>
+                        <RouteCommentsModal 
+                        modalVisible={true} 
+                        stopShowingModal={()=>closeCommentsModal()} 
+                        comments = {hardcodedUserComments}
+                        />
+                        </View>
+                    }
                     <Space size = {20}/>
                     <RouteDescription
                         description = {data===null ? null : data.description}
