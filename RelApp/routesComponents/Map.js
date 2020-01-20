@@ -1,58 +1,100 @@
 import {View, Text, StyleSheet} from "react-native";
 import MapView from "react-native-maps";
-import React from "react";
+import React, {useState} from "react";
 import {Marker} from "react-native-maps";
+import { Linking } from 'expo';
 
-const CreateMarker = (coordinate)=>{
+const OpenInGoogleMaps = (lat, lon)=>
+{
+    console.log("OpenInGoogleMapssssssssssssssssssssssssssssssss");
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+    const latLng = `${lat},${lon}`;
+    const label = 'Custom Label';
+    const url = Platform.select({
+        ios: `${scheme}${label}@${latLng}`,
+        android: `${scheme}${latLng}(${label})`
+    });
+    Linking.openURL(url);
+};
+
+const InitialRegion = ()=> {
+    return (
+        {
+            latitude: 46.4906700,
+            longitude: 11.3398200,
+            latitudeDelta: 0.5,
+            longitudeDelta: 0.5,
+        }
+    )
+}
+
+const coordinatesExample = ()=>
+{
+    return(
+        [
+            {latitude: 46.4906700, longitude:  11.3398200,},
+            {latitude: 46.9906700, longitude:  11.9398200,},
+            {latitude: 47.4906700, longitude:  12.3398200,},
+        ]
+
+    )
+}
+
+function MyMarker(props)
+{
+    let marker = null;
+    let isCalloutVisible = false;
+    const ifVisible = ()=>
+    {
+        if(marker!==null)
+        {
+            if(isCalloutVisible) {
+                marker.hideCallout();
+                isCalloutVisible = !isCalloutVisible;
+            }
+            else {
+                marker.showCallout();
+                isCalloutVisible = !isCalloutVisible;
+            }
+        }
+    };
+
     return(
         <MapView.Marker
-            key = {1}
-            coordinate={coordinate}
+            key = {props.key}
+            coordinate={props.location}
             title={"title"}
             description={"description"}
-            onLongPress={(props)=>{console.log("markeris")
-                console.log(props.nativeEvent.coordinate)
-            }}
+            ref={ref => {marker = ref; }}
+            onPress={()=>{ifVisible()}}
+            onCalloutPress={()=>{OpenInGoogleMaps(props.location.latitude, props.location.longitude);}}
         />
     )
 
 }
 
-export default class Map extends React.Component {
-    state = {
-        coordinate:{
-            latitude: 54.687157,
-            longitude: 25.279652,
-        },
-        markers:[]
-    }
+export default function Map(props)
+{
+    const [markers, setMarkers] = useState(null);
+    if(markers===null)setMarkers(coordinatesExample());
+    let marker = null;
 
-    constructor(props)
-    {
-        super(props)
-        this.state.markers.push(
-           CreateMarker({
-               latitude: 46.4906700,
-               longitude: 11.3398200,
-           })
-        )
-    }
-
-    render() {
-        return (
-            <MapView style={styles.mapStyle}
-                     initialRegion={{
-                         latitude: 46.4906700,
-                         longitude: 11.3398200,
-                         latitudeDelta: 0.5,
-                         longitudeDelta: 0.5,
-                     }}
-                     onLongPress={(props)=>{console.log(props.nativeEvent.coordinate)}}
-            >
-                {this.state.markers}
-            </MapView>
-        );
-    }
+    return (
+        <MapView style={styles.mapStyle}
+                 initialRegion={InitialRegion()}
+                 onLongPress={(props)=>{console.log(props.nativeEvent.coordinate)}}
+        >
+            {markers === null ? null :
+                markers.map(
+                    (x,index)=>{
+                        return(
+                            <MyMarker key = {index} location={x} />
+                        )
+                    }
+                )
+            }
+        </MapView>
+    );
 }
 
 const styles = StyleSheet.create({
