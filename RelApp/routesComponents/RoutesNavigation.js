@@ -2,7 +2,7 @@ import {createSwitchNavigator} from "react-navigation";
 import Routes from "../screens/Routes";
 import CreateRoute from "./CreateRoute";
 import {createStackNavigator} from "react-navigation-stack";
-import Route from "./Route";
+import SingleRoute from "./SingleRoute";
 
 export const RoutesNavigation = createStackNavigator({
     Route: {
@@ -12,7 +12,7 @@ export const RoutesNavigation = createStackNavigator({
         screen: CreateRoute,
     },
     SingleRoute: {
-        screen: Route,
+        screen: SingleRoute,
     },
 }, {
         headerMode: 'none',

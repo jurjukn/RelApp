@@ -7,14 +7,37 @@ import {
     Space
 } from "../components/stylingComponents";
 import {RouteAddress, RouteDescription, RouteHeader, RouteStart, RouteStyles} from "./RoutesStyles";
+import {addRouteAsFavorite, getRouteById, removeRouteFromFavorites} from "../databaseServices/RouteService";
 
-export default function Route(props)
+export default function SingleRoute(props)
 {
-    const [favorite, isFavorite] = useState(false)
+    const [data, setData] = useState(null);
+    const [address, setAddress] = useState(null);
+    const [favorite, isFavorite] = useState(false);
+
+    if(data===null)
+    {
+        const routeData = props.navigation.getParam('routeData', 'default value')
+        console.log(routeData);
+        setData(routeData);
+        isFavorite(routeData.isFavorite);
+        //getting full address of route
+        //getRouteById(routeData.id).then(r=>  setAddress(r));
+        //create comments screen
+    }
+
     const selectIconName = () =>
     {
-        if(favorite) return 'md-star'
-        else return 'md-star-outline'
+        if(favorite) {
+            //no ideas with user is currently working
+            addRouteAsFavorite(data.ownerId, data.id).then(r => console.log(r));
+            return 'md-star'
+        }
+        else {
+            //no ideas with user is currently working
+            removeRouteFromFavorites(data.ownerId, data.id).then(r => console.log(r));
+            return 'md-star-outline'
+        }
     }
     return (
         <View style={{flex: 1}}>
@@ -23,7 +46,7 @@ export default function Route(props)
                 <ScrollView>
                     <Space size = {5}/>
                     <View style={RouteStyles.centeredContainer}>
-                        <Text style={{...RouteStyles.text,fontSize: 32,}} > {"Route IV"} </Text>
+                        <Text style={{...RouteStyles.text,fontSize: 32,}} > {data===null ? null : data.name} </Text>
                     </View>
                     <Space size = {20}/>
                     <RouteStart
@@ -34,7 +57,7 @@ export default function Route(props)
                        />
                     <Space size = {20}/>
                     <RouteDescription
-                        description = {"Lorem Ipsum"}
+                        description = {data===null ? null : data.description}
                         />
                     <Space size = {20}/>
                     <RouteAddress

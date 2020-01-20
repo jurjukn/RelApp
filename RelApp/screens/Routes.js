@@ -13,6 +13,9 @@ export default function Routes(props)
     const [text, setText] = useState("")
     const [routesArr, setRoutesArr] = useState(null);
 
+    //not logical getAllRoutes() should take user id and filtered which is favorite for each user
+    if(routesArr===null)getAllRoutes().then(r=>setRoutesArr(r));
+
     return (
         <View style={{flex: 1}}>
             <RelappLogo/>
@@ -22,10 +25,21 @@ export default function Routes(props)
                 <Space size = {20}/>
                 <View style={styles.container2}>
                     <ScrollView>
-                        <RouteItem  callback = {()=> props.navigation.navigate("SingleRoute")}/>
-                        <Space size = {10} />
-                        <RouteItem  callback = {()=> props.navigation.navigate("SingleRoute")}/>
-                        <Space size = {10} />
+                        {routesArr===null ? null:
+                            routesArr.map(
+                                (x,index)=>
+                                {
+                                    return(
+                                        <View key = {index}>
+                                            <RouteItem data = {x}
+                                                       callback = {()=> props.navigation.navigate("SingleRoute", {routeData:x})
+                                                       }/>
+                                            <Space size = {10} />
+                                        </View>
+                                    )
+                                }
+                            )
+                        }
                     </ScrollView>
                 </View>
                 <Space size = {20}/>

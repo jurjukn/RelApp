@@ -1,6 +1,7 @@
 import {View, Text, StyleSheet, TextInput, TouchableOpacity} from "react-native";
 import React, {useState} from "react";
 import {IconsComponent, Space} from "../components/stylingComponents";
+import {addRouteAsFavorite, removeRouteFromFavorites} from "../databaseServices/RouteService";
 
 // Object {
 //     "description": "Some random description",
@@ -13,11 +14,20 @@ import {IconsComponent, Space} from "../components/stylingComponents";
 
 export function RouteItem(props)
 {
-    const [favorite, isFavorite] = useState(false)
+    const data = props.data;
+    const [favorite, isFavorite] = useState(data.isFavorite);
     const selectIconName = () =>
     {
-        if(favorite) return 'md-star'
-        else return 'md-star-outline'
+        if(favorite) {
+            //no ideas with user is currently working
+            addRouteAsFavorite(data.ownerId, data.id).then(r => console.log(r));
+            return 'md-star'
+        }
+        else {
+            //no ideas with user is currently working
+            removeRouteFromFavorites(data.ownerId, data.id).then(r => console.log(r));
+            return 'md-star-outline'
+        }
     }
 
     return (
@@ -26,12 +36,12 @@ export function RouteItem(props)
                 <TouchableOpacity   onPress={()=>{
                     props.callback()
                 }}>
-                    <Text style={RouteItemStyles.textStyle} >Amazing route </Text>
+                    <Text style={RouteItemStyles.textStyle} >{data.name} </Text>
                 </TouchableOpacity>
             </View>
             <View style={RouteItemStyles.secondView}>
                 <View style={RouteItemStyles.descriptionView}>
-                    <Text>Some random description</Text>
+                    <Text>{data.description}</Text>
                 </View>
                 <IconsComponent name = {selectIconName()} style={RouteItemStyles.iconView} callback = {()=>{
                     isFavorite(!favorite);
