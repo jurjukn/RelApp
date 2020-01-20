@@ -1,17 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions,StatusBar} from 'react-native';
 import {
     createAppContainer, createSwitchNavigator,
 } from 'react-navigation';
-import {createBottomTabNavigator, createMaterialTopTabNavigator} from 'react-navigation-tabs';
-import {RelappLogo, TopSeparator} from "../components/stylingComponents";
-import Routes from "./Routes";
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 import Profiles from "./Profiles";
 import History from "./History";
-import CreateRoute from "../routesComponents/CreateRoute";
 import {RoutesNavigation} from "../routesComponents/RoutesNavigation";
 import {RouteProgressNavigation} from "../routesComponents/routesProgress/RouteProgressNavigation";
 import {Ionicons} from "@expo/vector-icons";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 const getTabBarIcon = (navigation, focused, tintColor) => {
     const { routeName } = navigation.state;
@@ -56,11 +54,18 @@ const TabNavigation  = createBottomTabNavigator(
     },
 )
 
+const NavigationLogin = createSwitchNavigator({
+    SignIn: {screen: SignIn},
+    SignUp: {screen: SignUp},
+  });
+  
+const NavigatorLogin = createAppContainer(NavigationLogin);
+
 const TabNavigationContainer = createAppContainer(TabNavigation);
 
 const SwitchNavigation = createSwitchNavigator({
         Login: {
-            screen: History,
+            screen: NavigatorLogin,
         },
         Tabs: {
             screen: TabNavigationContainer,
@@ -70,7 +75,7 @@ const SwitchNavigation = createSwitchNavigator({
         },
     },
     {
-        initialRouteName:'Tabs',
+        initialRouteName:'Login',
     }
 );
 

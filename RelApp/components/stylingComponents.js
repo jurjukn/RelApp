@@ -34,6 +34,15 @@ export function IconsComponent (props)
     )
 }
 
+export function RelappLogoMain()
+{
+    return (
+        <View style= {{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 50 }}>
+            <Text style={{fontWeight: 'bold', color: '#3CCD76', fontSize:70 }}>RelApp</Text>
+        </View>
+    )
+}
+
 export function RelappLogo(props)
 {
     const iconWight = 26.3;
@@ -46,7 +55,7 @@ export function RelappLogo(props)
                 right:"200%",}}
                 callback = {props.callback}
             /> : null}
-            <Text style={{fontWeight: 'bold', fontSize:36, right:(props.callback !== undefined ? iconWight/2 : 0)}}>Relapp</Text>
+            <Text style={{fontWeight: 'bold', fontSize:36, right:(props.callback !== undefined ? iconWight/2 : 0)}}>RelApp</Text>
         </View>
     )
 }
@@ -75,6 +84,13 @@ export function RelappLogoForProfile(props)
     )
 }
 
+export const DottedLine = () =>{
+    return (
+        <View style= {{ alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={BasicStyles.dottedLineStyle}>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</Text>
+        </View>
+    )
+}
 
 export const RelappHeader = (props)=>{
     return (
@@ -87,9 +103,23 @@ export const RelappHeader = (props)=>{
 export const BasicStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F0E6E6',
+        backgroundColor: '#FFFFFF',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    signInStyle: {
+        flex: 1,
+        backgroundColor: '#F4F4F4',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    dottedLineStyle: {
+        color: "gray",
+        fontSize: 15,
+        textShadowColor: 'gray',
+        textShadowOffset: { height: 3, width: 0 },
+        textShadowRadius: 3,
     },
 })
