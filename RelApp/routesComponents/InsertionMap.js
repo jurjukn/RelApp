@@ -4,19 +4,6 @@ import React, {useState} from "react";
 import {Marker} from "react-native-maps";
 import { Linking } from 'expo';
 
-const OpenInGoogleMaps = (lat, lon)=>
-{
-    console.log("OpenInGoogleMap");
-    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
-    const latLng = `${lat},${lon}`;
-    const label = 'Custom Label';
-    const url = Platform.select({
-        ios: `${scheme}${label}@${latLng}`,
-        android: `${scheme}${latLng}(${label})`
-    });
-    Linking.openURL(url);
-};
-
 const InitialRegion = ()=> {
     return (
         {
@@ -40,7 +27,7 @@ const coordinatesExample = ()=>
     )
 }
 
-function MyMarker(props)
+function RemovableMarker(props)
 {
     let marker = null;
     let isCalloutVisible = false;
@@ -63,32 +50,47 @@ function MyMarker(props)
         <MapView.Marker
             key = {props.key}
             coordinate={props.location}
-            title={"title"}
-            description={"description"}
+            title={"X"}
+            description={"delete"}
             ref={ref => {marker = ref; }}
             onPress={()=>{ifVisible()}}
-            onCalloutPress={()=>{OpenInGoogleMaps(props.location.latitude, props.location.longitude);}}
+            onCalloutPress={()=>{
+                props.delete(props.index)
+            }}
         />
     )
-
 }
 
-export default function Map(props)
+export default function InsertionMap(props)
 {
     const [markers, setMarkers] = useState(null);
     if(markers===null)setMarkers(coordinatesExample());
     let marker = null;
 
+    const removeMarker=(index)=>{
+        setMarkers(markers.filter((x,i)=>{if(i!==index)return(x)}));
+    };
+    const addMarker=(coord)=>{
+        setMarkers([...markers,coord]);
+    };
+
     return (
         <MapView style={styles.mapStyle}
                  initialRegion={InitialRegion()}
-                 onLongPress={(props)=>{console.log(props.nativeEvent.coordinate)}}
+                 onLongPress={(props)=>{
+                     console.log(props.nativeEvent.coordinate);
+                     addMarker(props.nativeEvent.coordinate);
+                 }}
         >
             {markers === null ? null :
                 markers.map(
                     (x,index)=>{
                         return(
-                            <MyMarker key = {index} location={x} />
+                            <RemovableMarker
+                                index = {index}
+                                key = {index}
+                                delete = {removeMarker}
+                                location={x} />
                         )
                     }
                 )
@@ -96,7 +98,6 @@ export default function Map(props)
         </MapView>
     );
 }
-
 const styles = StyleSheet.create({
     mapStyle: {
         width: 300,
