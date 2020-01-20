@@ -73,7 +73,7 @@ async function updateFavorites(userId, routeId, add) {
     if (!add && isFound) {
       const idx = favorites.indexOf(userId);
       favorites.splice(idx, 1);
-      await db.collection(Collections.routes).doc(routeId).update();
+      await db.collection(Collections.routes).doc(routeId).update(favorites);
     } else if (add && !isFound) {
       favorites.push(userId);
       await db.collection(Collections.route).doc(routeId).update(favorites);
