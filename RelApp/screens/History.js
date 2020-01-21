@@ -18,6 +18,7 @@ export default function History (props) {
         const fetchData = async () => {
             const value = await getHistoryByUserId("UserId1")
             if(value.length!==0){
+                console.log(value)
                 setUserHistory(value)
             }
         };

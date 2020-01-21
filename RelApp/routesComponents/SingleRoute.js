@@ -56,6 +56,7 @@ export default function SingleRoute(props)
             return 'md-star-outline'
         }
     }
+    console.log(data)
     return (
         <View style={{flex: 1}}>
             <RelappLogo callback = {()=>props.navigation.goBack()}/>
