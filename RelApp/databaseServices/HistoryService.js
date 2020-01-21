@@ -1,5 +1,6 @@
 import { firestore as db } from '../firebaseServices/Firebase';
 import { Collections } from './Collections';
+import uuid from 'react-native-uuid';
 
 export async function getAverageRouteRating(routeId) {
   try {
@@ -44,9 +45,23 @@ export async function getHistoryByUserId(userId) {
   }
 }
 
-export async function insertHistoryRecord(history) {
+export async function insertHistoryRecord(completed, date, difficulty, distance, duration, rating, routeId, userId) {
   try {
-    await db.collection(Collections.history).doc().set(history);
+    const id = uuid.v4();
+    const history = {
+      completed,
+      date,
+      difficulty,
+      distance,
+      duration,
+      rating,
+      routeId,
+      userId
+    }
+
+    await db.collection(Collections.history).doc(id).set(history);
+
+    return id;
   } catch (err) {
     console.err(err);
   }
