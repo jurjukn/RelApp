@@ -1,5 +1,6 @@
 import { firestore as db } from '../firebaseServices/Firebase';
 import { Collections } from './Collections';
+import uuid from 'react-native-uuid';
 
 export async function getAddressByRouteId(routeId) {
   try {
@@ -20,9 +21,19 @@ export async function getAddressByRouteId(routeId) {
   }
 }
 
-export async function insertAddressRecord(address) {
+export async function insertAddressRecord(city, region, country, routeId, coordinates) {
   try {
-    await db.collection(Collections.address).doc().set(address);
+    const id = uuid.v4();
+    const address = {
+      city,
+      region,
+      country,
+      routeId,
+      coordinates
+    };
+    await db.collection(Collections.address).doc(id).set(address);
+
+    return id;
   } catch (err) {
     console.error(err);
   }
