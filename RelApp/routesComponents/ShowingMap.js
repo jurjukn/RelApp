@@ -3,6 +3,9 @@ import MapView from "react-native-maps";
 import React, {useState} from "react";
 import {Marker} from "react-native-maps";
 import { Linking } from 'expo';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+import {coordinatesExample, getCurrentCoordinates, InitialRegion} from "./MapFunctions";
 
 const OpenInGoogleMaps = (lat, lon)=>
 {
@@ -17,28 +20,6 @@ const OpenInGoogleMaps = (lat, lon)=>
     Linking.openURL(url);
 };
 
-const InitialRegion = ()=> {
-    return (
-        {
-            latitude: 46.4906700,
-            longitude: 11.3398200,
-            latitudeDelta: 0.5,
-            longitudeDelta: 0.5,
-        }
-    )
-}
-
-const coordinatesExample = ()=>
-{
-    return(
-        [
-            {latitude: 46.4906700, longitude:  11.3398200,},
-            {latitude: 46.9906700, longitude:  11.9398200,},
-            {latitude: 47.4906700, longitude:  12.3398200,},
-        ]
-
-    )
-}
 
 function MyMarker(props)
 {
@@ -73,14 +54,22 @@ function MyMarker(props)
 
 }
 
-export default function Map(props)
+export default function ShowingMap(props)
 {
     const [markers, setMarkers] = useState(null);
-    if(markers===null)setMarkers(coordinatesExample());
+    if(markers===null)
+    {
+        //for initialization
+        getCurrentCoordinates().then(r=>{});
+        setMarkers(coordinatesExample());
+    }
     let marker = null;
 
     return (
         <MapView style={styles.mapStyle}
+                 showsUserLocation={true}
+                 followUserLocation={true}
+                 //onUserLocationChange = {(props)=>{console.log(props.nativeEvent.coordinate)}}
                  initialRegion={InitialRegion()}
                  onLongPress={(props)=>{console.log(props.nativeEvent.coordinate)}}
         >
