@@ -24,7 +24,7 @@ export async function getRouteComments(routeId) {
   }
 }
 
-export async function insertComment(comment, username, routeId) {
+export async function insertRouteComment(comment, username, routeId) {
   try {
     const id = uuid.v4();
     const commentObject = {
