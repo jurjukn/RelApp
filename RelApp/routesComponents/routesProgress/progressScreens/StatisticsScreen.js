@@ -20,7 +20,7 @@ export default function StatisticsScreen(props)
                 </View>
                 <View style={styles.statsContainer}>
                     <View style={styles.circle}>
-                        <Text>Kilometers</Text>
+                        <Text>Steps</Text>
                         <Text style={styles.statisticsTextFont}>{props.navigation.state.params.distance}</Text>
                     </View>
                     <View style={styles.circle}>
