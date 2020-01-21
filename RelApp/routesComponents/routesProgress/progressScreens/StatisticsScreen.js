@@ -1,11 +1,16 @@
 import {StyleSheet, Text, View} from "react-native";
 import {RelappLogo} from "../../../components/stylingComponents"
-import React, {useState} from "react";
+import React from "react";
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
 import {ProgressToolbar} from "../RoutePregessStyles";
 
 export default function StatisticsScreen(props)
 {
+    function proceedToNextScreen(){
+        const durationInSeconds = Number(props.navigation.state.params.duration.durationMinutes)*60 + Number(props.navigation.state.params.duration.durationSeconds)
+        props.navigation.navigate("RatingScreen", {duration: durationInSeconds, distance: props.navigation.state.params.distance})
+    }
+
     return (
         <View style={{flex:1}}>
             <RelappLogo /> 
@@ -16,15 +21,21 @@ export default function StatisticsScreen(props)
                 <View style={styles.statsContainer}>
                     <View style={styles.circle}>
                         <Text>Kilometers</Text>
-                        <Text style={styles.statisticsTextFont}>13</Text>
+                        <Text style={styles.statisticsTextFont}>{props.navigation.state.params.distance}</Text>
                     </View>
                     <View style={styles.circle}>
-                        <Text>Minutes</Text>
-                        <Text style={styles.statisticsTextFont}>15</Text>
+                        <Text>Duration</Text>
+                        <Text style={styles.statisticsTextFont}>
+                            {props.navigation.state.params.duration.durationMinutes} : {props.navigation.state.params.duration.durationSeconds}
+                        </Text>
                     </View>
                 </View>
                 <View style={styles.innerContainer}>
-                    <RelappButton style = {ButtonTypes().mediumButton} text = "Next" callback = {()=>{props.navigation.navigate("RatingScreen")}}/>
+                    <RelappButton 
+                        style = {ButtonTypes().mediumButton} 
+                        text = "Next" 
+                        callback = {()=>{proceedToNextScreen()}}
+                    />
                 </View>
             </View>
         </View>
