@@ -2,7 +2,7 @@ import {View, Text, StyleSheet} from "react-native";
 import MapView from "react-native-maps";
 import React from "react";
 import {BasicStyles, RelappLogo, RelappLogoForProfile} from "../components/stylingComponents";
-import Map from "../routesComponents/Map";
+import ShowingMap from "../routesComponents/ShowingMap";
 
 
 export default function Profiles(props){

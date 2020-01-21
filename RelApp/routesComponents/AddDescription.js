@@ -30,15 +30,19 @@ export default function AddDescription(props)
         console.log("useEffect",props.setModalVisible);
         ChangeState();
     }, [props.setModalVisible]);
-
+    const [text, setText] = useState("");
     return (
         <View>
             <TransparentModal setModalVisible = {mainVisible}/>
             <MainModal content = {<Description
-                onChangeText = {(text)=>{
-                console.log(text)
-                }}
-            />} header = {"Add Description"} setModalVisible = {mainVisible} callback = {()=>{ChangeState()}} />
+                onChangeText = {(text)=>{setText(text)}}
+            />}
+                       header = {"Add Description"}
+                       setModalVisible = {mainVisible}
+                       callback = {()=>{
+                           props.sendInfo(text);
+                           ChangeState()
+                       }} />
         </View>
     );
 }
