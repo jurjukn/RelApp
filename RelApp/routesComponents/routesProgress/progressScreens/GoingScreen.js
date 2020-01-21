@@ -6,6 +6,7 @@ import {RelappHeader, RelappLogo, Space} from "./../../../components/stylingComp
 import React, {useState} from "react";
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
 import ProgramItem, {ProgressToolbar} from "./../RoutePregessStyles";
+import { Linking } from 'expo';
 
 export default function GoingScreen(props)
 {
@@ -15,6 +16,11 @@ export default function GoingScreen(props)
             <RelappLogo callback = {()=>{props.navigation.navigate("BlockingScreen")}}/>
             <View style={styles.container}>
                 <ProgressToolbar header = {"Route IV"}/>
+                <RelappButton 
+                    style = {ButtonTypes().mediumButton} 
+                    text = "Recommended playlist" 
+                    callback = {()=>{Linking.openURL('https://open.spotify.com/playlist/7fZUgTmUcN4KVRsRwadU2z')}}
+                />
                 <Text>This is going screen. Here we show map</Text>
                 <RelappButton style = {ButtonTypes().mediumButton} text = "Finish" callback = {()=>{props.navigation.navigate("StatisticsScreen")}}/>
             </View>

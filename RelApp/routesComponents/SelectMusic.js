@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Modal, Text, TouchableHighlight, View, Alert, StyleSheet} from 'react-native';
+import {Modal, Text, View, Alert, StyleSheet} from 'react-native';
 import {MainModal, ModalStyles, TransparentModal} from "./ModalComponent";
 import {IconsComponent, RelappHeader, Space} from "../components/stylingComponents";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
