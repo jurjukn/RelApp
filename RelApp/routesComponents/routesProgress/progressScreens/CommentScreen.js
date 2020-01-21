@@ -7,7 +7,7 @@ import {ProgressToolbar} from "../RoutePregessStyles";
 function UselessTextInput(props) {
     return (
       <TextInput
-        {...props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
+        {...props}
         editable
         maxLength={40}
       />
@@ -17,6 +17,25 @@ function UselessTextInput(props) {
 export default function CommentScreen(props)
 {
     const [value, onChangeText] = useState('Please type your comment');
+
+    function addToHistory(routeHistory){
+        console.log("Here we add routeHistory to database")
+        console.log(routeHistory)
+    }
+
+    function proceedToNextScreen(){
+        const historyObject = props.navigation.state.params
+        addToHistory(
+            {
+                duration: historyObject.duration, 
+                distance: historyObject.distance, 
+                rating: historyObject.rating, 
+                comments: value
+            }
+        )
+        props.navigation.navigate("Tabs")
+    }
+
     return (
         <View style={{flex:1}}>
             <RelappLogo callback = {()=>{props.navigation.navigate("RatingScreen")}}/> 
@@ -42,7 +61,7 @@ export default function CommentScreen(props)
                     </View>
                 </View>
                 <View style={styles.innerContainer}>
-                    <RelappButton style = {ButtonTypes().mediumButton} text = "Finish" callback = {()=>{props.navigation.navigate("Tabs")}}/>
+                    <RelappButton style = {ButtonTypes().mediumButton} text = "Finish" callback = {()=>{proceedToNextScreen()}}/>
                 </View>
             </View>
         </View>

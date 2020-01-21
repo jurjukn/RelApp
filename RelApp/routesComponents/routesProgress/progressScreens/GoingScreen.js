@@ -3,14 +3,45 @@ import {ScrollView, StyleSheet, Text, View, Button} from "react-native";
 // import {RelappHeader, RelappLogo, Space} from "../../../components/stylingComponents";
 import {RelappHeader, RelappLogo, Space} from "./../../../components/stylingComponents"
 // import {RelappSearch} from "../../components/RelappTextInput";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
 import ProgramItem, {ProgressToolbar} from "./../RoutePregessStyles";
 import { Linking } from 'expo';
 
 export default function GoingScreen(props)
 {
-    const [text, setText] = useState("")
+    const [timer, setTimer] = useState(null)
+    const [minutesCounter, setMinutesCounter] = useState('00')
+    const [secondsCounter, setSecondsCounter] = useState('00')
+    const [startDisable, setStartDisable] = useState(false)
+
+    useEffect(() => {
+        let timer = setInterval(() => {
+ 
+            var num = (Number(secondsCounter) + 1).toString(),
+              count = minutesCounter;
+       
+            if (Number(secondsCounter) == 59) {
+              count = (Number(minutesCounter) + 1).toString();
+              num = '00';
+            }
+            setMinutesCounter(count.length == 1 ? '0' + count : count)
+            setSecondsCounter(num.length == 1 ? '0' + num : num)
+          }, 1000);
+          setTimer(timer);
+          setStartDisable(true)
+    // returned function will be called on component unmount 
+    return () => {
+        clearInterval(timer);
+    }
+    }, [minutesCounter, secondsCounter])
+
+    function saveTimeAndProceed(){
+        setStartDisable(false)
+        clearInterval(timer)
+        props.navigation.navigate('StatisticsScreen',  {duration: {durationMinutes: minutesCounter, durationSeconds: secondsCounter}, distance: "13"})
+    }
+
     return (
         <View style={{flex:1}}>
             <RelappLogo callback = {()=>{props.navigation.navigate("BlockingScreen")}}/>
@@ -22,7 +53,16 @@ export default function GoingScreen(props)
                     callback = {()=>{Linking.openURL('https://open.spotify.com/playlist/7fZUgTmUcN4KVRsRwadU2z')}}
                 />
                 <Text>This is going screen. Here we show map</Text>
-                <RelappButton style = {ButtonTypes().mediumButton} text = "Finish" callback = {()=>{props.navigation.navigate("StatisticsScreen")}}/>
+                <Text>{minutesCounter} : {secondsCounter}</Text>
+                <RelappButton 
+                    style = {ButtonTypes().mediumButton} 
+                    text = "Finish" 
+                    callback = {
+                        ()=>{saveTimeAndProceed()}
+                    }
+                
+                />
+                {/* <RelappButton style = {ButtonTypes().mediumButton} text = "Finish" callback = {()=>{props.navigation.navigate("StatisticsScreen")}}/> */}
             </View>
         </View>
     )
