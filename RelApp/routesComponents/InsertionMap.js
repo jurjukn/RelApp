@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet} from "react-native";
 import MapView from "react-native-maps";
-import React, {useState} from "react";
+import React, {useState, useEffect, useRef,} from "react";
 import {Marker} from "react-native-maps";
 import { Linking } from 'expo';
 
@@ -29,6 +29,9 @@ const coordinatesExample = ()=>
 
 function RemovableMarker(props)
 {
+
+    useEffect(() => console.log('value changed!'), [props.last]);
+
     let marker = null;
     let isCalloutVisible = false;
     const ifVisible = ()=>
@@ -45,11 +48,27 @@ function RemovableMarker(props)
             }
         }
     };
+    const selectColor = ()=>{
+        let color = '#fff900';
+        switch (props.index) {
+            case 0:
+                color = '#25ff02';
+                break;
+            case props.last-1:
+                color = '#ff001b';
+                break;
+            default:
+                color = '#fff900';
+                break;
+        }
+        return color;
+    }
 
     return(
         <MapView.Marker
             key = {props.key}
             coordinate={props.location}
+            pinColor={selectColor()}
             title={"X"}
             description={"delete"}
             ref={ref => {marker = ref; }}
@@ -65,7 +84,9 @@ export default function InsertionMap(props)
 {
     const [markers, setMarkers] = useState(null);
     if(markers===null)setMarkers(coordinatesExample());
-    let marker = null;
+    const [refresh, setRefresh] = useState(false);
+    const refreshing = ()=>{setRefresh(!refresh);}
+
 
     const removeMarker=(index)=>{
         setMarkers(markers.filter((x,i)=>{if(i!==index)return(x)}));
@@ -87,8 +108,10 @@ export default function InsertionMap(props)
                     (x,index)=>{
                         return(
                             <RemovableMarker
-                                index = {index}
                                 key = {index}
+                                index = {index}
+                                last = {markers.length}
+                                refresh = {refreshing}
                                 delete = {removeMarker}
                                 location={x} />
                         )
