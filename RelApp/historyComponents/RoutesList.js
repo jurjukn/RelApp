@@ -5,13 +5,15 @@ import RouteStatistics from "./RouteStatistics"
 
 export default RoutesList = ({userHistory}) => {
 
+    console.log(userHistory)
+
     return (
         <FlatList
         data={userHistory}
         renderItem={({ item }) => 
             <RouteStatistics 
                 routeName={item.routeId} 
-                date={item.date.seconds} 
+                date={item.date} 
                 time={item.duration} 
                 difficulty={9} 
                 distance={item.distance} 

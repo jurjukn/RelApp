@@ -3,29 +3,7 @@ import MapView from "react-native-maps";
 import React, {useState, useEffect, useRef,} from "react";
 import {Marker} from "react-native-maps";
 import { Linking } from 'expo';
-
-const InitialRegion = ()=> {
-    return (
-        {
-            latitude: 46.4906700,
-            longitude: 11.3398200,
-            latitudeDelta: 0.5,
-            longitudeDelta: 0.5,
-        }
-    )
-}
-
-const coordinatesExample = ()=>
-{
-    return(
-        [
-            {latitude: 46.4906700, longitude:  11.3398200,},
-            {latitude: 46.9906700, longitude:  11.9398200,},
-            {latitude: 47.4906700, longitude:  12.3398200,},
-        ]
-
-    )
-}
+import {coordinatesExample, InitialRegion} from "./MapFunctions";
 
 function RemovableMarker(props)
 {
@@ -89,10 +67,14 @@ export default function InsertionMap(props)
 
 
     const removeMarker=(index)=>{
-        setMarkers(markers.filter((x,i)=>{if(i!==index)return(x)}));
+        const newMarkers = markers.filter((x,i)=>{if(i!==index)return(x)});
+        props.insert(newMarkers);
+        setMarkers(newMarkers);
     };
     const addMarker=(coord)=>{
-        setMarkers([...markers,coord]);
+        const newMarkers = [...markers,coord];
+        props.insert(newMarkers);
+        setMarkers(newMarkers);
     };
 
     return (

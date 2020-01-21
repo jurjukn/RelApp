@@ -1,6 +1,7 @@
 import { firestore as db } from '../firebaseServices/Firebase';
 import { getCurrentUser } from '../firebaseServices/Authorization';
 import { Collections } from './Collections';
+import uuid from 'react-native-uuid';
 
 export async function getAllRoutes() {
   try {
@@ -46,12 +47,23 @@ function formatRoute(id, data, userId) {
   return route;
 }
 
-export async function insertRoute(route) {
+export async function insertRoute(description, name, ownerId, isFavorite) {
   try {
-    await db.collection(Collections.routes).doc().set(route);
+    const id = uuid.v4();
+    let userFavorite = [];
+    if (isFavorite) userFavorite.push(ownerId);
+    const route = {
+      name,
+      description,
+      ownerId,
+      userFavorite
+    }
+
+    await db.collection(Collections.routes).doc(id).set(route);
+
+    return id;
   } catch (err) {
-    console.log(err);
-    throw err;
+    console.error(err);
   } 
 }
 

@@ -1,7 +1,7 @@
 import {View, ScrollView, StyleSheet, TextInput, TouchableOpacity, Text} from "react-native";
 import MapView from "react-native-maps";
 import React, {useState} from "react";
-import Map from "../routesComponents/Map";
+import ShowingMap from "./ShowingMap";
 import {
     RelappLogo,
     Space
@@ -9,21 +9,22 @@ import {
 import {RouteAddress, RouteDescription, RouteHeader, RouteStart, RouteStyles} from "./RoutesStyles";
 import {addRouteAsFavorite, getRouteById, removeRouteFromFavorites} from "../databaseServices/RouteService";
 import RouteCommentsModal from "./routeComments/RouteCommentsModal"
+import {getAddressByRouteId} from "../databaseServices/AddressService";
 
 export default function SingleRoute(props)
 {
     const [data, setData] = useState(null);
     const [address, setAddress] = useState(null);
     const [favorite, isFavorite] = useState(false);
-    const [modalVisible, setModalVisible] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false);
     // here we should fetch comments and add to array, maybe fetch username?
     const hardcodedUserComments = [
         {
-            UserId: "Rapolas ", 
+            UserId: "Rapolas ",
             Comment: "Veri gud veri naisVeri gud veri naisVeri gud veri naisVeri gud veri naisVeri gud veri naisVeri gud veri nais "
-        }, 
+        },
         {
-            UserId: "Leopoldas ", 
+            UserId: "Leopoldas ",
             Comment: "Veri bad veri gud"
         }
     ]
@@ -38,9 +39,8 @@ export default function SingleRoute(props)
         console.log(routeData);
         setData(routeData);
         isFavorite(routeData.isFavorite);
-        //getting full address of route
-        //getRouteById(routeData.id).then(r=>  setAddress(r));
-        //create comments screen
+        getAddressByRouteId(routeData.id).then(r=>  console.log("getAddressByRouteId",r));
+
     }
 
     const selectIconName = () =>
@@ -56,6 +56,7 @@ export default function SingleRoute(props)
             return 'md-star-outline'
         }
     }
+    console.log(data)
     return (
         <View style={{flex: 1}}>
             <RelappLogo callback = {()=>props.navigation.goBack()}/>
@@ -72,11 +73,11 @@ export default function SingleRoute(props)
                         isFavorite = {()=>{isFavorite(!favorite)}}
                         showComents =  {()=>{setModalVisible(true)}}
                        />
-                    {modalVisible === true && 
+                    {modalVisible === true &&
                         <View style={{width:"100%"}}>
-                        <RouteCommentsModal 
-                        modalVisible={true} 
-                        stopShowingModal={()=>closeCommentsModal()} 
+                        <RouteCommentsModal
+                        modalVisible={true}
+                        stopShowingModal={()=>closeCommentsModal()}
                         comments = {hardcodedUserComments}
                         />
                         </View>
@@ -93,7 +94,7 @@ export default function SingleRoute(props)
                         />
                     <Space size = {20}/>
                     <View style={RouteStyles.centeredContainer}>
-                        <Map/>
+                        <ShowingMap/>
                     </View>
                     <Space size = {20}/>
                 </ScrollView>

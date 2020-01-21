@@ -1,5 +1,6 @@
 import { firestore as db } from '../firebaseServices/Firebase';
 import { Collections } from './Collections';
+import uuid from 'react-native-uuid';
 
 export async function getAverageRouteRating(routeId) {
   try {
@@ -28,12 +29,11 @@ export async function getHistoryByUserId(userId) {
 
     historySnapshot.forEach(doc => {
       const data = doc.data();
-      const date = new Date(data.date * 1000);
-
+      const date = new Date(data.date.seconds * 1000);
       const history = {
+        ...data,
         id: doc.id,
-        date: date,
-        ...data
+        date: formatDate(date),
       };
       
       historyList.push(history);
@@ -45,9 +45,23 @@ export async function getHistoryByUserId(userId) {
   }
 }
 
-export async function insertHistoryRecord(history) {
+export async function insertHistoryRecord(completed, date, difficulty, distance, duration, rating, routeId, userId) {
   try {
-    await db.collection(Collections.history).doc().set(history);
+    const id = uuid.v4();
+    const history = {
+      completed,
+      date,
+      difficulty,
+      distance,
+      duration,
+      rating,
+      routeId,
+      userId
+    }
+
+    await db.collection(Collections.history).doc(id).set(history);
+
+    return id;
   } catch (err) {
     console.err(err);
   }
@@ -67,4 +81,17 @@ export function calculateHistoryStatistics(historyList) {
   const totalHours = totalTime / 60;
 
   return { totalDistance, routeCount, totalHours }
+}
+
+function formatDate(date) {
+  let day = date.getDay();
+  let month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  if (day < 10) day = "0" + day;
+  if (month < 10) month = "0" + month;
+  
+  const time = day + '-' + month + '-' + year;
+  console.log(time);
+  return time;
 }
