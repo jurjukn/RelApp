@@ -93,3 +93,34 @@ export const CreateInitialRegionByCurrentLocation = async () => {
     });
 }
 
+export const selectColor = (index, last)=>{
+    let color = '#fff900';
+    switch (index) {
+        case 0:
+            color = '#25ff02';
+            break;
+        case last-1:
+            color = '#ff001b';
+            break;
+        default:
+            color = '#fff900';
+            break;
+    }
+    return color;
+};
+
+export const generateTitle = (index, last)=>{
+    let title = "";
+    switch (index) {
+        case 0:
+            title = "Start !";
+            break;
+        case last-1:
+            title = "Finish !";
+            break;
+        default:
+            title = `${index}  checkpoint.`;
+            break;
+    }
+    return title;
+};

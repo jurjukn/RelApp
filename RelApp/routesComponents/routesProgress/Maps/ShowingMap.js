@@ -5,7 +5,8 @@ import {Marker} from "react-native-maps";
 import { Linking } from 'expo';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-import {coordinatesExample, getCurrentCoordinates, InitialRegion} from "./MapFunctions";
+import {coordinatesExample, generateTitle, getCurrentCoordinates, InitialRegion, selectColor} from "./MapFunctions";
+import MyMarker from "./MyMarker";
 
 const OpenInGoogleMaps = (lat, lon)=>
 {
@@ -20,39 +21,6 @@ const OpenInGoogleMaps = (lat, lon)=>
     Linking.openURL(url);
 };
 
-
-function MyMarker(props)
-{
-    let marker = null;
-    let isCalloutVisible = false;
-    const ifVisible = ()=>
-    {
-        if(marker!==null)
-        {
-            if(isCalloutVisible) {
-                marker.hideCallout();
-                isCalloutVisible = !isCalloutVisible;
-            }
-            else {
-                marker.showCallout();
-                isCalloutVisible = !isCalloutVisible;
-            }
-        }
-    };
-
-    return(
-        <MapView.Marker
-            key = {props.key}
-            coordinate={props.location}
-            title={"title"}
-            description={"description"}
-            ref={ref => {marker = ref; }}
-            onPress={()=>{ifVisible()}}
-            onCalloutPress={()=>{OpenInGoogleMaps(props.location.latitude, props.location.longitude);}}
-        />
-    )
-
-}
 
 export default function ShowingMap(props)
 {
@@ -77,7 +45,13 @@ export default function ShowingMap(props)
                 markers.map(
                     (x,index)=>{
                         return(
-                            <MyMarker key = {index} location={x} />
+                            <MyMarker key = {index}
+                                      index =  {index}
+                                      location={x}
+                                      isForShowing = {true}
+                                      last = {markers.length}
+                                      open = {OpenInGoogleMaps}
+                            />
                         )
                     }
                 )

@@ -1,7 +1,7 @@
 import {View, ScrollView, StyleSheet, TextInput, TouchableOpacity, Text} from "react-native";
 import MapView from "react-native-maps";
 import React, {useState} from "react";
-import ShowingMap from "./ShowingMap";
+import ShowingMap from "./routesProgress/Maps/ShowingMap";
 import {
     RelappLogo,
     Space
