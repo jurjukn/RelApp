@@ -1,16 +1,7 @@
 import {View, Text, StyleSheet, TextInput, TouchableOpacity} from "react-native";
 import React, {useState} from "react";
-import {IconsComponent, Space} from "../components/stylingComponents";
+import {IconsComponent, MainColors, Space} from "../components/stylingComponents";
 import {addRouteAsFavorite, removeRouteFromFavorites} from "../databaseServices/RouteService";
-
-// Object {
-//     "description": "Some random description",
-//         "id": "23Pofwb8jT15SenciHg6",
-//         "isFavorite": false,
-//         "name": "Amazing route 1",
-//         "ownerId": "User1",
-// }
-
 
 export function RouteItem(props)
 {
@@ -29,10 +20,9 @@ export function RouteItem(props)
             return 'md-star-outline'
         }
     }
-
     return (
-        <View style={RouteItemStyles.customView}>
-            <View style={RouteItemStyles.mainView}>
+        <View style={RouteItemStyles.itemBody}>
+            <View style={RouteItemStyles.titleView}>
                 <TouchableOpacity   onPress={()=>{
                     props.callback()
                 }}>
@@ -43,25 +33,25 @@ export function RouteItem(props)
                 <View style={RouteItemStyles.descriptionView}>
                     <Text>{data.description}</Text>
                 </View>
-                <IconsComponent name = {selectIconName()} style={RouteItemStyles.iconView} callback = {()=>{
-                    isFavorite(!favorite);
-                }}/>
+                <IconsComponent name = {selectIconName()}
+                                style={RouteItemStyles.iconView}
+                                callback = {()=>{isFavorite(!favorite);}}/>
             </View>
         </View>
     )
 }
 
 export const RouteItemStyles = StyleSheet.create({
-    customView: {
+    itemBody: {
         flex: 1,
         width: '95%',
         flexDirection: 'column',
         borderRadius: 10,
         borderWidth: 2,
         borderColor: 'black',
-        backgroundColor: '#F0E6E6',
+        backgroundColor: MainColors.backgroundColor,
     },
-    mainView:{
+    titleView:{
         width: '100%',
         height: 50,
         alignItems: 'center',

@@ -1,17 +1,17 @@
 import {View, ScrollView, StyleSheet, TextInput, TouchableOpacity, Text, Alert} from "react-native";
 import MapView from "react-native-maps";
-import React, {useState} from "react";
+import React, {forwardRef, useImperativeHandle, useRef, useState} from "react";
 import ShowingMap from "./routesProgress/Maps/ShowingMap";
 import {
     IconsComponent, RelappLogo, RelappToolBar,
     Space
 } from "../components/stylingComponents";
 import AddDescription from "./AddDescription";
-import {RelappMiniTextInput, RelappTextInput} from "../components/RelappTextInput";
+import {RelappTextInput} from "../components/RelappTextInput";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 import SelectMusic from "./SelectMusic";
 import {
-    CreateRouteToolbar,
+    AddressFields,
     CreationModalButtons,
     HorizontalSpace,
     RouteHeader,
@@ -27,30 +27,30 @@ export default function CreateRoute(props)
     const [descriptionModal, setDescriptionModal] = useState(false);
 
     const [coordinates, setCoordinates] = useState(null);
-    const [country, setCountry] = useState("");
-    const [region, setRegion] = useState("");
-    const [city, setCity] = useState("");
     const [description, setDescription] = useState("");
     const [title, setTitle] = useState("");
+    let addressRef = null;
 
     const generateSendRequest = ()=>
     {
-        if(title !==""&& region !==""&&
-            city !==""&&description !==""
-            &&country !==""&&coordinates !=="")
+        const address = addressRef.getSomething();
+        if(title !==""&& address.region !==""&&
+            address.city !==""&&description !==""
+            &&address.country !==""&&coordinates !=="")
         {
-            //insertRoute(routeExample).then(r => console.log(r));
-            // insertAddressRecord(addressExample).then(r => console.log(r));
+            let ownerId = "pvz1";
+            //insertRoute(description, title, ownerId, false).then(r => console.log(r));
+            //routeId, coordinates
+            //insertAddressRecord(address.city, address.region, address.country, routeId, coordinates).then(r => console.log(r));
             console.log("CREATE");
         }
         else {
             Alert.alert('Check data! ');
         }
     }
-
     return (
         <View style={{flex: 1}}>
-            <RelappToolBar callback = {()=>props.navigation.goBack()}/>
+            <RelappToolBar text = {"Create New"} callback = {()=>props.navigation.goBack()}/>
             <View style={RouteStyles.container}>
                 <ScrollView>
                     <Space size = {20}/>
@@ -62,23 +62,9 @@ export default function CreateRoute(props)
                         />
                     </View>
                     <Space size = {20}/>
-                    <RouteHeader text = {"Set route address"}/>
-                    <Space size = {20}/>
-                    <View style={RouteStyles.centeredContainer}>
-                        <RelappMiniTextInput defaultValue = {"Country"}
-                                             onChangeText={(text)=>{setCountry(text)}}
-                        />
-                        <HorizontalSpace size = {20}/>
-                        <RelappMiniTextInput defaultValue = {"Region"}
-                                             onChangeText={(text)=>{setRegion(text)}}
-                        />
-                    </View>
-                    <Space size = {10}/>
-                    <View style={RouteStyles.centeredContainer}>
-                        <RelappMiniTextInput defaultValue = {"City"}
-                                             onChangeText={(text)=>{setCity(text)}}
-                        />
-                    </View>
+                    <AddressFields ref={(ref) => {
+                        addressRef = ref;
+                    }} />
                     <Space size = {20}/>
                     <RouteHeader text = {"Select route locations"}/>
                     <Space size = {20}/>
@@ -110,4 +96,3 @@ export default function CreateRoute(props)
         </View>
     )
 }
-

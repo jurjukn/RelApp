@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 export default function SignIn(props){
     const [email, onChangeEmail] = React.useState('Email');
     const [password, onChangePassword] = React.useState('Password');
-   
+
     return (
         <View style={BasicStyles.signInStyle}>
             <View style={{width: "100%", alignItems: "center", top: -100, marginBottom: -40}}>
@@ -21,13 +21,13 @@ export default function SignIn(props){
                     onChangeText={text => onChangePassword(text)}
                     value={password}
                 />
-                <TouchableOpacity  
+                <TouchableOpacity
                     style = {{marginStart: 150}}
                     onPress={() => Alert.alert('Forgot password button pressed')}>
                     <Text style={{fontSize: 15, color: '#4F4F4F', fontWeight: 'bold'}}>FORGOT PASSWORD</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity  
+                <TouchableOpacity
                     style={styles.buttonStyle}
                     onPress={() => props.navigation.navigate("Tabs")}>
                     <Text style={styles.buttonTextStyle}>Sign In</Text>
@@ -57,23 +57,22 @@ export default function SignIn(props){
                     </TouchableOpacity>
                 </View>
             </View>
-            
+
             <View style ={{flexDirection: 'row', marginTop: 50}}>
                 <Text style={{color: '#4F4F4F', fontSize: 16}}>Don't have an account? </Text>
-                <TouchableOpacity  
+                <TouchableOpacity
                     style={{fontWeight: 'bold', color: '#4F4F4F', fontSize: 16}}
                     onPress={() => props.navigation.navigate("SignUp")}>
                     <Text style={{fontSize: 15, color: '#4F4F4F', fontWeight: 'bold'}}>Sign up</Text>
                 </TouchableOpacity>
             </View>
 
-            
+
         </View>
     );
 }
 export const styles = StyleSheet.create({
     textInputStyle: {
-        height: 40,
         borderColor: '#4F4F4F',
         color: "#4F4F4F",
         borderStartWidth: 1,

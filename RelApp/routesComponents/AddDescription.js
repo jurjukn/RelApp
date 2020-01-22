@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {Modal, Text, TouchableHighlight, View, Alert, StyleSheet, TextInput} from 'react-native';
 import {MainModal, ModalStyles, TransparentModal} from "./ModalComponent";
-import {RelappHeader, Space} from "../components/stylingComponents";
+import {MainColors, RelappHeader, Space} from "../components/stylingComponents";
 import {RelappTextInput} from "../components/RelappTextInput";
 
 const Description = (props)=>
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     textStyle: {
         height:'80%',
         width:'95%',
+        backgroundColor:MainColors.backgroundColor,
         borderColor: 'black',
         borderWidth: 1.5,
         borderRadius: 10,

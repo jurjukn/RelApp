@@ -37,7 +37,7 @@ const ButtonStyles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 2,
         backgroundColor: MainColors.greenColor,
-        borderColor: MainColors.greyColor,
+        borderColor: MainColors.containerBackground,
     },
     miniButton: {
         width: '30%',
@@ -46,7 +46,7 @@ const ButtonStyles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 2,
         backgroundColor: MainColors.greenColor,
-        borderColor: MainColors.greyColor,
+        borderColor: MainColors.containerBackground,
     },
     mediumButton: {
         width: '50%',
@@ -55,7 +55,7 @@ const ButtonStyles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 2,
         backgroundColor: MainColors.greenColor,
-        borderColor: MainColors.greyColor,
+        borderColor: MainColors.containerBackground,
     },
     buttonText: {
         fontWeight: 'bold',

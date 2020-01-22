@@ -1,8 +1,9 @@
-import {IconsComponent} from "../components/stylingComponents";
+import {IconsComponent, MainColors, Space} from "../components/stylingComponents";
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
-import React from "react";
+import React, {forwardRef, useImperativeHandle, useState} from "react";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
+import {RelappMiniTextInput} from "../components/RelappTextInput";
 
 export function RouteStart (props)
 {
@@ -34,10 +35,24 @@ export function RouteDescription (props)
 export function RouteAddress (props)
 {
     return(
-        <View style={styles.locationContainer}>
-            <Text style={styles.text}> {props.country} </Text>
-            <Text style={styles.text}> {props.region} </Text>
-            <Text style={styles.text}> {props.city} </Text>
+        <View style={{flex:1}}>
+            <View style={RouteStyles.centeredContainer}>
+                <MiniTextField text = {props.country}/>
+                <HorizontalSpace size = {20}/>
+                <MiniTextField text = {props.region}/>
+            </View>
+            <Space size = {10}/>
+            <View style={RouteStyles.centeredContainer}>
+                <MiniTextField text = {props.city}/>
+            </View>
+        </View>
+    )
+}
+function MiniTextField(props)
+{
+    return(
+        <View style = {styles.miniTextField}>
+            <Text style={styles.descriptionText}> {props.text} </Text>
         </View>
     )
 }
@@ -75,10 +90,56 @@ export function HorizontalSpace (props)
     }/>
 }
 
+export function AddressFields(props, ref) {
+    const [country, setCountry] = useState("");
+    const [region, setRegion] = useState("");
+    const [city, setCity] = useState("");
+
+    const ReturnAddress = ()=>
+    {
+        return(
+            {
+                country:country,
+                region:region,
+                city:city,
+            }
+        )
+    }
+
+    useImperativeHandle(ref, () => ({
+        getSomething: () => {
+            return ReturnAddress()
+        }
+    }));
+
+    return(
+        <View style={{flex:1}}>
+            <RouteHeader text = {"Set route address"}/>
+            <Space size = {20}/>
+            <View style={RouteStyles.centeredContainer}>
+                <RelappMiniTextInput defaultValue = {"Country"}
+                                     onChangeText={(text)=>{setCountry(text)}}
+                />
+                <HorizontalSpace size = {20}/>
+                <RelappMiniTextInput defaultValue = {"Region"}
+                                     onChangeText={(text)=>{setRegion(text)}}
+                />
+            </View>
+            <Space size = {10}/>
+            <View style={RouteStyles.centeredContainer}>
+                <RelappMiniTextInput defaultValue = {"City"}
+                                     onChangeText={(text)=>{setCity(text)}}
+                />
+            </View>
+        </View>
+    )
+}
+AddressFields = forwardRef(AddressFields);
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F0E6E6',
+        backgroundColor: MainColors.backgroundColor,
         alignItems: 'center',
         justifyContent: 'flex-start',
         flexDirection: 'column',
@@ -93,7 +154,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     locationContainer: {
-        backgroundColor: '#F0E6E6',
+        backgroundColor:MainColors.backgroundColor,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
@@ -105,13 +166,24 @@ const styles = StyleSheet.create({
     descriptionView: {
         flex: 1,
         width: '95%',
-        height: 200,
+        height: 100,
         flexDirection: 'column',
         borderRadius: 10,
         borderWidth: 2,
         borderColor: 'black',
-        backgroundColor: '#F0E6E6',
-
+        backgroundColor: MainColors.greyBackgroundColor,
+    },
+    miniTextField: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        width: '40%',
+        height: 40,
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: 'black',
+        backgroundColor: MainColors.greyBackgroundColor,
     },
     descriptionText: {
         color: 'black',

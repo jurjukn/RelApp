@@ -13,8 +13,6 @@ export default function InsertionMap(props)
     if(markers===null)setMarkers(coordinatesExample());
     const [refresh, setRefresh] = useState(0);
 
-
-
     const removeMarker=(index)=>{
         const newMarkers = markers.filter((x,i)=>{if(i!==index)return(x)});
         props.insert(newMarkers);

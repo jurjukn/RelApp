@@ -1,16 +1,26 @@
 import {View, Text, StyleSheet} from "react-native";
 import React from "react";
-import {RelappLogoForProfile} from "../components/stylingComponents";
+import {RelappLogoForProfile, RelappToolBar} from "../components/stylingComponents";
 import {getAllRoutes} from "../databaseServices/RouteService";
 import UserInfo from '../profileComponents/UserInfo';
 import AllRoutes from '../profileComponents/AllRoutes';
 
+const helpIcon = {
+    name:"md-help-circle",
+    callback:()=>{props.navigation.navigate("Tabs")}
+};
+
+const logoutIcon = {
+    name:"md-log-out",
+    callback:()=>{props.navigation.navigate("Tabs")}
+};
+
 export default function Profiles(props){
     return (
         <View style={{flex: 1}}>
-            <RelappLogoForProfile 
-                help = {()=>{props.navigation.navigate("Tabs")}}
-                logOut = {()=>{props.navigation.navigate("Tabs")}}
+            <RelappToolBar text = {"Profile"}
+                           secondIcon = {helpIcon}
+                           thirdIcon = {logoutIcon}
             />
             <UserInfo/>
             <View style={{margin: 10}}>
@@ -23,9 +33,9 @@ export default function Profiles(props){
 
 export const styles = StyleSheet.create({
     textStyle: {
-        fontWeight: 'bold', 
-        color: "#4F4F4F", 
-        fontSize: 18, 
+        fontWeight: 'bold',
+        color: "#4F4F4F",
+        fontSize: 18,
         marginEnd:'auto',
         marginVertical: 15,
     },

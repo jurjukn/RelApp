@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {Modal, Text, TouchableHighlight, View, Alert, StyleSheet} from 'react-native';
-import {RelappHeader, Space} from "../components/stylingComponents";
+import {MainColors, RelappHeader, Space} from "../components/stylingComponents";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 
 export function TransparentModal(props)
@@ -58,9 +58,10 @@ const styles = StyleSheet.create({
         height: '80%',
         top:'10%',
         left:'10%',
-        backgroundColor: '#F0E6E6',
+        backgroundColor: MainColors.backgroundColor,
     },
     lineStyle:{
+        borderColor: MainColors.greenColor,
         borderStyle: 'dotted',
             borderWidth: 1,
         borderRadius: 1,
@@ -75,7 +76,7 @@ export const ModalStyles = StyleSheet.create({
         alignItems: 'center',
         width: '80%',
         height: '80%',
-        backgroundColor: '#AF8989',
+        backgroundColor: MainColors.containerBackground,
     },
 });
 

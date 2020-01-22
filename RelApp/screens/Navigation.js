@@ -46,13 +46,13 @@ const TabNavigation  = createBottomTabNavigator(
         initialRouteName: "Routes",
         tabBarOptions: {
             style:{
-                backgroundColor: MainColors.greyColor,
+                backgroundColor: MainColors.containerBackground,
                 borderTopColor: '#F0E6E6',
 
             },
-            activeTintColor: MainColors.iconColor,
+            activeTintColor: MainColors.iconWhite,
             activeBackgroundColor:MainColors.greenColor,
-            inactiveTintColor: MainColors.darkGreyColor,
+            inactiveTintColor: MainColors.iconGrey,
         },
     },
 )
