@@ -5,6 +5,8 @@ import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
 import ProgramItem, {ProgressToolbar} from "./../RoutePregessStyles";
 import { Linking } from 'expo';
 import { Pedometer } from "expo-sensors";
+import ShowingMap from "../../Maps/ShowingMap";
+import {coordinatesExample} from "../../Maps/MapFunctions";
 
 export default function GoingScreen(props)
 {
@@ -22,7 +24,7 @@ export default function GoingScreen(props)
         let timer = setInterval(() => {
             var num = (Number(secondsCounter) + 1).toString(),
               count = minutesCounter;
-       
+
             if (Number(secondsCounter) == 59) {
               count = (Number(minutesCounter) + 1).toString();
               num = '00';
@@ -32,7 +34,7 @@ export default function GoingScreen(props)
           }, 1000);
           setTimer(timer);
           setStartDisable(true)
-    
+
     return () => {
         clearInterval(timer)
         this.stepsub && this.stepsub.remove()
@@ -41,7 +43,7 @@ export default function GoingScreen(props)
     }, [minutesCounter, secondsCounter, steps])
 
     subscribePedometer = async () => {
-        try 
+        try
         {const available = await Pedometer.isAvailableAsync();
         if (available) {
           this.stepsub = Pedometer.watchStepCount(saySteps)
@@ -61,9 +63,9 @@ export default function GoingScreen(props)
         setStartDisable(false)
         clearInterval(timer)
         props.navigation.navigate(
-            'StatisticsScreen',  
+            'StatisticsScreen',
             {
-                duration: {durationMinutes: minutesCounter, durationSeconds: secondsCounter}, 
+                duration: {durationMinutes: minutesCounter, durationSeconds: secondsCounter},
                 distance: steps
             }
             )
@@ -74,21 +76,21 @@ export default function GoingScreen(props)
             <RelappLogo callback = {()=>{props.navigation.navigate("BlockingScreen")}}/>
             <View style={styles.container}>
                 <ProgressToolbar header = {"Route IV"}/>
-                <RelappButton 
-                    style = {ButtonTypes().mediumButton} 
-                    text = "Recommended playlist" 
+                <RelappButton
+                    style = {ButtonTypes().mediumButton}
+                    text = "Recommended playlist"
                     callback = {()=>{Linking.openURL('https://open.spotify.com/playlist/7fZUgTmUcN4KVRsRwadU2z')}}
                 />
-                <Text>This is going screen. Here we show map</Text>
+                <ShowingMap markers = {coordinatesExample()}/>
                 <Text>{minutesCounter} : {secondsCounter}</Text>
                 <Text>Steps : {"" + steps}</Text>
-                <RelappButton 
-                    style = {ButtonTypes().mediumButton} 
-                    text = "Finish" 
+                <RelappButton
+                    style = {ButtonTypes().mediumButton}
+                    text = "Finish"
                     callback = {
                         ()=>{saveTimeAndProceed()}
                     }
-                
+
                 />
             </View>
         </View>

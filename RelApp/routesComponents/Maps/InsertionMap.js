@@ -3,15 +3,32 @@ import MapView from "react-native-maps";
 import React, {useState, useEffect, useRef,} from "react";
 import {Marker} from "react-native-maps";
 import { Linking } from 'expo';
-import {coordinatesExample, generateTitle, InitialRegion, selectColor} from "./MapFunctions";
+import {
+    coordinatesExample, CreateInitialRegionByCurrentLocation, DefaultInitialRegion,
+} from "./MapFunctions";
 import MyMarker from "./MyMarker";
 
 
 export default function InsertionMap(props)
 {
     const [markers, setMarkers] = useState(null);
-    if(markers===null)setMarkers(coordinatesExample());
-    const [refresh, setRefresh] = useState(0);
+    const [initialRegion, setInitialRegion] = useState(null);
+
+    useEffect(() => {
+        if(initialRegion === null)
+        CreateInitialRegionByCurrentLocation().then(r=>
+        {
+            setInitialRegion(r)
+        }).catch(
+            function (error) {
+            setInitialRegion(DefaultInitialRegion());
+        })
+    });
+
+    if(markers===null)
+    {
+        setMarkers(coordinatesExample());
+    };
 
     const removeMarker=(index)=>{
         const newMarkers = markers.filter((x,i)=>{if(i!==index)return(x)});
@@ -27,7 +44,7 @@ export default function InsertionMap(props)
     const randomKey = Math.random()*1000;
     return (
         <MapView style={styles.mapStyle}
-                 initialRegion={InitialRegion()}
+                 initialRegion={initialRegion}
                  onLongPress={(props)=>{
                      console.log(props.nativeEvent.coordinate);
                      addMarker(props.nativeEvent.coordinate);

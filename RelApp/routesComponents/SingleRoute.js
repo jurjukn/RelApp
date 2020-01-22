@@ -1,7 +1,7 @@
 import {View, ScrollView, StyleSheet, TextInput, TouchableOpacity, Text} from "react-native";
 import MapView from "react-native-maps";
 import React, {useState} from "react";
-import ShowingMap from "./routesProgress/Maps/ShowingMap";
+import ShowingMap from "./Maps/ShowingMap";
 import {
     IconsComponent,
     RelappLogo, RelappToolBar,
@@ -12,6 +12,7 @@ import {addRouteAsFavorite, getRouteById, removeRouteFromFavorites} from "../dat
 import RouteCommentsModal from "./routeComments/RouteCommentsModal"
 import {getAddressByRouteId} from "../databaseServices/AddressService";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
+import {coordinatesExample} from "./Maps/MapFunctions";
 
 
 const hardcodedUserComments = [
@@ -93,7 +94,7 @@ export default function SingleRoute(props)
                     <Space size = {20}/>
                     <RouteAddress country ={"country"} region ={"region"} city ={"city"}/>
                     <Space size = {20}/>
-                    <View style={RouteStyles.centeredContainer}><ShowingMap/></View>
+                    <View style={RouteStyles.centeredContainer}><ShowingMap markers = {coordinatesExample()}/></View>
                     <Space size = {20}/>
                     <View style={RouteStyles.centeredContainer}>
                         <RelappButton style = {ButtonTypes().largeButton}

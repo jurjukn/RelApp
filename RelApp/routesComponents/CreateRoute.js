@@ -1,7 +1,7 @@
 import {View, ScrollView, StyleSheet, TextInput, TouchableOpacity, Text, Alert} from "react-native";
 import MapView from "react-native-maps";
 import React, {forwardRef, useImperativeHandle, useRef, useState} from "react";
-import ShowingMap from "./routesProgress/Maps/ShowingMap";
+import ShowingMap from "./Maps/ShowingMap";
 import {
     IconsComponent, RelappLogo, RelappToolBar,
     Space
@@ -17,7 +17,7 @@ import {
     RouteHeader,
     RouteStyles,
 } from "./RoutesStyles";
-import InsertionMap from "./routesProgress/Maps/InsertionMap";
+import InsertionMap from "./Maps/InsertionMap";
 import {insertRoute} from "../databaseServices/RouteService";
 import {insertAddressRecord} from "../databaseServices/AddressService";
 

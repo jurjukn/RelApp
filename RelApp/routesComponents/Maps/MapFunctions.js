@@ -1,19 +1,23 @@
 import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
 
+export const checkPermissions = async ()=>
+{
+    let checkPermission = await Permissions.askAsync(Permissions.LOCATION);
+    if (checkPermission.status !== 'granted') {
+        throw 'Permission to access location was denied'
+    }
+    if (! await Location.hasServicesEnabledAsync()) {
+        throw 'Location.hasServicesEnabledAsync'
+    }
+    return "Ok";
+};
+
+
 export const getCurrentCoordinates = async () => {
     const coords = {latitude: "", longitude: ""}
     const getDeviceLocation = async () => {
-        let checkPermission = await Permissions.askAsync(Permissions.LOCATION);
-        if (checkPermission.status !== 'granted') {
-            throw 'Permission to access location was denied'
-        }
-        if (! await Location.hasServicesEnabledAsync()) {
-            throw 'Location.hasServicesEnabledAsync'
-        }
-        // IntentLauncherAndroid.startActivityAsync(
-        //     IntentLauncherAndroid.ACTION_LOCATION_SOURCE_SETTINGS
-        // );
+        await checkPermissions();
         const result = await Location.getCurrentPositionAsync({enableHighAccuracy: true })
         return result.coords
     };
@@ -46,6 +50,18 @@ const distanceCoordinates = (lat1, lon1, lat2, lon2, unit)=>
     }
 }
 
+export const createInitialRegionFromCord = (coord)=>
+{
+    return (
+        {
+            latitude: coord.latitude,
+            longitude: coord.longitude,
+            latitudeDelta: 0.5,
+            longitudeDelta: 0.5,
+        }
+    );
+};
+
 export const getDistance = (coord1,coord2)=>{return distanceCoordinates(coord1.latitude, coord1.longitude,
     coord2.latitude, coord2.longitude, "K")};
 
@@ -57,14 +73,13 @@ export const coordinatesExample = ()=>
             {latitude: 46.9906700, longitude:  11.9398200,},
             {latitude: 47.4906700, longitude:  12.3398200,},
         ]
-
     )
 }
 
-export const InitialRegion = ()=> {
+export const DefaultInitialRegion = ()=> {
     return (
         {
-            latitude: 46.4906700,
+            latitude: 49.4906700,
             longitude: 11.3398200,
             latitudeDelta: 0.5,
             longitudeDelta: 0.5,

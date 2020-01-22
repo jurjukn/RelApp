@@ -1,6 +1,6 @@
 import {View, ScrollView, StyleSheet, TextInput, TouchableOpacity, Text} from "react-native";
 import React, {useState,useEffect} from "react";
-import ShowingMap from "../routesComponents/routesProgress/Maps/ShowingMap";
+import ShowingMap from "../routesComponents/Maps/ShowingMap";
 import {MainColors, RelappLogo, RelappToolBar, Space} from "../components/stylingComponents";
 import {RouteItem} from "../routesComponents/RouteItem";
 import {RelappTextInput} from "../components/RelappTextInput";
