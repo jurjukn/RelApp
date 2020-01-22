@@ -12,7 +12,7 @@ export default function SignUp(props){
         Alert.alert('Your account has been created! ');
         props.navigation.navigate("Tabs");
     }
-   
+
     return (
         <View style={BasicStyles.signInStyle}>
             <View style={{width: "100%", alignItems: "center", top: -100, marginBottom: -40}}>
@@ -38,7 +38,7 @@ export default function SignUp(props){
                     value={password}
                 />
                 <DottedLine/>
-                <TouchableOpacity  
+                <TouchableOpacity
                     style={styles.buttonStyle}
                     onPress={() => handleSignUp()}>
                     <Text style={styles.buttonTextStyle}>Sign Up</Text>
@@ -55,7 +55,6 @@ export const styles = StyleSheet.create({
         borderStartWidth: 1,
         borderWidth: 2,
         width: "80%",
-        height: 50,
         borderRadius: 5,
         margin: 15,
     },

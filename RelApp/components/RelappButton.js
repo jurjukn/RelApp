@@ -1,5 +1,6 @@
 import React from "react";
 import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {MainColors} from "./stylingComponents";
 
 
 
@@ -35,8 +36,8 @@ const ButtonStyles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: 'black',
-        backgroundColor: '#F0E6E6',
+        backgroundColor: MainColors.greenColor,
+        borderColor: MainColors.greyColor,
     },
     miniButton: {
         width: '30%',
@@ -44,8 +45,8 @@ const ButtonStyles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: 'black',
-        backgroundColor: '#F0E6E6',
+        backgroundColor: MainColors.greenColor,
+        borderColor: MainColors.greyColor,
     },
     mediumButton: {
         width: '50%',
@@ -53,17 +54,17 @@ const ButtonStyles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: 'black',
-        backgroundColor: '#F0E6E6',
+        backgroundColor: MainColors.greenColor,
+        borderColor: MainColors.greyColor,
     },
     buttonText: {
         fontWeight: 'bold',
-        color: 'black',
+        color:  MainColors.textWhite,
         fontSize: 20,
     },
     smallerButtonText: {
         fontWeight: 'bold',
-        color: 'black',
+        color:  MainColors.textWhite,
         fontSize: 17,
         textAlign: 'center',
     },

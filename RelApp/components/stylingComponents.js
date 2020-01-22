@@ -1,13 +1,27 @@
 import React, {useState} from "react";
 import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
+import Constants from "expo-constants";
 
-export const TopSeparator = ()=> {
+
+export const MainColors = {
+    greenColor: '#3CCD76',
+    textWhite:'#E8F1F2',
+    iconColor:'#FFFFFF',
+    greyColor:'#F4F4F4',
+    darkGreyColor:'#B1B1B1',
+    backgroundColor:'#FFFFFF',
+    greyBackgroundColor:'#F1F1F1',
+
+};
+
+    export const TopSeparator = ()=> {
     return(
         <View style={{
             width: '100%',
             height: 25,
-            backgroundColor: 'gray',
+            backgroundColor: '#3CCD76',
+            paddingTop: Constants.statusBarHeight,
         }}/>
     )
 }
@@ -28,7 +42,7 @@ export function IconsComponent (props)
     return(
         <View style={props.style}>
             <TouchableOpacity  onPress={props.callback}>
-                <Ionicons name={props.name} size={30} color={'black'} />
+                <Ionicons name={props.name} size={30} color={props.iconColor === undefined ? 'black' : props.iconColor} />
             </TouchableOpacity>
         </View>
     )
@@ -42,6 +56,45 @@ export function RelappLogoMain()
         </View>
     )
 }
+export function RelappToolBar(props)
+{
+    const iconWight = 26.3;
+    return (
+        <View style= {RelappToolBarStyles.container}>
+            {props.callback !== undefined ?
+                <IconsComponent name = {"md-undo"}
+                                style={RelappToolBarStyles.undoIcon}
+                                callback = {props.callback}
+                                iconColor = {MainColors.iconColor}/>
+                                : null}
+            <Text style={{...RelappToolBarStyles.text, right:(props.callback !== undefined ? iconWight/2 : 0)}}>
+                {props.text === undefined ? "RelApp" : props.text}
+            </Text>
+        </View>
+    )
+}
+
+const RelappToolBarStyles = StyleSheet.create({
+    container:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: MainColors.greenColor,
+    },
+    undoIcon:{
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        right:"200%",
+
+    },
+    text:{
+        fontWeight: 'bold',
+        fontSize:36,
+        color:MainColors.textWhite,
+    }
+
+})
+
 
 export function RelappLogo(props)
 {

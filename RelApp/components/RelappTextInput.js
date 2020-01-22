@@ -2,7 +2,7 @@ import React from "react";
 import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 
 
-export function RelappSearch(props)
+export function RelappTextInput(props)
 {
     const isDefaultValueAvailable = props.defaultValue == null;
     return(

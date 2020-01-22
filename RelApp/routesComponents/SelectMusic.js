@@ -3,7 +3,7 @@ import {Modal, Text, View, Alert, StyleSheet} from 'react-native';
 import {MainModal, ModalStyles, TransparentModal} from "./ModalComponent";
 import {IconsComponent, RelappHeader, Space} from "../components/stylingComponents";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
-import {RelappSearch} from "../components/RelappTextInput";
+import {RelappTextInput} from "../components/RelappTextInput";
 
 const Music = ()=>
 {
@@ -11,7 +11,7 @@ const Music = ()=>
         <View style={ModalStyles.textView}>
             <RelappHeader text = {"Upload URL of the Spotify playlist"} size = {16} />
             <Space size = {5}/>
-            <RelappSearch
+            <RelappTextInput
                 defaultValue = "URL"
                 onChangeText = {(text)=>{
                     console.log(text)

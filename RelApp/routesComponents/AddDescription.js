@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {Modal, Text, TouchableHighlight, View, Alert, StyleSheet, TextInput} from 'react-native';
 import {MainModal, ModalStyles, TransparentModal} from "./ModalComponent";
 import {RelappHeader, Space} from "../components/stylingComponents";
-import {RelappSearch} from "../components/RelappTextInput";
+import {RelappTextInput} from "../components/RelappTextInput";
 
 const Description = (props)=>
 {

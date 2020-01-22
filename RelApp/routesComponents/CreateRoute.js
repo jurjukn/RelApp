@@ -3,11 +3,11 @@ import MapView from "react-native-maps";
 import React, {useState} from "react";
 import ShowingMap from "./routesProgress/Maps/ShowingMap";
 import {
-    IconsComponent, RelappLogo,
+    IconsComponent, RelappLogo, RelappToolBar,
     Space
 } from "../components/stylingComponents";
 import AddDescription from "./AddDescription";
-import {RelappMiniTextInput, RelappSearch} from "../components/RelappTextInput";
+import {RelappMiniTextInput, RelappTextInput} from "../components/RelappTextInput";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 import SelectMusic from "./SelectMusic";
 import {
@@ -50,14 +50,14 @@ export default function CreateRoute(props)
 
     return (
         <View style={{flex: 1}}>
-            <RelappLogo callback = {()=>props.navigation.goBack()}/>
+            <RelappToolBar callback = {()=>props.navigation.goBack()}/>
             <View style={RouteStyles.container}>
                 <ScrollView>
                     <Space size = {20}/>
                     <RouteHeader text = {"Set route title"}/>
                     <Space size = {20}/>
                     <View style={RouteStyles.centeredContainer}>
-                        <RelappSearch defaultValue = {"Title"}
+                        <RelappTextInput defaultValue = {"Title"}
                                              onChangeText={(text)=>{setTitle(text)}}
                         />
                     </View>
