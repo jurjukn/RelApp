@@ -1,7 +1,7 @@
 import {ScrollView, StyleSheet, Text, View} from "react-native";
 import {MainModal, TransparentModal} from "../../ModalComponent";
 import {RelappHeader, RelappLogo, Space} from "../../../components/stylingComponents";
-import {RelappSearch} from "../../../components/RelappTextInput";
+import {RelappTextInput} from "../../../components/RelappTextInput";
 import React, {useState} from "react";
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
 import ProgramItem, {ProgressToolbar} from "../RoutePregessStyles";

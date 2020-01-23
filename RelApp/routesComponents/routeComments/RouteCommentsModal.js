@@ -1,11 +1,11 @@
 import {View, ScrollView, StyleSheet, FlatList, TouchableHighlight, Modal, Text} from "react-native";
 import React, {useState} from "react";
-import {RelappLogo} from "./../../components/stylingComponents";
 import RouteCommentsList from "./RouteCommentsList"
+import {RelappToolBar} from "../../components/stylingComponents";
 
 export default function RouteCommentsModal(props)
-{    
-    return (        
+{
+    return (
         <Modal
         animationType="slide"
         transparent={false}
@@ -14,7 +14,7 @@ export default function RouteCommentsModal(props)
             Alert.alert('Modal has been closed.');
         }}>
             <View style={{flex:1, width:"100%"}}>
-                <RelappLogo callback = {()=>props.stopShowingModal()}/>
+                <RelappToolBar callback = {()=>props.stopShowingModal()}/>
                 <View style={{alignItems:"center", padding:10}}>
                     <Text style={{fontSize: 20}}>Comments</Text>
                 </View>
@@ -22,7 +22,7 @@ export default function RouteCommentsModal(props)
                     <RouteCommentsList routeComments={props.comments} />
                 </View>
             </View>
-        </Modal> 
+        </Modal>
     )
 }
 

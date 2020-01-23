@@ -1,9 +1,9 @@
 import {View, ScrollView, StyleSheet, TextInput, TouchableOpacity, Text} from "react-native";
 import React, {useState,useEffect} from "react";
-import ShowingMap from "../routesComponents/ShowingMap";
-import {RelappLogo, Space} from "../components/stylingComponents";
+import ShowingMap from "../routesComponents/Maps/ShowingMap";
+import {MainColors, RelappLogo, RelappToolBar, Space} from "../components/stylingComponents";
 import {RouteItem} from "../routesComponents/RouteItem";
-import {RelappSearch} from "../components/RelappTextInput";
+import {RelappTextInput} from "../components/RelappTextInput";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 import {getAllRoutes} from "../databaseServices/RouteService";
 
@@ -13,24 +13,23 @@ export default function Routes(props)
     const [text, setText] = useState("")
     const [routesArr, setRoutesArr] = useState(null);
 
-    //not logical getAllRoutes() should take user id and filtered which is favorite for each user
     if(routesArr===null)getAllRoutes().then(r=>setRoutesArr(r));
 
     return (
         <View style={{flex: 1}}>
-            <RelappLogo/>
+            <RelappToolBar text = {"All Routes"}/>
             <View style={styles.container}>
                 <Space size = {30}/>
-                <RelappSearch onChangeText = {(text)=>{setText(text)}}/>
+                <RelappTextInput onChangeText = {(text)=>{setText(text)}}/>
                 <Space size = {20}/>
-                <View style={styles.container2}>
+                <View style={styles.scrollbar}>
                     <ScrollView>
                         {routesArr===null ? null:
                             routesArr.map(
                                 (x,index)=>
                                 {
                                     return(
-                                        <View key = {index}>
+                                        <View key = {index} style={styles.scrollElement}>
                                             <RouteItem data = {x}
                                                        callback = {()=> props.navigation.navigate("SingleRoute", {routeData:x})
                                                        }/>
@@ -54,17 +53,23 @@ export default function Routes(props)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F0E6E6',
+        backgroundColor: MainColors.backgroundColor,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
     },
-    container2: {
+    scrollbar: {
         flex: 1,
-        left:10,
-        backgroundColor: '#F0E6E6',
+        backgroundColor: MainColors.greyBackgroundColor,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
     },
+    scrollElement: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+    },
+
 })

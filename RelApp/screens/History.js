@@ -2,7 +2,7 @@ import {View, StyleSheet} from "react-native";
 import React, {useEffect, useState} from "react";
 
 import {RelappLogo, Space} from "../components/stylingComponents";
-import {RelappSearch} from "../components/RelappTextInput";
+import {RelappTextInput} from "../components/RelappTextInput";
 import UserStatistics from "./../historyComponents/UserStatistics"
 import RoutesList from "./../historyComponents/RoutesList"
 
@@ -14,7 +14,7 @@ export default function History (props) {
     const [userHistory, setUserHistory] = useState([])
 
     useEffect(() => {
-        try{ 
+        try{
         const fetchData = async () => {
             const value = await getHistoryByUserId("UserId1")
             if(value.length!==0){
@@ -34,13 +34,13 @@ export default function History (props) {
             <View style={styles.mainContainer}>
                 <View style={styles.searchBarContainer}>
                     <Space size = {30}/>
-                    <RelappSearch onChangeText = {(text)=>{setText(text)}}/>
+                    <RelappTextInput onChangeText = {(text)=>{setText(text)}}/>
                 </View>
                 <View style={styles.listContainer}>
                     <RoutesList userHistory={userHistory}/>
                 </View>
                 <View style={styles.userStatisticsContainer}>
-                    {userHistory.length !== 0 && 
+                    {userHistory.length !== 0 &&
                         <UserStatistics userHistory={userHistory}/>
                     }
                 </View>

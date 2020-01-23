@@ -1,49 +1,34 @@
 import {View, Text, StyleSheet} from "react-native";
 import MapView from "react-native-maps";
-import React, {useState} from "react";
+import React, {useState, useEffect, useRef,} from "react";
 import {Marker} from "react-native-maps";
 import { Linking } from 'expo';
-import {coordinatesExample, InitialRegion} from "./MapFunctions";
+import {
+    coordinatesExample, CreateInitialRegionByCurrentLocation, DefaultInitialRegion,
+} from "./MapFunctions";
+import MyMarker from "./MyMarker";
 
-function RemovableMarker(props)
-{
-    let marker = null;
-    let isCalloutVisible = false;
-    const ifVisible = ()=>
-    {
-        if(marker!==null)
-        {
-            if(isCalloutVisible) {
-                marker.hideCallout();
-                isCalloutVisible = !isCalloutVisible;
-            }
-            else {
-                marker.showCallout();
-                isCalloutVisible = !isCalloutVisible;
-            }
-        }
-    };
-
-    return(
-        <MapView.Marker
-            key = {props.key}
-            coordinate={props.location}
-            title={"X"}
-            description={"delete"}
-            ref={ref => {marker = ref; }}
-            onPress={()=>{ifVisible()}}
-            onCalloutPress={()=>{
-                props.delete(props.index)
-            }}
-        />
-    )
-}
 
 export default function InsertionMap(props)
 {
     const [markers, setMarkers] = useState(null);
-    if(markers===null)setMarkers(coordinatesExample());
-    let marker = null;
+    const [initialRegion, setInitialRegion] = useState(null);
+
+    useEffect(() => {
+        if(initialRegion === null)
+        CreateInitialRegionByCurrentLocation().then(r=>
+        {
+            setInitialRegion(r)
+        }).catch(
+            function (error) {
+            setInitialRegion(DefaultInitialRegion());
+        })
+    });
+
+    if(markers===null)
+    {
+        setMarkers(coordinatesExample());
+    };
 
     const removeMarker=(index)=>{
         const newMarkers = markers.filter((x,i)=>{if(i!==index)return(x)});
@@ -56,9 +41,10 @@ export default function InsertionMap(props)
         setMarkers(newMarkers);
     };
 
+    const randomKey = Math.random()*1000;
     return (
         <MapView style={styles.mapStyle}
-                 initialRegion={InitialRegion()}
+                 initialRegion={initialRegion}
                  onLongPress={(props)=>{
                      console.log(props.nativeEvent.coordinate);
                      addMarker(props.nativeEvent.coordinate);
@@ -68,11 +54,14 @@ export default function InsertionMap(props)
                 markers.map(
                     (x,index)=>{
                         return(
-                            <RemovableMarker
+                            <MyMarker
+                                key = {randomKey + index}
                                 index = {index}
-                                key = {index}
+                                last = {markers.length}
                                 delete = {removeMarker}
+                                isForShowing = {false}
                                 location={x} />
+
                         )
                     }
                 )

@@ -10,6 +10,7 @@ import {RouteProgressNavigation} from "../routesComponents/routesProgress/RouteP
 import {Ionicons} from "@expo/vector-icons";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import {MainColors} from "../components/stylingComponents";
 
 const getTabBarIcon = (navigation, focused, tintColor) => {
     const { routeName } = navigation.state;
@@ -45,11 +46,13 @@ const TabNavigation  = createBottomTabNavigator(
         initialRouteName: "Routes",
         tabBarOptions: {
             style:{
-                backgroundColor: '#F0E6E6',
+                backgroundColor: MainColors.containerBackground,
                 borderTopColor: '#F0E6E6',
+
             },
-            activeTintColor: 'black',
-            inactiveTintColor: 'gray',
+            activeTintColor: MainColors.iconWhite,
+            activeBackgroundColor:MainColors.greenColor,
+            inactiveTintColor: MainColors.iconGrey,
         },
     },
 )
@@ -58,7 +61,7 @@ const NavigationLogin = createSwitchNavigator({
     SignIn: {screen: SignIn},
     SignUp: {screen: SignUp},
   });
-  
+
 const NavigatorLogin = createAppContainer(NavigationLogin);
 
 const TabNavigationContainer = createAppContainer(TabNavigation);

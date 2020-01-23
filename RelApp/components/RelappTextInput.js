@@ -1,8 +1,8 @@
 import React from "react";
 import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {MainColors} from "./stylingComponents";
 
-
-export function RelappSearch(props)
+export function RelappTextInput(props)
 {
     const isDefaultValueAvailable = props.defaultValue == null;
     return(
@@ -29,6 +29,7 @@ export function RelappMiniTextInput(props)
 
 const SearchStyles = StyleSheet.create({
     textStyle: {
+        backgroundColor:MainColors.backgroundColor,
         height: 40,
         width:'80%',
         borderColor: 'black',
