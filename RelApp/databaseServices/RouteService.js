@@ -1,5 +1,5 @@
 import { firestore as db } from '../firebaseServices/Firebase';
-import { getCurrentUser } from '../firebaseServices/Authorization';
+import { getCurrentUser } from '../firebaseServices/Authentication';
 import { Collections } from './Collections';
 import uuid from 'react-native-uuid';
 
