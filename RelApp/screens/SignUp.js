@@ -1,6 +1,7 @@
-import {View, Text, TextInput, StyleSheet, TouchableOpacity, Alert} from "react-native";
+import {View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, ScrollView, KeyboardAvoidingView} from "react-native";
 import React from "react";
-import {BasicStyles, DottedLine, RelappLogoMain} from "../components/stylingComponents";
+import {BasicStyles, DottedLine, RelappLogoMain, Space} from "../components/stylingComponents";
+import {handleUserSignUp} from '../firebaseServices/Authentication';
 
 export default function SignUp(props){
     const [name, onChangeName] = React.useState('Name');
@@ -8,42 +9,63 @@ export default function SignUp(props){
     const [email, onChangeEmail] = React.useState('Email');
     const [password, onChangePassword] = React.useState('Password');
 
-    const handleSignUp = () => {
-        Alert.alert('Your account has been created! ');
-        props.navigation.navigate("Tabs");
-    }
+    async function handleSignUp() {
+        try {
+            await handleUserSignUp(email, password, name);
+            Alert.alert('Your account has been created! ');  
+            props.navigation.navigate("Tabs");
+          } catch (err) {
+            alert(err);
+            throw err;
+          }
+    };
 
     return (
         <View style={BasicStyles.signInStyle}>
-            <View style={{width: "100%", alignItems: "center", top: -100, marginBottom: -40}}>
+            <KeyboardAvoidingView style={{width: "100%", alignItems: "center"}} behavior="padding" enabled>
                 <RelappLogoMain/>
-                <TextInput
-                    style={styles.textInputStyle}
-                    onChangeText={text => onChangeName(text)}
-                    value={name}
-                />
-                <TextInput
-                    style={styles.textInputStyle}
-                    onChangeText={text => onChangeLastName(text)}
-                    value={lastName}
-                />
-                <TextInput
-                    style={styles.textInputStyle}
-                    onChangeText={text => onChangeEmail(text)}
-                    value={email}
-                />
-                <TextInput
-                    style={styles.textInputStyle}
-                    onChangeText={text => onChangePassword(text)}
-                    value={password}
-                />
+                <ScrollView style={{width: "100%"}} contentContainerStyle={{justifyContent : 'center', alignItems: 'center'}}>
+                    <TextInput
+                        style={styles.textInputStyle}
+                        onChangeText={text => onChangeName(text)}
+                        placeholder={"Name"}
+                    />
+                    <TextInput
+                        style={styles.textInputStyle}
+                        onChangeText={text => onChangeLastName(text)}
+                        placeholder={"Last name"}
+                    />
+                    <TextInput
+                        style={styles.textInputStyle}
+                        onChangeText={text => onChangeEmail(text)}
+                        autoCapitalize="none"
+                        placeholder={"Email"}
+                    />
+                    <TextInput
+                        style={styles.textInputStyle}
+                        onChangeText={text => onChangePassword(text)}
+                        secureTextEntry={true}
+                        autoCapitalize="none"
+                        placeholder={"Password"}
+                    />
+                </ScrollView>
+                <Space size = {20}/>
                 <DottedLine/>
                 <TouchableOpacity
                     style={styles.buttonStyle}
                     onPress={() => handleSignUp()}>
                     <Text style={styles.buttonTextStyle}>Sign Up</Text>
                 </TouchableOpacity>
-            </View>
+
+                <View style ={{flexDirection: 'row', marginTop: 50}}>
+                    <Text style={{color: '#4F4F4F', fontSize: 16}}>Back to </Text>
+                    <TouchableOpacity
+                        style={{fontWeight: 'bold', color: '#4F4F4F', fontSize: 16}}
+                        onPress={() => props.navigation.navigate("SignIn")}>
+                        <Text style={{fontSize: 15, color: '#4F4F4F', fontWeight: 'bold'}}>Sign In</Text>
+                    </TouchableOpacity>
+                </View>
+            </KeyboardAvoidingView>
         </View>
     );
 }
