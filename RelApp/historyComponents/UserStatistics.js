@@ -15,8 +15,8 @@ export default function UserStatistics ({userHistory}) {
     return (
         <View style={styles.statisticsContainer}>
             <View style={styles.circle} >
-                <Text>Total distance</Text>
-                <Text style={styles.statisticsTextFont}>{userStats.totalDistance} km</Text>
+                <Text>Total steps</Text>
+                <Text style={styles.statisticsTextFont}>{userStats.totalDistance} </Text>
             </View>
             <View style={styles.circle} >
                 <Text>Routes</Text>
