@@ -1,5 +1,7 @@
 import firebase from './Firebase';
 import { addUser } from '../databaseServices/UserService';
+import { firestore as db } from '../firebaseServices/Firebase';
+import { Collections } from '../databaseServices/Collections';
 
 export async function handleUserSignUp(email, password, name) {
   try {
@@ -61,7 +63,15 @@ export async function changeUserPassword(currentPassword, newPassword) {
 
 export async function getCurrentUser() {
   try {
-    const user = firebase.auth().currentUser;
+    const userFromService = firebase.auth().currentUser;
+    const userDoc = await db.collection(Collections.users).doc(userFromService.uid).get();
+    const data = userDoc.data();
+
+    const user = {
+      id: userFromService.uid,
+      ...data
+    };
+
     return user;
   } catch (err) {
     console.log(err);
