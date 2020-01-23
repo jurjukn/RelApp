@@ -3,6 +3,18 @@ import React from "react";
 
 export default function RouteStatistics({routeName, date, time, distance, difficulty, myRate})
 {
+    function secondsToHms(d) {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+    
+        var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+        var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+        var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+        return hDisplay + mDisplay + sDisplay; 
+    }
+
     return (
         <View style={Styles.customView}>
             <View style={Styles.mainView}>
@@ -13,13 +25,13 @@ export default function RouteStatistics({routeName, date, time, distance, diffic
                     <Text>Date: {date} </Text>
                 </View>
                 <View style={{width:'50%'}}>
-                    <Text>Time: {time} minutes</Text>
+                    <Text>Time: {secondsToHms(time)}</Text>
                 </View>
                 <View style={{width:'50%'}}>
-                    <Text>Distance: {distance} km</Text>
+                    <Text>Steps: {distance}</Text>
                 </View>
                 <View style={{width:'50%'}}>
-                    <Text>Difficulty: {difficulty}</Text>
+                    <Text>Difficulty: {difficulty}/10</Text>
                 </View>
                 <View style={{width:'50%'}}>
                     <Text>My Rate: {myRate}</Text>
