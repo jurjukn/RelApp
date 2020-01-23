@@ -26,7 +26,7 @@ export default function History (props) {
         } catch (error) {
             alert("Error getting user history")
         }
-    }, []);
+    }, [])
 
     return (
         <View style={{flex: 1}}>

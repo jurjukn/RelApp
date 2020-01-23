@@ -7,6 +7,7 @@ import GoingScreen from "./progressScreens/GoingScreen"
 import StatisticsScreen from "./progressScreens/StatisticsScreen"
 import RatingScreen from "./progressScreens/RatingScreen"
 import CommentScreen from "./progressScreens/CommentScreen"
+import CheckPointsScreen from "./progressScreens/CheckPointsScreen"
 
 
 export const RouteProgressNavigation = createStackNavigator({
@@ -24,6 +25,9 @@ export const RouteProgressNavigation = createStackNavigator({
     },
     CommentScreen: {
         screen: CommentScreen,
+    },
+    CheckPointsScreen: {
+        screen: CheckPointsScreen
     },
     }, {
         headerMode: 'none',

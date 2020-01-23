@@ -5,8 +5,6 @@ import RouteStatistics from "./RouteStatistics"
 
 export default RoutesList = ({userHistory}) => {
 
-    console.log(userHistory)
-
     return (
         <FlatList
         data={userHistory}

@@ -33,7 +33,7 @@ export default function SingleRoute(props)
     const [modalVisible, setModalVisible] = useState(false);
     // here we should fetch comments and add to array, maybe fetch username?
 
-    function closeCommentsModal() {
+    closeCommentsModal = () => {
         setModalVisible(false)
     }
 
@@ -107,9 +107,11 @@ export default function SingleRoute(props)
                     </View>
                     <Space size = {20}/>
                     <View style={RouteStyles.centeredContainer}>
-                        <RelappButton style = {ButtonTypes().largeButton}
-                                      text = "Start"
-                                      callback = {()=>{props.navigation.navigate("Progress")}}/>
+                        <RelappButton 
+                            style = {ButtonTypes().largeButton}          
+                            text = "Start"
+                            callback = {()=>{ props.navigation.navigate("Progress")}}
+                        />
                     </View>
                     <Space size = {20}/>
                 </ScrollView>
