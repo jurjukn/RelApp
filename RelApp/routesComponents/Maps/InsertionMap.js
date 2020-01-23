@@ -27,6 +27,7 @@ export default function InsertionMap(props)
 
     if(markers===null)
     {
+        props.insert(coordinatesExample());
         setMarkers(coordinatesExample());
     };
 

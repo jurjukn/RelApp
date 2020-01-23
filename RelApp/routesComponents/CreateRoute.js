@@ -33,16 +33,32 @@ export default function CreateRoute(props)
 
     const generateSendRequest = ()=>
     {
+        console.log("-----------------------------------------------------------");
+
+        const ownerId = "YSyq7X6EstfICCEB8KMq2EDtjjS2";
         const address = addressRef.getSomething();
+        const coords =
+            coordinates.map(
+                (x,index)=>
+                {
+                    return {...x, index:index};
+                }
+            );
+
         if(title !==""&& address.region !==""&&
             address.city !==""&&description !==""
             &&address.country !==""&&coordinates !=="")
         {
-            let ownerId = "pvz1";
-            //insertRoute(description, title, ownerId, false).then(r => console.log(r));
-            //routeId, coordinates
-            //insertAddressRecord(address.city, address.region, address.country, routeId, coordinates).then(r => console.log(r));
-            console.log("CREATE");
+            insertRoute(description, title, ownerId).then(r =>
+                {
+                    insertAddressRecord(address.city, address.region, address.country, r, coords).then(r =>
+                        {
+                            console.log("CREATED ",r);
+                            props.navigation.navigate("Route");
+                        }
+                    )
+                }
+            )
         }
         else {
             Alert.alert('Check data! ');
