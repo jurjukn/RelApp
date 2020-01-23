@@ -14,7 +14,6 @@ import {getAddressByRouteId} from "../databaseServices/AddressService";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 import {coordinatesExample} from "./Maps/MapFunctions";
 
-
 const hardcodedUserComments = [
     {
         UserId: "Rapolas ",
@@ -41,10 +40,17 @@ export default function SingleRoute(props)
     if(data===null)
     {
         const routeData = props.navigation.getParam('routeData', 'default value')
-        console.log(routeData);
+        //console.log(routeData);
         setData(routeData);
         isFavorite(routeData.isFavorite);
-        getAddressByRouteId(routeData.id).then(r=>  console.log("getAddressByRouteId",r));
+        getAddressByRouteId(routeData.id).then(r=>
+        {
+            //console.log("address", r);
+            if(r!== undefined )
+            {
+                setAddress(r);
+            }
+        });
 
     }
 
@@ -92,9 +98,13 @@ export default function SingleRoute(props)
                     <Space size = {20}/>
                     <RouteDescription description = {data===null ? null : data.description}/>
                     <Space size = {20}/>
-                    <RouteAddress country ={"country"} region ={"region"} city ={"city"}/>
+                    <RouteAddress country ={address===null ? null : address.country}
+                                  region ={address===null ? null : address.region}
+                                  city ={address===null ? null : address.city}/>
                     <Space size = {20}/>
-                    <View style={RouteStyles.centeredContainer}><ShowingMap markers = {coordinatesExample()}/></View>
+                    <View style={RouteStyles.centeredContainer}>
+                        <ShowingMap markers ={address=== null ? null : address.coordinates}/>
+                    </View>
                     <Space size = {20}/>
                     <View style={RouteStyles.centeredContainer}>
                         <RelappButton style = {ButtonTypes().largeButton}
