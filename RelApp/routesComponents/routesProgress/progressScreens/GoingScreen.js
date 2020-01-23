@@ -10,6 +10,8 @@ import {coordinatesExample} from "../../Maps/MapFunctions";
 
 export default function GoingScreen(props)
 {
+    const hardCodedCheckPoints = ["61.03:70.03", "62.53:71.31", "65.43:79.05", "64.13:69.69"]
+    const [allCheckPointsChecked, setAllCheckPointsChecked] = useState(false)
 
     const [steps, setSteps] = useState(0)
     const [stepsAvailable, setStepsAvailable] = useState(null)
@@ -42,7 +44,7 @@ export default function GoingScreen(props)
     }
     }, [minutesCounter, secondsCounter, steps])
 
-    subscribePedometer = async () => {
+    const subscribePedometer = async () => {
         try
         {const available = await Pedometer.isAvailableAsync();
         if (available) {
@@ -54,12 +56,12 @@ export default function GoingScreen(props)
         }
     }
 
-    saySteps = result => {
+    const saySteps = result => {
         const diff = result.steps - steps;
         setSteps(result.steps)
     }
 
-    function saveTimeAndProceed(){
+    const handleSaveAndProceed = () => {
         setStartDisable(false)
         clearInterval(timer)
         props.navigation.navigate(
@@ -68,7 +70,11 @@ export default function GoingScreen(props)
                 duration: {durationMinutes: minutesCounter, durationSeconds: secondsCounter},
                 distance: steps
             }
-            )
+        )
+    }
+
+    const handleCheckCheckPoints = () => {
+        props.navigation.navigate("CheckPointsScreen", {CheckPoints: hardCodedCheckPoints})
     }
 
     return (
@@ -85,12 +91,12 @@ export default function GoingScreen(props)
                 <Text>{minutesCounter} : {secondsCounter}</Text>
                 <Text>Steps : {"" + steps}</Text>
                 <RelappButton
-                    style = {ButtonTypes().mediumButton}
-                    text = "Finish"
-                    callback = {
-                        ()=>{saveTimeAndProceed()}
-                    }
-
+                style = {ButtonTypes().mediumButton}
+                text = {allCheckPointsChecked? "Finish" : "CheckPoints"}
+                callback = {
+                    allCheckPointsChecked? 
+                    ()=>{handleSaveAndProceed()} : ()=>{handleCheckCheckPoints()}
+                }
                 />
             </View>
         </View>
