@@ -37,7 +37,7 @@ export default function ShowingMap(props)
     const [previousDistance, setPreviousDistance] = useState(null);
 
     useEffect(() => {
-        if(initialRegion === null)
+        if(props.markers!==null)
         {
             checkPermissions().then(r=>
             {
@@ -46,10 +46,11 @@ export default function ShowingMap(props)
                 function (error) {
                     console.log(error);
                 });
-            if(markers !== null)setInitialRegion(createInitialRegionFromCord(markers[0]));
-            else setInitialRegion(DefaultInitialRegion());
+
+            setMarkers(props.markers);
+            setInitialRegion(createInitialRegionFromCord(props.markers[0]));
         }
-    });
+    }, [props.markers]);
 
     const countAllDistances = (current)=>
     {
@@ -69,7 +70,7 @@ export default function ShowingMap(props)
                  followUserLocation={true}
                  onUserLocationChange = {(props)=>
                  {
-                     if(previousDistance === null)
+                     if(previousDistance === null && markers!==null)
                      {
                          console.log(countAllDistances(props.nativeEvent.coordinate));
                          setPreviousDistance(getDistance(props.nativeEvent.coordinate,markers[0]));
