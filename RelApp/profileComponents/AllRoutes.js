@@ -1,38 +1,40 @@
 import {View, StyleSheet, ScrollView} from "react-native";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Route} from "./Route";
+import {getAllRoutes} from '../databaseServices/RouteService';
+import {getCurrentUser} from '../firebaseServices/Authentication';
 
-export default function AllRoutes(props){
-    //---
-    //examples, data will be from the db
-    const exampleRoute1 = {
-        "description": "Amazing Route in Dolomites",
-        "id": "23Pofwb8jT15SenciHg6",
-        "isFavorite": false,
-        "name": "Sella Ronda Route",
-        "ownerId": "User1",
-    };
-    const exampleRoute2 = {
-        "description": "Best Route in Bolzano",
-        "id": "23Pofwb8jT15SenciHg6",
-        "isFavorite": false,
-        "name": "Bolzano Route",
-        "ownerId": "User1",
-    };
-    const exampleRoute3 = {
-        "description": "Easy route",
-        "id": "23Pofwb8jT15SenciHg6",
-        "isFavorite": false,
-        "name": "Route 3",
-        "ownerId": "User2",
-    };
-    const data = [exampleRoute1,exampleRoute2,exampleRoute3];
-    const currentUserId = 'User1';
-    //---
-
+export default function AllRoutes(){
     const [routesCreatedByUser, setRoutes] = useState([]);
-    if (routesCreatedByUser.length === 0) {
-        setRoutes(data.filter(item => item.ownerId === currentUserId))
+    const [currentUserId, setCurrentUserId] = useState("");
+
+    useEffect(() => {
+        getUserId();
+        getAllRoutesFromDb();
+    });
+
+    async function getUserId() {
+        try {
+            let data = await getCurrentUser();
+            setCurrentUserId(data.id);
+        } catch (err) {
+            console.log(err);
+        }     
+    }
+
+    async function getAllRoutesFromDb() {
+        try {
+            let data = await getAllRoutes();
+            getRoutesCreatedByUser(data);
+        } catch (err) {
+            console.log(err);
+        }     
+    }
+
+    const getRoutesCreatedByUser = (allRoutes) => {
+        if (routesCreatedByUser.length === 0) {
+            setRoutes(allRoutes.filter(item => item.ownerId === currentUserId))
+        }
     }
     
     return (

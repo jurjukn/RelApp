@@ -5,12 +5,29 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 export function Route(props)
 {
     const data = props.data;
+    const handleEditRouteBtn = () => {
+        //const address = {region: data.address.region, city: data.address.city};
+        //const route = {title: data.name, description: data.description, coordinates: data.coordinates, address}
+        
+        /*
+        There are no address and coordinates retrieved from db
+        Current route object:
+        Object {
+            "description": "Example description683",
+            "id": "1b9da03f-4a59-47bc-a35e-fceaee4d1399",
+            "isFavorite": false,
+            "name": "Example title683",
+            "ownerId": "YSyq7X6EstfICCEB8KMq2EDtjjS2",
+        },
+        */
+
+        //props.navigation.navigate("CreateRoute", {route})
+        Alert.alert("Edit route pressed")
+    }
     return (
         <View style={styles.customView}>
             <View style={styles.mainView}>
-                <TouchableOpacity onPress={()=> { Alert.alert("Pressed")}}>
-                    <Text style={styles.textStyle}>{data.name}</Text>
-                </TouchableOpacity>
+                <Text style={styles.textStyle}>{data.name}</Text>
             </View>
 
             <View style={styles.secondView}>
@@ -18,7 +35,7 @@ export function Route(props)
                     <Text style={{color: '#333333'}}> {data.description} </Text>
                 </View>
 
-                <TouchableOpacity  onPress={() => Alert.alert('Edit route pressed')}>
+                <TouchableOpacity  onPress={() => handleEditRouteBtn()}>
                         <MaterialCommunityIcons
                             name={"square-edit-outline"}
                             size={45}
