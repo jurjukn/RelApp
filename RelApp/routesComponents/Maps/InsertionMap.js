@@ -4,7 +4,7 @@ import React, {useState, useEffect, useRef, useImperativeHandle, forwardRef,} fr
 import {Marker} from "react-native-maps";
 import { Linking } from 'expo';
 import {
-    coordinatesExample, CreateInitialRegionByCurrentLocation, DefaultInitialRegion,
+    coordinatesExample, CreateInitialRegionByCurrentLocation, createInitialRegionFromCord, DefaultInitialRegion,
 } from "./MapFunctions";
 import MyMarker from "./MyMarker";
 import {AddressFields} from "../RoutesStyles";
@@ -12,7 +12,7 @@ import {AddressFields} from "../RoutesStyles";
 
 export default function InsertionMap(props,ref)
 {
-    const [markers, setMarkers] = useState(null);
+    const [markers, setMarkers] = useState(props.data === null ? null : props.data);
     const [initialRegion, setInitialRegion] = useState(null);
 
     const getMarkersCopy = ()=>{return [...markers]};
@@ -24,15 +24,18 @@ export default function InsertionMap(props,ref)
     }));
 
     useEffect(() => {
-        if(initialRegion === null)
-        CreateInitialRegionByCurrentLocation().then(r=>
-        {
-            setInitialRegion(r)
-        }).catch(
-            function (error) {
-            setInitialRegion(DefaultInitialRegion());
-        })
-    });
+        if(initialRegion === null) {
+            if (markers === null) {
+                CreateInitialRegionByCurrentLocation().then(r => {
+                    setInitialRegion(r)
+                }).catch(
+                    function (error) {
+                        setInitialRegion(DefaultInitialRegion());
+                    })
+            } else {
+                setInitialRegion(createInitialRegionFromCord(markers[0]));
+            }
+    }});
 
     const removeMarker=(index)=>{
         const newMarkers = markers.filter((x,i)=>{if(i!==index)return(x)});
@@ -48,6 +51,8 @@ export default function InsertionMap(props,ref)
     const randomKey = Math.random()*1000;
     return (
         <MapView style={styles.mapStyle}
+                 showsUserLocation={true}
+                 followUserLocation={true}
                  initialRegion={initialRegion}
                  onLongPress={(props)=>{addMarker(props.nativeEvent.coordinate);}}
         >

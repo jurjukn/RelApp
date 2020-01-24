@@ -1,7 +1,7 @@
 import {IconsComponent, MainColors, Space} from "../components/stylingComponents";
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
-import React, {forwardRef, useImperativeHandle, useState} from "react";
+import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 import {RelappMiniTextInput} from "../components/RelappTextInput";
 
@@ -91,9 +91,9 @@ export function HorizontalSpace (props)
 }
 
 export function AddressFields(props, ref) {
-    const [country, setCountry] = useState("");
-    const [region, setRegion] = useState("");
-    const [city, setCity] = useState("");
+    const [country, setCountry] = useState(props.data === null ? "" : props.data.country);
+    const [region, setRegion] = useState(props.data === null ? "" : props.data.region);
+    const [city, setCity] = useState(props.data === null ? "" : props.data.city);
 
     const ReturnAddress = ()=>
     {
@@ -117,17 +117,17 @@ export function AddressFields(props, ref) {
             <RouteHeader text = {"Set route address"}/>
             <Space size = {20}/>
             <View style={RouteStyles.centeredContainer}>
-                <RelappMiniTextInput defaultValue = {"Country"}
+                <RelappMiniTextInput defaultValue  = {props.data === null ? "Country" : props.data.country}
                                      onChangeText={(text)=>{setCountry(text)}}
                 />
                 <HorizontalSpace size = {20}/>
-                <RelappMiniTextInput defaultValue = {"Region"}
+                <RelappMiniTextInput defaultValue = {props.data === null ? "Region" : props.data.region}
                                      onChangeText={(text)=>{setRegion(text)}}
                 />
             </View>
             <Space size = {10}/>
             <View style={RouteStyles.centeredContainer}>
-                <RelappMiniTextInput defaultValue = {"City"}
+                <RelappMiniTextInput defaultValue = {props.data === null ? "City" : props.data.city}
                                      onChangeText={(text)=>{setCity(text)}}
                 />
             </View>
