@@ -7,18 +7,18 @@ export default RoutesList = ({userHistory}) => {
 
     return (
         <FlatList
-        data={userHistory}
-        renderItem={({ item }) => 
-            <RouteStatistics 
-                routeName={item.routeId} 
-                date={item.date} 
-                time={item.duration} 
-                difficulty={9} 
-                distance={item.distance} 
-                myRate={item.rating}
-            />
-        }
-        keyExtractor={item => item.routeId}
+            data={userHistory}
+            renderItem={({ item }) => 
+                <RouteStatistics 
+                    routeName={item.routeId} 
+                    date={item.date} 
+                    time={item.duration} 
+                    difficulty={9} 
+                    distance={item.distance} 
+                    myRate={item.rating}
+                />
+            }
+            keyExtractor={item => item.routeId}
         />
     )
 }

@@ -18,23 +18,23 @@ export default function RouteStatistics({routeName, date, time, distance, diffic
     return (
         <View style={Styles.customView}>
             <View style={Styles.mainView}>
-                <Text style={Styles.textStyle} >{routeName}</Text>
+                <Text style={Styles.title} >{routeName}</Text>
             </View>
             <View style={Styles.secondView}>
                 <View style={{width:'50%'}}>
-                    <Text>Date: {date} </Text>
+                    <Text style={Styles.text}>Date: {date} </Text>
                 </View>
                 <View style={{width:'50%'}}>
-                    <Text>Time: {secondsToHms(time)}</Text>
+                    <Text style={Styles.text}>Time: {secondsToHms(time)}</Text>
                 </View>
                 <View style={{width:'50%'}}>
-                    <Text>Steps: {distance}</Text>
+                    <Text style={Styles.text}>Steps: {distance}</Text>
                 </View>
                 <View style={{width:'50%'}}>
-                    <Text>Difficulty: {difficulty}/10</Text>
+                    <Text style={Styles.text}>Difficulty: {difficulty}/10</Text>
                 </View>
                 <View style={{width:'50%'}}>
-                    <Text>My Rate: {myRate}</Text>
+                    <Text style={Styles.text}>My Rate: {myRate}</Text>
                 </View>
             </View>
         </View>
@@ -43,13 +43,14 @@ export default function RouteStatistics({routeName, date, time, distance, diffic
 
 const Styles = StyleSheet.create({
     customView: {
-        flex: 1,
-        width: '95%',
-        flexDirection: 'column',
+        width: 330,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: 'black',
-        backgroundColor: '#F0E6E6',
+        borderColor: '#333333',
+        backgroundColor: 'white',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 15,
     },
     mainView:{
         width: '100%',
@@ -64,9 +65,15 @@ const Styles = StyleSheet.create({
         flexWrap: 'wrap',
         alignItems: 'flex-start'
     },
-    textStyle:{
+    title:{
         fontWeight: 'bold',
-        color: 'black',
+        color: '#333333',
         fontSize: 20,
+    },
+    text:{
+        color: '#333333',
+        fontSize: 15,
+        marginLeft: 15,
+        marginBottom: 5,
     },
 })
