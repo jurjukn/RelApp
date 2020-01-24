@@ -23,6 +23,7 @@ export default function SignUp(props){
     return (
         <View style={BasicStyles.signInStyle}>
             <KeyboardAvoidingView style={{width: "100%", alignItems: "center"}} behavior="padding" enabled>
+                <Space size = {10}/>
                 <RelappLogoMain/>
                 <ScrollView style={{width: "100%"}} contentContainerStyle={{justifyContent : 'center', alignItems: 'center'}}>
                     <TextInput

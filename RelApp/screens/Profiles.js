@@ -1,23 +1,50 @@
-import {View, Text, StyleSheet} from "react-native";
-import React from "react";
+import {View, Text, StyleSheet, Modal} from "react-native";
+import React, {useState} from "react";
 import {RelappLogoForProfile, RelappToolBar} from "../components/stylingComponents";
-import {getAllRoutes} from "../databaseServices/RouteService";
 import UserInfo from '../profileComponents/UserInfo';
 import AllRoutes from '../profileComponents/AllRoutes';
-
-const helpIcon = {
-    name:"md-help-circle",
-    callback:()=>{props.navigation.navigate("Tabs")}
-};
-
-const logoutIcon = {
-    name:"md-log-out",
-    callback:()=>{props.navigation.navigate("Tabs")}
-};
+import {handlerUserSignOut} from "../firebaseServices/Authentication";
+import Help from "../profileComponents/modals/Help";
 
 export default function Profiles(props){
+    const [modalVisible, setModalVisible] = useState(false);
+    const helpIcon = {
+        name:"md-help-circle",
+        callback:()=>{setModalVisible(true)}
+    };
+    
+    const logoutIcon = {
+        name:"md-log-out",
+        callback:()=>{signOut()}
+    };
+    
+    async function signOut() {
+        try {
+            data = await handlerUserSignOut()
+            props.navigation.navigate("SignIn")
+        } catch (err) {
+            console.log(err);
+        }     
+    }
+
+    const handleCallback = () =>{
+        setModalVisible(!modalVisible)
+    }
+    
     return (
         <View style={{flex: 1}}>
+            <Modal
+                animationType = "slide"
+                transparent = {false}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    Alert.alert('Help screen has been closed.');
+                }}>
+
+                <View style={{marginTop: 15}}>
+                    <Help callback = {() => handleCallback()}/>
+                </View>
+            </Modal>
             <RelappToolBar text = {"Profile"}
                            secondIcon = {helpIcon}
                            thirdIcon = {logoutIcon}
@@ -26,7 +53,7 @@ export default function Profiles(props){
             <View style={{margin: 10}}>
                 <Text style={styles.textStyle}>Routes created by me</Text>
             </View>
-            <AllRoutes/>
+            <AllRoutes navigation = {props.navigation}/>
         </View>
     );
 }

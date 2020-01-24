@@ -1,31 +1,38 @@
 import {View, Text, StyleSheet, TouchableOpacity, Alert} from "react-native";
 import React from "react";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {getAddressByRouteId} from '../databaseServices/AddressService';
 
 export function Route(props)
 {
-    const data = props.data;
+    async function handleEditRouteBtn() {
+        try {
+            let data = await getAddressByRouteId(props.data.id);
+            let address = {city: data.city, country: data.country, region: data.region};
+            let coordinates = data.coordinates;
+            const route = {title: props.data.name, description: props.data.description, coordinates: coordinates, address: address}
+            props.navigation.navigate("CreateRoute", {route})
+        } catch (err) {
+            console.log(err);
+        }     
+    }
+
     return (
         <View style={styles.customView}>
             <View style={styles.mainView}>
-                <TouchableOpacity onPress={()=> { Alert.alert("Pressed")}}>
-                    <Text style={styles.textStyle}>{data.name}</Text>
-                </TouchableOpacity>
+                <Text style={styles.textStyle}>{props.data.name}</Text>
             </View>
-
             <View style={styles.secondView}>
                 <View style={styles.descriptionView}>
-                    <Text style={{color: '#333333'}}> {data.description} </Text>
+                    <Text style={{color: '#333333'}}> {props.data.description} </Text>
                 </View>
-
-                <TouchableOpacity  onPress={() => Alert.alert('Edit route pressed')}>
+                <TouchableOpacity  onPress={() => handleEditRouteBtn()}>
                         <MaterialCommunityIcons
                             name={"square-edit-outline"}
                             size={45}
                             color={"#333333"}
                         />
                 </TouchableOpacity>
-                
             </View>
         </View>
     )
