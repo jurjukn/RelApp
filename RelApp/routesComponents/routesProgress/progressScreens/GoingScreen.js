@@ -7,7 +7,7 @@ import { Linking } from 'expo';
 import { Pedometer } from "expo-sensors";
 import ShowingMap from "../../Maps/ShowingMap";
 import {coordinatesExample} from "../../Maps/MapFunctions";
-import CheckPoint from "./../checkPoints/CheckPoint"
+import CheckPoint from "../checkPoints/CheckPoint"
 
 export default function GoingScreen(props)
 {
@@ -34,7 +34,7 @@ export default function GoingScreen(props)
         let timer = setInterval(() => {
             var num = (Number(secondsCounter) + 1).toString(),
               count = minutesCounter;
-    
+
             if (Number(secondsCounter) == 59) {
               count = (Number(minutesCounter) + 1).toString();
               num = '00';
@@ -44,7 +44,7 @@ export default function GoingScreen(props)
           }, 1000);
           setTimer(timer);
           setStartDisable(true)
-    
+
     return () => {
         clearInterval(timer)
         // this.stepsub && this.stepsub.remove()
@@ -92,7 +92,7 @@ export default function GoingScreen(props)
         setCheckPointReached(true)
     }
     const handleCheckPointReached = () => {
-        
+
         const newCheckPoints = checkPoints.shift()
         setCheckPointReached(false)
         checkPoints.length === 0 ? (alert("You've completed this route")) : (setCurrentCheckPoint(newCheckPoints[0]))
