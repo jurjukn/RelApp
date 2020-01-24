@@ -9,18 +9,18 @@ export default function CheckPointsScreen(props)
     const [checkPoints, setCheckPoints] = useState(null)
     useEffect(() => {
         const points = props.navigation.getParam('CheckPoints', 'default value')
-        const arrayOfObjects = []
-        let i = 0
-        points.forEach(element => {
-            if(i == 0)
-                arrayOfObjects.push({type:"Start", coordinates: element, visited: false})
-            else if (i == points.length - 1)
-                arrayOfObjects.push({type:"Finish", coordinates: element, visited: false})
-            else 
-                arrayOfObjects.push({type:"Checkpoint" + i.toString(), coordinates: element, visited: false})
-            i++
-        })
-        setCheckPoints(arrayOfObjects)
+        // const arrayOfObjects = []
+        // let i = 0
+        // points.forEach(element => {
+        //     if(i == 0)
+        //         arrayOfObjects.push({type:"Start", coordinates: element, visited: false})
+        //     else if (i == points.length - 1)
+        //         arrayOfObjects.push({type:"Finish", coordinates: element, visited: false})
+        //     else
+        //         arrayOfObjects.push({type:"Checkpoint" + i.toString(), coordinates: element, visited: false})
+        //     i++
+        // })
+        setCheckPoints(points)
     }, []);
 
     return (

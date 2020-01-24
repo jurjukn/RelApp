@@ -11,12 +11,12 @@ export function RouteItem(props)
     {
         if(favorite) {
             //no ideas with user is currently working
-            addRouteAsFavorite(data.ownerId, data.id).then(r => console.log(r));
+            //addRouteAsFavorite(data.ownerId, data.id).then(r => console.log(r));
             return 'md-star'
         }
         else {
             //no ideas with user is currently working
-            removeRouteFromFavorites(data.ownerId, data.id).then(r => console.log(r));
+            //removeRouteFromFavorites(data.ownerId, data.id).then(r => console.log(r));
             return 'md-star-outline'
         }
     }

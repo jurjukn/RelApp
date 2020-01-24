@@ -3,19 +3,24 @@ import React from "react";
 
 import CheckPoint from "./CheckPoint"
 
+//     "distance": 1801.3151932968408,
+//     "index": 0,
+//     "title": "Start !",
+
+
 export default CheckPointsList = ({checkPoints}) => {
 
     return (
         <FlatList
         data={checkPoints}
-        renderItem={({ item }) => 
+        renderItem={({ item }) =>
             <CheckPoint
-               coordinates = {item.coordinates}
-               type = {item.type}
-               visited = {item.visited}
+               coordinates = { "distance " + item.distance}
+               type = { "title " + item.title}
+               visited = { "finished " + item.finished}
             />
         }
-        keyExtractor={item => item.coordinates}
+        keyExtractor={item => item.index}
         />
     )
 }

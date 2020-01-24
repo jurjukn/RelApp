@@ -1,18 +1,27 @@
 import {View, Text, StyleSheet} from "react-native";
 import MapView from "react-native-maps";
-import React, {useState, useEffect, useRef,} from "react";
+import React, {useState, useEffect, useRef, useImperativeHandle, forwardRef,} from "react";
 import {Marker} from "react-native-maps";
 import { Linking } from 'expo';
 import {
     coordinatesExample, CreateInitialRegionByCurrentLocation, DefaultInitialRegion,
 } from "./MapFunctions";
 import MyMarker from "./MyMarker";
+import {AddressFields} from "../RoutesStyles";
 
 
-export default function InsertionMap(props)
+export default function InsertionMap(props,ref)
 {
     const [markers, setMarkers] = useState(null);
     const [initialRegion, setInitialRegion] = useState(null);
+
+    const getMarkersCopy = ()=>{return [...markers]};
+
+    useImperativeHandle(ref, () => ({
+        getMarkers: () => {
+            return getMarkersCopy()
+        }
+    }));
 
     useEffect(() => {
         if(initialRegion === null)
@@ -25,20 +34,14 @@ export default function InsertionMap(props)
         })
     });
 
-    if(markers===null)
-    {
-        props.insert(coordinatesExample());
-        setMarkers(coordinatesExample());
-    };
-
     const removeMarker=(index)=>{
         const newMarkers = markers.filter((x,i)=>{if(i!==index)return(x)});
-        props.insert(newMarkers);
         setMarkers(newMarkers);
     };
     const addMarker=(coord)=>{
-        const newMarkers = [...markers,coord];
-        props.insert(newMarkers);
+        let newMarkers;
+        if(markers===null)  newMarkers = [coord];
+        else newMarkers = [...markers,coord];
         setMarkers(newMarkers);
     };
 
@@ -46,10 +49,7 @@ export default function InsertionMap(props)
     return (
         <MapView style={styles.mapStyle}
                  initialRegion={initialRegion}
-                 onLongPress={(props)=>{
-                     console.log(props.nativeEvent.coordinate);
-                     addMarker(props.nativeEvent.coordinate);
-                 }}
+                 onLongPress={(props)=>{addMarker(props.nativeEvent.coordinate);}}
         >
             {markers === null ? null :
                 markers.map(
@@ -70,9 +70,13 @@ export default function InsertionMap(props)
         </MapView>
     );
 }
+
+InsertionMap = forwardRef(InsertionMap);
+
 const styles = StyleSheet.create({
     mapStyle: {
         width: 300,
         height: 400,
     },
 })
+
