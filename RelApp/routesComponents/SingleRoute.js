@@ -33,14 +33,13 @@ export default function SingleRoute(props)
     const [modalVisible, setModalVisible] = useState(false);
     // here we should fetch comments and add to array, maybe fetch username?
 
-    closeCommentsModal = () => {
+    const closeCommentsModal = () => {
         setModalVisible(false)
     }
 
     if(data===null)
     {
         const routeData = props.navigation.getParam('routeData', 'default value')
-        //console.log(routeData);
         setData(routeData);
         isFavorite(routeData.isFavorite);
         getAddressByRouteId(routeData.id).then(r=>
@@ -107,10 +106,12 @@ export default function SingleRoute(props)
                     </View>
                     <Space size = {20}/>
                     <View style={RouteStyles.centeredContainer}>
-                        <RelappButton 
-                            style = {ButtonTypes().largeButton}          
+                        <RelappButton
+                            style = {ButtonTypes().largeButton}
                             text = "Start"
-                            callback = {()=>{ props.navigation.navigate("Progress")}}
+                            callback = {()=>{
+                                props.navigation.navigate("GoingScreen", {coordinates:address.coordinates})
+                            }}
                         />
                     </View>
                     <Space size = {20}/>

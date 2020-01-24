@@ -27,7 +27,7 @@ export default function AddDescription(props)
         setMainVisible(!mainVisible);
     };
     useEffect(() => {
-        console.log("useEffect",props.setModalVisible);
+        //console.log("useEffect",props.setModalVisible);
         ChangeState();
     }, [props.setModalVisible]);
     const [text, setText] = useState("");

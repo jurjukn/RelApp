@@ -29,16 +29,17 @@ export default function CreateRoute(props)
     const [coordinates, setCoordinates] = useState(null);
     const [description, setDescription] = useState("");
     const [title, setTitle] = useState("");
+
+    let mapRef = null;
     let addressRef = null;
 
     const generateSendRequest = ()=>
     {
-        console.log("-----------------------------------------------------------");
-
+        //console.log("-----------------------------------------------------------");
         const ownerId = "YSyq7X6EstfICCEB8KMq2EDtjjS2";
         const address = addressRef.getSomething();
         const coords =
-            coordinates.map(
+            mapRef.getMarkers().map(
                 (x,index)=>
                 {
                     return {...x, index:index};
@@ -53,7 +54,7 @@ export default function CreateRoute(props)
                 {
                     insertAddressRecord(address.city, address.region, address.country, r, coords).then(r =>
                         {
-                            console.log("CREATED ",r);
+                            //console.log("CREATED ",r);
                             props.navigation.navigate("Route");
                         }
                     )
@@ -86,7 +87,7 @@ export default function CreateRoute(props)
                     <Space size = {20}/>
                     <View style={RouteStyles.centeredContainer}>
                         <InsertionMap
-                            insert={setCoordinates}
+                            ref={(ref) => {mapRef = ref;}}
                         />
                     </View>
                     <Space size = {20}/>

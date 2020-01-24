@@ -13,7 +13,10 @@ export default function Routes(props)
     const [text, setText] = useState("")
     const [routesArr, setRoutesArr] = useState(null);
 
-    if(routesArr===null)getAllRoutes().then(r=>setRoutesArr(r));
+    useEffect(() => {
+        if(routesArr===null)getAllRoutes().then(r=>setRoutesArr(r));
+    });
+
 
     return (
         <View style={{flex: 1}}>
@@ -31,7 +34,10 @@ export default function Routes(props)
                                     return(
                                         <View key = {index} style={styles.scrollElement}>
                                             <RouteItem data = {x}
-                                                       callback = {()=> props.navigation.navigate("SingleRoute", {routeData:x})
+                                                       callback = {()=>
+                                                       {
+                                                           props.navigation.navigate("SingleRoute", {routeData:x})
+                                                       }
                                                        }/>
                                             <Space size = {10} />
                                         </View>

@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet} from "react-native";
 import MapView from "react-native-maps";
-import React, {useEffect, useState} from "react";
+import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
 import {Marker} from "react-native-maps";
 import { Linking } from 'expo';
 import * as Location from 'expo-location';
@@ -18,7 +18,7 @@ import MyMarker from "./MyMarker";
 
 const OpenInGoogleMaps = (lat, lon)=>
 {
-    console.log("OpenInGoogleMap");
+    //console.log("OpenInGoogleMap");
     const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
     const latLng = `${lat},${lon}`;
     const label = 'Custom Label';
@@ -30,25 +30,31 @@ const OpenInGoogleMaps = (lat, lon)=>
 };
 
 
-export default function ShowingMap(props)
+export default function ShowingMap(props, ref)
 {
     const [markers, setMarkers] = useState(props.markers);
     const [initialRegion, setInitialRegion] = useState(null);
-    const [previousDistance, setPreviousDistance] = useState(null);
+
+    const currentInit = {latitude: 0.0, longitude:  0.0,};
+    const [currentCoordinates, setCurrentCoordinates] = useState(currentInit);
+
+    const finishedRoutes = [];
+    const UpdateDistance = 10;//metres
+    const Precision = 100;
 
     useEffect(() => {
         if(props.markers!==null)
         {
+            setMarkers(props.markers);
+            setInitialRegion(createInitialRegionFromCord(props.markers[0]));
+        } else {
             checkPermissions().then(r=>
             {
-                console.log(r);
+                //console.log("Permissions",r);
             }).catch(
                 function (error) {
                     console.log(error);
                 });
-
-            setMarkers(props.markers);
-            setInitialRegion(createInitialRegionFromCord(props.markers[0]));
         }
     }, [props.markers]);
 
@@ -58,11 +64,29 @@ export default function ShowingMap(props)
         const answer =
         markers.map(
             (x,index)=>{
-                return(generateTitle(index,last) + " yra " + getDistance(current,x) + " km  atstumu ");
+                const distance = getDistance(current,x)*1000;
+                const title = generateTitle(index,last);
+                if(distance<Precision)
+                {
+                    props.finishCallback(title,index);
+                }
+                return (
+                    {
+                        index:index,
+                        title:title,
+                        distance: distance,
+                    }
+                );
             }
         );
         return answer;
     };
+
+    useImperativeHandle(ref, () => ({
+        getSituation: () => {
+            return countAllDistances(currentCoordinates);
+        }
+    }));
 
     return (
         <MapView style={styles.mapStyle}
@@ -70,14 +94,14 @@ export default function ShowingMap(props)
                  followUserLocation={true}
                  onUserLocationChange = {(props)=>
                  {
-                     if(previousDistance === null && markers!==null)
+                     const current = props.nativeEvent.coordinate;
+                     const distance = getDistance(current,currentCoordinates) * 1000;
+                     if(distance>=UpdateDistance)
                      {
-                         console.log(countAllDistances(props.nativeEvent.coordinate));
-                         setPreviousDistance(getDistance(props.nativeEvent.coordinate,markers[0]));
+                         setCurrentCoordinates(current);
                      }
                  }}
                  initialRegion={initialRegion}
-                 onLongPress={(props)=>{console.log(props.nativeEvent.coordinate)}}
         >
             {markers === null ? null :
                 markers.map(
@@ -97,6 +121,8 @@ export default function ShowingMap(props)
         </MapView>
     );
 }
+
+ShowingMap = forwardRef(ShowingMap);
 
 const styles = StyleSheet.create({
     mapStyle: {
