@@ -53,7 +53,7 @@ export default function Profiles(props){
             <View style={{margin: 10}}>
                 <Text style={styles.textStyle}>Routes created by me</Text>
             </View>
-            <AllRoutes/>
+            <AllRoutes navigation = {props.navigation}/>
         </View>
     );
 }

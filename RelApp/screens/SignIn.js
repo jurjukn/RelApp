@@ -1,7 +1,7 @@
 import {View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, KeyboardAvoidingView} from "react-native";
 import React from "react";
 import {BasicStyles, DottedLine, RelappLogoMain, Space} from "../components/stylingComponents";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {handleUserLogIn} from '../firebaseServices/Authentication';
 import {sendEmail} from "../components/SendEmail";
 
@@ -43,6 +43,7 @@ export default function SignIn(props){
     return (
         <KeyboardAvoidingView style={BasicStyles.signInStyle} behavior="padding" enabled>
             <View style={{width: "100%", alignItems: "center"}}>
+                <Space size = {10}/>
                 <RelappLogoMain/>
                 <TextInput
                     style={styles.textInputStyle}
