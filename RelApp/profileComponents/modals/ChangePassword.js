@@ -1,11 +1,10 @@
-import {View, Text, StyleSheet, TextInput} from "react-native";
+import {View, Text, StyleSheet, TextInput, TouchableOpacity} from "react-native";
 import React, {useState} from "react";
 
 export default function ChangePassword (props)
 {
-    const [password, setPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-    const [verifiedPassword, setVerifiedPassword] = useState("");
+    const [password, setPassword] = useState(null);
+    const [newPassword, setNewPassword] = useState(null);
 
     return (
         <View style={styles.mainView}>
@@ -32,17 +31,22 @@ export default function ChangePassword (props)
                   onChangeText={(text) => setNewPassword(text)}
                 />
             </View>
-            <View style={{flexDirection: "row"}}>
-                <Text style={styles.textStyle}>Verify password </Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder=""
-                  secureTextEntry={true}
-                  onChangeText={(text) => setVerifiedPassword(text)}
-                />
-            </View>
-        </View>
-          
+          </View>
+
+          <TouchableOpacity  
+              style={styles.buttonStyle}
+              onPress={() => props.callback(password, newPassword)}>
+              <Text style={styles.buttonTextStyle}>Done</Text>
+          </TouchableOpacity>
+          <View style ={{flexDirection: 'row', marginTop: 50}}>
+              <Text style={{color: '#4F4F4F', fontSize: 16}}>Back to </Text>
+              <TouchableOpacity
+                  style={{fontWeight: 'bold', color: '#4F4F4F', fontSize: 16}}
+                  onPress={() => props.callback(password, newPassword)}>
+                  <Text style={{fontSize: 15, color: '#4F4F4F', fontWeight: 'bold'}}>Profile</Text>
+              </TouchableOpacity>
+          </View>
+        
         </View>
     )
 }
@@ -59,6 +63,7 @@ export const styles = StyleSheet.create({
     mainView:{
         alignItems: 'center',
         justifyContent: 'center',
+        width: "100%",
     },
     headerText: {
       fontWeight: 'bold',
@@ -88,5 +93,19 @@ export const styles = StyleSheet.create({
       margin: 15,
       fontSize: 12,
       color: "#4F4F4F",
+    },
+    buttonStyle: {
+      width: "70%",
+      height: 40,
+      backgroundColor: '#3CCD76',
+      borderRadius: 10,
+      justifyContent: "center",
+      alignItems: "center",
+      marginVertical: 15,
+  },
+  buttonTextStyle: {
+      fontSize: 22,
+      color: "#F2F2F2",
+      fontWeight: 'bold'
   },
 })
