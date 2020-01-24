@@ -92,7 +92,9 @@ export default function GoingScreen(props)
         setCheckPointReached(true)
     }
     const handleCheckPointReached = () => {
+        
         const newCheckPoints = checkPoints.shift()
+        setCheckPointReached(false)
         checkPoints.length === 0 ? (alert("You've completed this route")) : (setCurrentCheckPoint(newCheckPoints[0]))
     }
     const handleRouteFinished = () => {
