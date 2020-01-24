@@ -14,16 +14,16 @@ export default function UserStatistics ({userHistory}) {
 
     return (
         <View style={styles.statisticsContainer}>
-            <View style={styles.circle} >
-                <Text>Total steps</Text>
+            <View style={styles.square} >
+                <Text style = {{fontWeight: 'bold', color: '#333333'}}>Total steps</Text>
                 <Text style={styles.statisticsTextFont}>{userStats.totalDistance} </Text>
             </View>
-            <View style={styles.circle} >
-                <Text>Routes</Text>
+            <View style={styles.square} >
+                <Text style = {{fontWeight: 'bold', color: '#333333'}}>Routes</Text>
                 <Text style={styles.statisticsTextFont}>{userStats.routeCount}</Text>
             </View>
-            <View style={styles.circle} >
-                <Text>Total time</Text>
+            <View style={styles.square} >
+                <Text style = {{fontWeight: 'bold', color: '#333333'}}>Total time</Text>
                 <Text style={styles.statisticsTextFont}>{userStats.totalHours} h</Text>
             </View>
         </View>
@@ -35,18 +35,19 @@ const styles = StyleSheet.create({
         flex:1,
         width:"100%",
         flexDirection:"row",
-        justifyContent:'space-evenly'
+        justifyContent:'space-evenly',
+        marginTop: 10,
     },
-    circle: {
+    square: {
         width: 100,
-        height: 100,
-        borderRadius: 100/2,
-        backgroundColor: '#4B5268',
+        height: 60,
+        borderRadius: 4,
+        backgroundColor: '#F1F1F1',
         alignItems: 'center',
         justifyContent: 'center',
     },
     statisticsTextFont: {
         fontSize: 15
-    }
+    },
 })
 

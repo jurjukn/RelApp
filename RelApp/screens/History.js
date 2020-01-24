@@ -1,7 +1,7 @@
 import {View, StyleSheet} from "react-native";
 import React, {useEffect, useState} from "react";
 
-import {RelappLogo, Space} from "../components/stylingComponents";
+import {RelappToolBar, Space} from "../components/stylingComponents";
 import {RelappTextInput} from "../components/RelappTextInput";
 import UserStatistics from "./../historyComponents/UserStatistics"
 import RoutesList from "./../historyComponents/RoutesList"
@@ -30,19 +30,19 @@ export default function History (props) {
 
     return (
         <View style={{flex: 1}}>
-            <RelappLogo/>
+            <RelappToolBar text = {"History"}/>
             <View style={styles.mainContainer}>
+                <View style={styles.userStatisticsContainer}>
+                    {userHistory.length !== 0 &&
+                        <UserStatistics userHistory={userHistory}/>
+                    }
+                </View>
                 <View style={styles.searchBarContainer}>
                     <Space size = {30}/>
                     <RelappTextInput onChangeText = {(text)=>{setText(text)}}/>
                 </View>
                 <View style={styles.listContainer}>
                     <RoutesList userHistory={userHistory}/>
-                </View>
-                <View style={styles.userStatisticsContainer}>
-                    {userHistory.length !== 0 &&
-                        <UserStatistics userHistory={userHistory}/>
-                    }
                 </View>
             </View>
         </View>
@@ -52,7 +52,7 @@ export default function History (props) {
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: '#F0E6E6',
+        backgroundColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
@@ -64,15 +64,14 @@ const styles = StyleSheet.create({
     },
     listContainer: {
         flex: 4,
-        left:10,
         width:'100%',
-        backgroundColor: '#F0E6E6',
+        backgroundColor: '#F1F1F1',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
     },
     userStatisticsContainer: {
-        flex:1
+        flex: 0.5,
     }
 })
 
