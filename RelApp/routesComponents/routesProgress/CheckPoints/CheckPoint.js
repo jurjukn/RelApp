@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet} from "react-native";
 import React from "react";
 
-export default function RouteStatistics({coordinates, type, visited})
+export default function CheckPoint({coordinates, type, visited})
 {
     return (
         <View style={Styles.customView}>

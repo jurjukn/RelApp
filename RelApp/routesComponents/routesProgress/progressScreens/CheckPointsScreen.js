@@ -2,7 +2,7 @@ import {StyleSheet, View} from "react-native";
 import {RelappHeader, RelappToolBar} from "../../../components/stylingComponents";
 import React, {useState, useEffect} from "react";
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
-import CheckPointsList from "./../CheckPoints/CheckPointsList"
+import CheckPointsList from "../checkPoints/CheckPointsList"
 
 export default function CheckPointsScreen(props)
 {

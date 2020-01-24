@@ -7,11 +7,13 @@ import { Linking } from 'expo';
 import { Pedometer } from "expo-sensors";
 import ShowingMap from "../../Maps/ShowingMap";
 import {coordinatesExample} from "../../Maps/MapFunctions";
+import CheckPoint from "./../checkPoints/CheckPoint"
 
 export default function GoingScreen(props)
 {
-    const hardCodedCheckPoints = ["61.03:70.03", "62.53:71.31", "65.43:79.05", "64.13:69.69"]
-    const [allCheckPointsChecked, setAllCheckPointsChecked] = useState(false)
+    const [currentCheckPoint, setCurrentCheckPoint] = useState(null)
+    const [checkPointReached, setCheckPointReached] = useState(false)
+    const [checkPoints, setCheckPoints] = useState(false)
 
     const [steps, setSteps] = useState(0)
     const [stepsAvailable, setStepsAvailable] = useState(null)
@@ -21,28 +23,34 @@ export default function GoingScreen(props)
     const [secondsCounter, setSecondsCounter] = useState('00')
     const [startDisable, setStartDisable] = useState(false)
 
-    // useEffect(() => {
-    //     subscribePedometer()
-    //     let timer = setInterval(() => {
-    //         var num = (Number(secondsCounter) + 1).toString(),
-    //           count = minutesCounter;
-    //
-    //         if (Number(secondsCounter) == 59) {
-    //           count = (Number(minutesCounter) + 1).toString();
-    //           num = '00';
-    //         }
-    //         setMinutesCounter(count.length == 1 ? '0' + count : count)
-    //         setSecondsCounter(num.length == 1 ? '0' + num : num)
-    //       }, 1000);
-    //       setTimer(timer);
-    //       setStartDisable(true)
-    //
-    // return () => {
-    //     clearInterval(timer)
-    //     this.stepsub && this.stepsub.remove()
-    //     this.stepsub = null
-    // }
-    // }, [minutesCounter, secondsCounter, steps])
+    useEffect(() => {
+        // subscribePedometer()
+        const checkPoints = props.navigation.getParam('coordinates', 'default value')
+        checkPoints.sort((a, b) => (a.index > b.index) ? 1 : -1)
+        setCheckPoints(checkPoints)
+        const first = checkPoints.find(element => element.index === 0)
+        setCurrentCheckPoint(first)
+
+        let timer = setInterval(() => {
+            var num = (Number(secondsCounter) + 1).toString(),
+              count = minutesCounter;
+    
+            if (Number(secondsCounter) == 59) {
+              count = (Number(minutesCounter) + 1).toString();
+              num = '00';
+            }
+            setMinutesCounter(count.length == 1 ? '0' + count : count)
+            setSecondsCounter(num.length == 1 ? '0' + num : num)
+          }, 1000);
+          setTimer(timer);
+          setStartDisable(true)
+    
+    return () => {
+        clearInterval(timer)
+        // this.stepsub && this.stepsub.remove()
+        // this.stepsub = null
+    }
+    }, [minutesCounter, secondsCounter, steps])
 
     const subscribePedometer = async () => {
         try
@@ -78,12 +86,26 @@ export default function GoingScreen(props)
 
     const callbackWhenCheckpointIsReached = (title, index)=>
     {
+        //condition to check whether currentCheckPoint is the one reached (currentCheckPoint.index === index)
         console.log(title, " IS  finished ", index);
+        alert("Checkpoint: " + title + " is reached.")
+        setCheckPointReached(true)
     }
-    const handleCheckCheckPoints = () => {
-        const checkPointStatus = mapRef.getSituation();
-        props.navigation.navigate("CheckPointsScreen", {CheckPoints: checkPointStatus})
-    };
+    const handleCheckPointReached = () => {
+        const newCheckPoints = checkPoints.shift()
+        checkPoints.length === 0 ? (alert("You've completed this route")) : (setCurrentCheckPoint(newCheckPoints[0]))
+    }
+    const handleRouteFinished = () => {
+        setStartDisable(false)
+        clearInterval(timer)
+        props.navigation.navigate(
+            'StatisticsScreen',
+            {
+                duration: {durationMinutes: minutesCounter, durationSeconds: secondsCounter},
+                distance: steps
+            }
+        )
+    }
 
     return (
         <View style={{flex:1}}>
@@ -95,6 +117,11 @@ export default function GoingScreen(props)
                     text = "Recommended playlist"
                     callback = {()=>{Linking.openURL('https://open.spotify.com/playlist/7fZUgTmUcN4KVRsRwadU2z')}}
                 />
+                <RelappButton
+                style = {ButtonTypes().mediumButton}
+                text = "Check points"
+                callback = {()=>{props.navigation.navigate("CheckPointsScreen",{CheckPoints: mapRef.getSituation()})}}
+                />
                 <ShowingMap
                     ref={(ref) => {mapRef = ref;}}
                     markers = {coordinates}
@@ -102,14 +129,19 @@ export default function GoingScreen(props)
                 />
                 <Text>{minutesCounter} : {secondsCounter}</Text>
                 <Text>Steps : {"" + steps}</Text>
-                <RelappButton
-                style = {ButtonTypes().mediumButton}
-                text = {allCheckPointsChecked? "Finish" : "CheckPoints"}
-                callback = {
-                    allCheckPointsChecked?
-                    ()=>{handleSaveAndProceed()} : ()=>{handleCheckCheckPoints()}
-                }
-                />
+                {/* Here we will display current checkpoint */}
+                {/* { checkPoints.length !== 0 &&
+                    <CheckPoint />
+                } */}
+                {/* constraints when to show check in/finish button, later uncomment */}
+                {/* {checkPointReached && */}
+                    <RelappButton
+                    style = {ButtonTypes().mediumButton}
+                    text = {checkPoints.length === 0? ("Finish") : ("Check In")}
+                    callback = {checkPoints.length === 0? (()=>{handleRouteFinished()}) : (()=>{handleCheckPointReached()})}
+                    />
+                {/* } */}
+
             </View>
         </View>
     )
