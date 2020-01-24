@@ -1,17 +1,16 @@
 import {View, Text, StyleSheet} from "react-native";
 import React from "react";
 
-export default function CheckPoint({coordinates, type, visited})
+export default function CheckPoint({distance, title})
 {
     return (
         <View style={Styles.customView}>
             <View style={Styles.mainView}>
-                <Text style={Styles.textStyle} >{type} </Text>
+                <Text style={Styles.textStyle} >{title} </Text>
             </View>
             <View style={Styles.secondView}>
                 <View>
-                    <Text>Coords: {coordinates}</Text>
-                    <Text>Visited: {visited.toString()}</Text>
+                    <Text>{distance} meters</Text>
                 </View>
             </View>
         </View>

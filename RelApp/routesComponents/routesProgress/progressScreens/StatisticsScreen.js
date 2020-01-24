@@ -1,23 +1,23 @@
 import {StyleSheet, Text, View} from "react-native";
-import {RelappLogo} from "../../../components/stylingComponents"
+import {RelappToolBar} from "../../../components/stylingComponents"
 import React from "react";
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
-import {ProgressToolbar} from "../RoutePregessStyles";
 
 export default function StatisticsScreen(props)
 {
     function proceedToNextScreen(){
-        const durationInSeconds = Number(props.navigation.state.params.duration.durationMinutes)*60 + Number(props.navigation.state.params.duration.durationSeconds)
-        props.navigation.navigate("RatingScreen", {duration: durationInSeconds, distance: props.navigation.state.params.distance})
+        const duration = props.navigation.getParam('duration', 'default_value')
+        const route = props.navigation.getParam('route', 'default_value')
+        const durationInSeconds = Number(duration.durationMinutes)*60 + Number(duration.durationSeconds)
+        props.navigation.navigate("RatingScreen", {duration: durationInSeconds, distance: props.navigation.state.params.distance, route: route})
     }
 
     return (
         <View style={{flex:1}}>
-            <RelappLogo /> 
+            <RelappToolBar text = "Statistics"
+                fontSize = {32}
+            />
             <View style={styles.container}>
-                <View style={{flex:1}}>
-                    <ProgressToolbar header = {"Route IV"}/> 
-                </View>
                 <View style={styles.statsContainer}>
                     <View style={styles.circle}>
                         <Text>Steps</Text>

@@ -1,8 +1,7 @@
 import {StyleSheet, View, TextInput} from "react-native";
-import {RelappLogo} from "../../../components/stylingComponents"
+import {RelappToolBar} from "../../../components/stylingComponents"
 import React, {useState} from "react";
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
-import {ProgressToolbar} from "../RoutePregessStyles";
 
 function UselessTextInput(props) {
     return (
@@ -25,12 +24,14 @@ export default function CommentScreen(props)
 
     function proceedToNextScreen(){
         const historyObject = props.navigation.state.params
+        console.log(historyObject)
         addToHistory(
             {
                 duration: historyObject.duration, 
                 distance: historyObject.distance, 
                 rating: historyObject.rating, 
-                comments: value
+                comments: value,
+                routeId: historyObject.route.id
             }
         )
         props.navigation.navigate("Tabs")
@@ -38,11 +39,11 @@ export default function CommentScreen(props)
 
     return (
         <View style={{flex:1}}>
-            <RelappLogo callback = {()=>{props.navigation.navigate("RatingScreen")}}/> 
+            <RelappToolBar text = "Comment"
+                fontSize = {32}
+                callback = {()=>{props.navigation.goBack()}}
+            />
             <View style={styles.container}>
-                <View style={{flex:1}}>
-                    <ProgressToolbar header = {"Route IV"}/> 
-                </View>
                 <View style={styles.innerContainer}>
                     <View
                     style={{
