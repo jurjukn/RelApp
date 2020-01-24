@@ -1,40 +1,31 @@
 import {View, Text, StyleSheet, TouchableOpacity, Alert} from "react-native";
 import React from "react";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {getAddressByRouteId} from '../databaseServices/AddressService';
 
 export function Route(props)
 {
-    const data = props.data;
-    const handleEditRouteBtn = () => {
-        //const address = {region: data.address.region, city: data.address.city};
-        //const route = {title: data.name, description: data.description, coordinates: data.coordinates, address}
-        
-        /*
-        There are no address and coordinates retrieved from db
-        Current route object:
-        Object {
-            "description": "Example description683",
-            "id": "1b9da03f-4a59-47bc-a35e-fceaee4d1399",
-            "isFavorite": false,
-            "name": "Example title683",
-            "ownerId": "YSyq7X6EstfICCEB8KMq2EDtjjS2",
-        },
-        */
-
-        //props.navigation.navigate("CreateRoute", {route})
-        Alert.alert("Edit route pressed")
+    async function handleEditRouteBtn() {
+        try {
+            let data = await getAddressByRouteId(props.data.id);
+            let address = {city: data.city, country: data.country, region: data.region};
+            let coordinates = data.coordinates;
+            const route = {title: props.data.name, description: props.data.description, coordinates: coordinates, address: address}
+            props.navigation.navigate("CreateRoute", {route})
+        } catch (err) {
+            console.log(err);
+        }     
     }
+
     return (
         <View style={styles.customView}>
             <View style={styles.mainView}>
-                <Text style={styles.textStyle}>{data.name}</Text>
+                <Text style={styles.textStyle}>{props.data.name}</Text>
             </View>
-
             <View style={styles.secondView}>
                 <View style={styles.descriptionView}>
-                    <Text style={{color: '#333333'}}> {data.description} </Text>
+                    <Text style={{color: '#333333'}}> {props.data.description} </Text>
                 </View>
-
                 <TouchableOpacity  onPress={() => handleEditRouteBtn()}>
                         <MaterialCommunityIcons
                             name={"square-edit-outline"}
@@ -42,7 +33,6 @@ export function Route(props)
                             color={"#333333"}
                         />
                 </TouchableOpacity>
-                
             </View>
         </View>
     )

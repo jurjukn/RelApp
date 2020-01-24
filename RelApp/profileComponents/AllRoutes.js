@@ -4,7 +4,7 @@ import {Route} from "./Route";
 import {getAllRoutes} from '../databaseServices/RouteService';
 import {getCurrentUser} from '../firebaseServices/Authentication';
 
-export default function AllRoutes(){
+export default function AllRoutes(props){
     const [routesCreatedByUser, setRoutes] = useState([]);
     const [currentUserId, setCurrentUserId] = useState("");
 
@@ -46,7 +46,7 @@ export default function AllRoutes(){
                         {
                             return(
                                 <View key = {key}>
-                                    <Route data = {route}/>
+                                    <Route data = {route} navigation = {props.navigation}/>
                                 </View>
                             )
                         }
