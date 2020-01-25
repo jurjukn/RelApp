@@ -28,7 +28,12 @@ export default function CommentScreen(props)
         const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         const yyyy = today.getFullYear();
         const dateObject = {day: dd, month: mm, year: yyyy}
-        // await insertHistoryRecord(true, dateObject, routeHistory.distance, routeHistory.duration, routeHistory.rating, routeHistory.routeId, user.id)
+        await insertHistoryRecord(true, 
+            dateObject, 
+            routeHistory.distance, 
+            routeHistory.duration, 
+            routeHistory.rating, 
+            routeHistory.routeId, user.id);
     }
 
     function proceedToNextScreen(){
