@@ -28,7 +28,7 @@ export default function RouteStatistics({routeName, date, time, distance, diffic
                     <Text style={Styles.text}>Time: {secondsToHms(time)}</Text>
                 </View>
                 <View style={{width:'50%'}}>
-                    <Text style={Styles.text}>Steps: {distance}</Text>
+                    <Text style={Styles.text}>Steps: {Math.round(distance)}</Text>
                 </View>
                 <View style={{width:'50%'}}>
                     <Text style={Styles.text}>Difficulty: {difficulty}/10</Text>
