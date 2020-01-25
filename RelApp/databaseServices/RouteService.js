@@ -49,6 +49,25 @@ function formatRoute(id, data, userId) {
   return route;
 }
 
+export async function searchRouteByTitle(searchText) {
+  try {
+    const routes = [];
+    const currentUser = await getCurrentUser();
+    const routesSnapshot = db.collection(Collections.routes)
+      .where('title', '>=', searchText)
+      .where('title', '<=', searchText);
+
+    routesSnapshot.forEach(doc => {
+      const route = formatRoute(doc.id, doc.data(), currentUser.id);
+      routes.push(route);
+    })
+
+    return routes;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export async function deleteRoute(routeId) {
   try {
     const deleteQueries = [
