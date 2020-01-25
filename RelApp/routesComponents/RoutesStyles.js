@@ -91,9 +91,9 @@ export function HorizontalSpace (props)
 }
 
 export function AddressFields(props, ref) {
-    const [country, setCountry] = useState(props.data === null ? "" : props.data.country);
-    const [region, setRegion] = useState(props.data === null ? "" : props.data.region);
-    const [city, setCity] = useState(props.data === null ? "" : props.data.city);
+    const [country, setCountry] = useState("");
+    const [region, setRegion] = useState("");
+    const [city, setCity] = useState("");
 
     const ReturnAddress = ()=>
     {
@@ -117,17 +117,17 @@ export function AddressFields(props, ref) {
             <RouteHeader text = {"Set route address"}/>
             <Space size = {20}/>
             <View style={RouteStyles.centeredContainer}>
-                <RelappMiniTextInput defaultValue  = {props.data === null ? "Country" : props.data.country}
+                <RelappMiniTextInput defaultValue  = {props.defaultValue === null ? "Country" : props.defaultValue.country}
                                      onChangeText={(text)=>{setCountry(text)}}
                 />
                 <HorizontalSpace size = {20}/>
-                <RelappMiniTextInput defaultValue = {props.data === null ? "Region" : props.data.region}
+                <RelappMiniTextInput defaultValue = {props.defaultValue === null ? "Region" : props.defaultValue.region}
                                      onChangeText={(text)=>{setRegion(text)}}
                 />
             </View>
             <Space size = {10}/>
             <View style={RouteStyles.centeredContainer}>
-                <RelappMiniTextInput defaultValue = {props.data === null ? "City" : props.data.city}
+                <RelappMiniTextInput defaultValue = {props.defaultValue === null ? "City" : props.defaultValue.city}
                                      onChangeText={(text)=>{setCity(text)}}
                 />
             </View>

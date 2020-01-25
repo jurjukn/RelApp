@@ -12,7 +12,7 @@ import {AddressFields} from "../RoutesStyles";
 
 export default function InsertionMap(props,ref)
 {
-    const [markers, setMarkers] = useState(props.data === null ? null : props.data);
+    const [markers, setMarkers] = useState(props.defaultValue === null ? null : props.defaultValue);
     const [initialRegion, setInitialRegion] = useState(null);
 
     const getMarkersCopy = ()=>{return [...markers]};
@@ -67,7 +67,6 @@ export default function InsertionMap(props,ref)
                                 delete = {removeMarker}
                                 isForShowing = {false}
                                 location={x} />
-
                         )
                     }
                 )

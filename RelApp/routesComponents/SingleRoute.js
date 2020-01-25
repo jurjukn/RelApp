@@ -44,12 +44,12 @@ export default function SingleRoute(props)
         isFavorite(routeData.isFavorite);
         getAddressByRouteId(routeData.id).then(r=>
         {
-            //console.log("address", r);
             if(r!== undefined )
             {
                 setAddress(r);
             }
         });
+
 
     }
 

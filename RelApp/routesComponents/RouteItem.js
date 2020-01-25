@@ -7,35 +7,30 @@ export function RouteItem(props)
 {
     const data = props.data;
     const [favorite, isFavorite] = useState(data.isFavorite);
-    const selectIconName = () =>
-    {
-        if(favorite) {
-            //no ideas with user is currently working
-            //addRouteAsFavorite(data.ownerId, data.id).then(r => console.log(r));
-            return 'md-star'
-        }
-        else {
-            //no ideas with user is currently working
-            //removeRouteFromFavorites(data.ownerId, data.id).then(r => console.log(r));
-            return 'md-star-outline'
-        }
-    }
+
     return (
         <View style={RouteItemStyles.itemBody}>
             <View style={RouteItemStyles.titleView}>
                 <TouchableOpacity   onPress={()=>{
                     props.callback()
                 }}>
-                    <Text style={RouteItemStyles.textStyle} >{data.name} </Text>
+                    <Text style={RouteItemStyles.textStyle} >{data.title} </Text>
                 </TouchableOpacity>
             </View>
             <View style={RouteItemStyles.secondView}>
                 <View style={RouteItemStyles.descriptionView}>
                     <Text>{data.description}</Text>
                 </View>
-                <IconsComponent name = {selectIconName()}
+                <IconsComponent name = {favorite === true ? 'md-star': 'md-star-outline'}
                                 style={RouteItemStyles.iconView}
-                                callback = {()=>{isFavorite(!favorite);}}/>
+                                callback = {()=>{
+                                    if(favorite) {
+                                        removeRouteFromFavorites(data.ownerId, data.id).then();
+                                    }else {
+                                        addRouteAsFavorite(data.ownerId, data.id).then();
+                                    }
+                                    isFavorite(!favorite);
+                                }}/>
             </View>
         </View>
     )

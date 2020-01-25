@@ -6,15 +6,21 @@ import {RouteItem} from "../routesComponents/RouteItem";
 import {RelappTextInput} from "../components/RelappTextInput";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 import {getAllRoutes} from "../databaseServices/RouteService";
+import {getCurrentUser} from "../firebaseServices/Authentication";
 
 
 export default function Routes(props)
 {
-    const [text, setText] = useState("")
+    const [text, setText] = useState("");
     const [routesArr, setRoutesArr] = useState(null);
+    const [currentUser, setCurrentUser] = useState(null);
 
     useEffect(() => {
-        if(routesArr===null)getAllRoutes().then(r=>setRoutesArr(r));
+        if(routesArr===null)
+        {
+            getCurrentUser().then(r=>setCurrentUser(r));
+            getAllRoutes().then(r=>setRoutesArr(r));
+        }
     });
 
 
@@ -33,10 +39,10 @@ export default function Routes(props)
                                 {
                                     return(
                                         <View key = {index} style={styles.scrollElement}>
-                                            <RouteItem data = {x}
+                                            <RouteItem data = {{...x,...currentUser}}
                                                        callback = {()=>
                                                        {
-                                                           props.navigation.navigate("SingleRoute", {routeData:x})
+                                                           props.navigation.navigate("SingleRoute", {routeData:x, userData:currentUser})
                                                        }
                                                        }/>
                                             <Space size = {10} />

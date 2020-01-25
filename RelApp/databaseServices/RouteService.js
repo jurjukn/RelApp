@@ -77,7 +77,7 @@ export async function insertRoute(description, title, ownerId, playlistUrl) {
     return id;
   } catch (err) {
     console.error(err);
-  } 
+  }
 }
 
 export async function addRouteAsFavorite(userId, routeId) {
@@ -91,6 +91,7 @@ export async function removeRouteFromFavorites(userId, routeId) {
 async function updateFavorites(userId, routeId, add) {
   try {
     const doc = await db.collection(Collections.routes).doc(routeId).get();
+    console.log(doc);
     const data = doc.data();
     let favorites = data.userFavorite;
     const isFound = favorites.includes(userId);
