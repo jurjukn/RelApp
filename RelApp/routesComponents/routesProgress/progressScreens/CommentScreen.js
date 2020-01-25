@@ -35,7 +35,9 @@ export default function CommentScreen(props)
             routeHistory.distance, 
             routeHistory.duration, 
             routeHistory.rating, 
-            routeHistory.routeId, user.id
+            routeHistory.routeId, 
+            user.id,
+            routeHistory.routeTitle
         );
         await insertRouteComment(routeHistory.comments, user.name, routeHistory.routeId)
     }
@@ -48,7 +50,8 @@ export default function CommentScreen(props)
                 distance: historyObject.distance, 
                 rating: historyObject.rating, 
                 comments: value,
-                routeId: historyObject.route.id
+                routeId: historyObject.route.id,
+                routeTitle: historyObject.route.title
             }
         )
         props.navigation.navigate("Tabs")
