@@ -53,9 +53,9 @@ export async function searchRouteByTitle(searchText) {
   try {
     const routes = [];
     const currentUser = await getCurrentUser();
-    const routesSnapshot = db.collection(Collections.routes)
+    const routesSnapshot = await db.collection(Collections.routes)
       .where('title', '>=', searchText)
-      .where('title', '<=', searchText);
+      .where('title', '<=', searchText + '\uf8ff').get();
 
     routesSnapshot.forEach(doc => {
       const route = formatRoute(doc.id, doc.data(), currentUser.id);
