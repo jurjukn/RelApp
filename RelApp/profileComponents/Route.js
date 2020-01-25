@@ -5,6 +5,7 @@ import {getAddressByRouteId} from '../databaseServices/AddressService';
 import {getRouteComments} from '../databaseServices/CommentService';
 import RouteCommentsModal from '../routesComponents/routeComments/RouteCommentsModal';
 import {deleteRoute} from '../databaseServices/RouteService';
+import {MainColors} from '../components/stylingComponents';
 
 export function Route(props)
 {
@@ -60,28 +61,28 @@ export function Route(props)
                     <MaterialCommunityIcons
                         name={"delete-outline"}
                         size={38}
-                        color={"#333333"}
+                        color={MainColors.iconGrey}
                     />
                 </TouchableOpacity>
             </View>
             
             <View style={styles.secondView}>
                 <View style={styles.descriptionView}>
-                    <Text style={{color: '#333333'}}> {props.data.description} </Text>
+                    <Text style={{color: MainColors.textDarkGrey}}> {props.data.description} </Text>
                 </View>
                 <View style={{flexDirection:'column', marginVertical: 10}}>
                     <TouchableOpacity  onPress={() => handleCommentsBtn()}>
                             <Ionicons
                                 name={"md-chatboxes"}
                                 size={38}
-                                color={"#333333"}
+                                color={MainColors.iconGrey}
                             />
                     </TouchableOpacity>
                     <TouchableOpacity  onPress={() => handleEditRouteBtn()}>
                             <MaterialCommunityIcons
                                 name={"square-edit-outline"}
                                 size={38}
-                                color={"#333333"}
+                                color={MainColors.iconGrey}
                             />
                     </TouchableOpacity>
                 </View>
@@ -95,7 +96,7 @@ export const styles = StyleSheet.create({
         width: 330,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: '#333333',
+        borderColor: MainColors.borders,
         backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
@@ -125,7 +126,7 @@ export const styles = StyleSheet.create({
     },
     textStyle:{
         fontWeight: 'bold',
-        color: '#333333',
+        color: MainColors.textDarkGrey,
         fontSize: 20,
     },
 })
