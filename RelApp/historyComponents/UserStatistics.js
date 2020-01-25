@@ -16,7 +16,7 @@ export default function UserStatistics ({userHistory}) {
         <View style={styles.statisticsContainer}>
             <View style={styles.square} >
                 <Text style = {{fontWeight: 'bold', color: '#333333'}}>Total steps</Text>
-                <Text style={styles.statisticsTextFont}>{userStats.totalDistance} </Text>
+                <Text style={styles.statisticsTextFont}>{Math.round(userStats.totalDistance)} </Text>
             </View>
             <View style={styles.square} >
                 <Text style = {{fontWeight: 'bold', color: '#333333'}}>Routes</Text>
@@ -24,7 +24,7 @@ export default function UserStatistics ({userHistory}) {
             </View>
             <View style={styles.square} >
                 <Text style = {{fontWeight: 'bold', color: '#333333'}}>Total time</Text>
-                <Text style={styles.statisticsTextFont}>{userStats.totalHours} h</Text>
+                <Text style={styles.statisticsTextFont}>{Math.round(userStats.totalHours*10)/10} h</Text>
             </View>
         </View>
     )
