@@ -45,13 +45,12 @@ export async function getHistoryByUserId(userId) {
   }
 }
 
-export async function insertHistoryRecord(completed, date, difficulty, distance, duration, rating, routeId, userId) {
+export async function insertHistoryRecord(completed, date, distance, duration, rating, routeId, userId) {
   try {
     const id = uuid.v4();
     const history = {
       completed,
       date,
-      difficulty,
       distance,
       duration,
       rating,
