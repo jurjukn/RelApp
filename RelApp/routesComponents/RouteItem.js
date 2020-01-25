@@ -5,8 +5,9 @@ import {addRouteAsFavorite, removeRouteFromFavorites} from "../databaseServices/
 
 export function RouteItem(props)
 {
-    const data = props.data;
-    const [favorite, isFavorite] = useState(data.isFavorite);
+    const routeData = props.data.routeData;
+    const userData = props.data.currentUser;
+    const [favorite, isFavorite] = useState(routeData.isFavorite);
 
     return (
         <View style={RouteItemStyles.itemBody}>
@@ -14,20 +15,20 @@ export function RouteItem(props)
                 <TouchableOpacity   onPress={()=>{
                     props.callback()
                 }}>
-                    <Text style={RouteItemStyles.textStyle} >{data.title} </Text>
+                    <Text style={RouteItemStyles.textStyle} >{routeData.title} </Text>
                 </TouchableOpacity>
             </View>
             <View style={RouteItemStyles.secondView}>
                 <View style={RouteItemStyles.descriptionView}>
-                    <Text>{data.description}</Text>
+                    <Text>{routeData.description}</Text>
                 </View>
                 <IconsComponent name = {favorite === true ? 'md-star': 'md-star-outline'}
                                 style={RouteItemStyles.iconView}
                                 callback = {()=>{
                                     if(favorite) {
-                                        removeRouteFromFavorites(data.ownerId, data.id).then();
+                                        removeRouteFromFavorites(userData.id, routeData.id).then();
                                     }else {
-                                        addRouteAsFavorite(data.ownerId, data.id).then();
+                                        addRouteAsFavorite(userData.id, routeData.id).then();
                                     }
                                     isFavorite(!favorite);
                                 }}/>
