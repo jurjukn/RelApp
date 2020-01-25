@@ -38,7 +38,7 @@ function formatRoute(id, data, userId) {
   const isFavorite = data.userFavorite.includes(userId);
   const route = {
     id: id,
-    name: data.name,
+    title: data.title,
     description: data.description,
     ownerId: data.ownerId,
     isFavorite: isFavorite
