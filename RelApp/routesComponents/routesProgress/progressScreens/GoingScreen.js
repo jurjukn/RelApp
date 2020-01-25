@@ -60,7 +60,6 @@ export default function GoingScreen(props)
             }
         )
     }
-
     return (
         <View style={{flex:1}}>
             <RelappToolBar text = {routeName}

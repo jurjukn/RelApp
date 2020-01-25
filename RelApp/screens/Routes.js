@@ -1,12 +1,12 @@
-import {View, ScrollView, StyleSheet, TextInput, TouchableOpacity, Text} from "react-native";
+import {View, StyleSheet} from "react-native";
 import React, {useState,useEffect} from "react";
 import ShowingMap from "../routesComponents/Maps/ShowingMap";
-import {MainColors, RelappLogo, RelappToolBar, Space} from "../components/stylingComponents";
-import {RouteItem} from "../routesComponents/RouteItem";
+import {MainColors, RelappToolBar, Space} from "../components/stylingComponents";
 import {RelappTextInput} from "../components/RelappTextInput";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 import {getAllRoutes, searchRouteByTitle} from "../databaseServices/RouteService";
 import {getCurrentUser} from "../firebaseServices/Authentication";
+import AllRoutes from "../routesComponents/AllRoutes";
 
 
 export default function Routes(props)
@@ -14,15 +14,18 @@ export default function Routes(props)
     const [text, setText] = useState("");
     const [routesArr, setRoutesArr] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
+    const [favorites, setFavorites] = useState(false);
 
     useEffect(() => {
-        if(routesArr===null)
-        {
+        if(routesArr===null){
             getCurrentUser().then(r=>setCurrentUser(r));
             getAllRoutes().then(r=>setRoutesArr(r));
         }
     });
 
+    const handleFilter = () => {
+        setFavorites(!favorites);   
+    }
 
     return (
         <View style={{flex: 1}}>
@@ -36,27 +39,19 @@ export default function Routes(props)
                     onChangeText = {(text)=>{setText(text)}
                 }/>
                 <Space size = {20}/>
-                <View style={styles.scrollbar}>
-                    <ScrollView>
-                        {routesArr===null ? null:
-                            routesArr.map(
-                                (x,index)=>
-                                {
-                                    const randomIndex = Math.random()*100;
-                                    return(
-                                        <View key = {randomIndex + index} style={styles.scrollElement}>
-                                            <RouteItem data = {{routeData:x,currentUser}}
-                                                       callback = {()=> {
-                                                           props.navigation.navigate("SingleRoute", {routeData:x, userData:currentUser})
-                                                       }}/>
-                                            <Space size = {10} />
-                                        </View>
-                                    )
-                                }
-                            )
-                        }
-                    </ScrollView>
-                </View>
+                <RelappButton
+                    style = {ButtonTypes().mediumButton}
+                    text = "Show favorites"
+                    text = {favorites === true ? "Show all routes": "Show favorites"}
+                    callback = {()=> handleFilter()}
+                />
+                <Space size = {20}/>
+                <AllRoutes 
+                    navigation={props.navigation} 
+                    allRoutes={routesArr} 
+                    favorites={favorites}
+                    currentUser={currentUser}
+                />
                 <Space size = {20}/>
                 <RelappButton
                     style = {ButtonTypes().largeButton}
@@ -77,18 +72,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'column',
     },
-    scrollbar: {
-        flex: 1,
-        backgroundColor: MainColors.greyBackgroundColor,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-    },
-    scrollElement: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-    },
-
 })
