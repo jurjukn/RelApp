@@ -47,11 +47,11 @@ function formatRoute(id, data, userId) {
   return route;
 }
 
-export async function updateRoute(description, name, playlistUrl, routeId) {
+export async function updateRoute(description, title, playlistUrl, routeId) {
   try {
     const route = {
       description,
-      name,
+      title,
       playlistUrl
     };
 
@@ -61,11 +61,11 @@ export async function updateRoute(description, name, playlistUrl, routeId) {
   }
 }
 
-export async function insertRoute(description, name, ownerId, playlistUrl) {
+export async function insertRoute(description, title, ownerId, playlistUrl) {
   try {
     const id = uuid.v4();
     const route = {
-      name,
+      title,
       description,
       ownerId,
       playlistUrl,
