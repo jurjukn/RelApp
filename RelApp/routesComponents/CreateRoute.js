@@ -50,7 +50,7 @@ export default function CreateRoute(props)
                     return {...x, index:index};
                 }
             );
-
+        console.log("___________updateRoute____________ ", editRoute);
         if(editRoute===null) {
             if (title !== "" && address.region !== "" && address.city !== ""
                 && description !== ""  && music !== ""
@@ -66,28 +66,29 @@ export default function CreateRoute(props)
                 Alert.alert('Check data! ');
             }
         }else {
+            let oldRoute = editRoute.route;
+            let oldAddress = editRoute.address;
             let newRoute = {
-                title: title==="" ? editRoute.title : title,
-                description: description==="" ? editRoute.description : description,
+                id:oldRoute.id,
+                title: title==="" ?oldRoute.title : title,
+                description: description==="" ? oldRoute.description : description,
                 address:{
-                    id:"null",
-                    region: address.region === "" ? editRoute.address.region : address.region,
-                    country: address.country === "" ? editRoute.address.country : address.country,
-                    city: address.city === "" ? editRoute.address.city : address.city,
+                    id:oldAddress.id,
+                    region: address.region === "" ? oldAddress.region : address.region,
+                    country: address.country === "" ? oldAddress.country : address.country,
+                    city: address.city === "" ? oldAddress.city : address.city,
                 },
                 coordinates:coords,
-                playlistUrl:"www.example.com",
+                playlistUrl:oldRoute.playlistUrl,
             };
             //console.log("___________updateRoute____________ ", newRoute);
-            updateRoute(newRoute.description, newRoute.title, newRoute.playlistUrl, routeId).then(r =>
+            updateRoute(newRoute.description, newRoute.title, newRoute.playlistUrl, newRoute.id).then(r =>
                 {
-                    updateAddressRecord(newRoute.address.id,
-                        newRoute.address.city, newRoute.address.region, country, coordinates).then();
+                    updateAddressRecord(newRoute.address.id, newRoute.address.city,
+                        newRoute.address.region, newRoute.address.country, newRoute.coordinates).then();
                 }
             )
-
-
-        }
+       }
     };
 
     return (
@@ -100,7 +101,7 @@ export default function CreateRoute(props)
                     <Space size = {20}/>
                     <View style={RouteStyles.centeredContainer}>
                         <RelappTextInput
-                            defaultValue = {editRoute === null ? "Title" : editRoute.title}
+                            defaultValue = {editRoute === null ? "Title" : editRoute.route.title}
                             onChangeText={(text)=>{setTitle(text)}}
                         />
                     </View>
@@ -113,7 +114,7 @@ export default function CreateRoute(props)
                     <Space size = {20}/>
                     <View style={RouteStyles.centeredContainer}>
                         <InsertionMap
-                            defaultValue = {editRoute === null ? null : editRoute.coordinates}
+                            defaultValue = {editRoute === null ? null : editRoute.address.coordinates}
                             ref={(ref) => {mapRef = ref;}}
                         />
                     </View>
@@ -133,7 +134,7 @@ export default function CreateRoute(props)
                     <Space size = {20}/>
                 </ScrollView>
                 <AddDescription
-                    defaultValue = {editRoute === null ? null : editRoute.description}
+                    defaultValue = {editRoute === null ? null : editRoute.route.description}
                     sendInfo = {setDescription}
                     setModalVisible = {descriptionModal}/>
                 <SelectMusic

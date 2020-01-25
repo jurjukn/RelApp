@@ -15,7 +15,10 @@ export default function InsertionMap(props,ref)
     const [markers, setMarkers] = useState(props.defaultValue === null ? null : props.defaultValue);
     const [initialRegion, setInitialRegion] = useState(null);
 
-    const getMarkersCopy = ()=>{return [...markers]};
+    const getMarkersCopy = ()=>{
+        if(markers===null) return [];
+        else return [...markers];
+    };
 
     useImperativeHandle(ref, () => ({
         getMarkers: () => {

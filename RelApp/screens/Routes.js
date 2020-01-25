@@ -40,11 +40,9 @@ export default function Routes(props)
                                     return(
                                         <View key = {index} style={styles.scrollElement}>
                                             <RouteItem data = {{routeData:x,currentUser}}
-                                                       callback = {()=>
-                                                       {
+                                                       callback = {()=> {
                                                            props.navigation.navigate("SingleRoute", {routeData:x, userData:currentUser})
-                                                       }
-                                                       }/>
+                                                       }}/>
                                             <Space size = {10} />
                                         </View>
                                     )
