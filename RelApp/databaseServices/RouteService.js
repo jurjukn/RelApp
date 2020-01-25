@@ -47,6 +47,14 @@ function formatRoute(id, data, userId) {
   return route;
 }
 
+export async function deleteRoute(routeId) {
+  try {
+    await db.collection(Collections.routes).doc(routeId).delete();
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export async function updateRoute(description, title, playlistUrl, routeId) {
   try {
     const route = {
