@@ -18,7 +18,7 @@ export default RoutesList = ({userHistory}) => {
                     myRate={item.rating}
                 />
             }
-            keyExtractor={item => item.routeId}
+            keyExtractor={item => item.id}
         />
     )
 }
