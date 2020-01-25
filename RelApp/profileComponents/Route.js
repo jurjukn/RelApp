@@ -1,9 +1,10 @@
 import {View, Text, StyleSheet, TouchableOpacity, Alert} from "react-native";
 import React, {useState} from "react";
-import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import {MaterialCommunityIcons, Ionicons} from '@expo/vector-icons';
 import {getAddressByRouteId} from '../databaseServices/AddressService';
 import {getRouteComments} from '../databaseServices/CommentService';
 import RouteCommentsModal from '../routesComponents/routeComments/RouteCommentsModal';
+import {deleteRoute} from '../databaseServices/RouteService';
 
 export function Route(props)
 {
@@ -29,6 +30,13 @@ export function Route(props)
         }     
     }
 
+    async function handleDeleteRouteBtn() {
+        try {
+            await deleteRoute(props.data.id);
+        } catch (err) {
+        }     
+    }
+
     const changeModalVisible = () => {
         setModalVisible(!modalVisible)
     }
@@ -48,7 +56,7 @@ export function Route(props)
                 <View style={styles.headerView}>
                     <Text style={styles.textStyle}>{props.data.title}</Text>
                 </View>
-                <TouchableOpacity  onPress={() => Alert.alert("delete btn pressed")}>
+                <TouchableOpacity  onPress={() => handleDeleteRouteBtn()}>
                     <MaterialCommunityIcons
                         name={"delete-outline"}
                         size={38}
