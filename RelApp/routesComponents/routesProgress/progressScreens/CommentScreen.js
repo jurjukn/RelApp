@@ -2,6 +2,7 @@ import {StyleSheet, View, TextInput, KeyboardAvoidingView} from "react-native";
 import {RelappToolBar, MainColors} from "../../../components/stylingComponents"
 import React, {useState} from "react";
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
+import {getCurrentUser} from "./../../../firebaseServices/Authentication"
 
 function UselessTextInput(props) {
     return (
@@ -18,12 +19,15 @@ export default function CommentScreen(props)
 {
     const [value, onChangeText] = useState('');
 
-    function addToHistory(routeHistory){
+    async function addToHistory(routeHistory){
         console.log("Here we add routeHistory to database")
+        const user = await getCurrentUser()
+        console.log(user)
         console.log(routeHistory)
     }
 
     function proceedToNextScreen(){
+        
         const historyObject = props.navigation.state.params
         console.log(historyObject)
         addToHistory(
