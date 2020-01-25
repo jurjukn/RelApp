@@ -47,13 +47,14 @@ function formatRoute(id, data, userId) {
   return route;
 }
 
-export async function insertRoute(description, name, ownerId) {
+export async function insertRoute(description, name, ownerId, playlistUrl) {
   try {
     const id = uuid.v4();
     const route = {
       name,
       description,
       ownerId,
+      playlistUrl,
       userFavorite: []
     }
 
