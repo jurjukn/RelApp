@@ -21,6 +21,7 @@ export default function Routes(props)
             getCurrentUser().then(r=>setCurrentUser(r));
             getAllRoutes().then(r=>setRoutesArr(r));
         }
+        getAllRoutes().then(r=>{if(r!==routesArr) setRoutesArr(r)});
     });
 
 
@@ -37,8 +38,9 @@ export default function Routes(props)
                             routesArr.map(
                                 (x,index)=>
                                 {
+                                    const randomIndex = Math.random()*100;
                                     return(
-                                        <View key = {index} style={styles.scrollElement}>
+                                        <View key = {randomIndex + index} style={styles.scrollElement}>
                                             <RouteItem data = {{routeData:x,currentUser}}
                                                        callback = {()=> {
                                                            props.navigation.navigate("SingleRoute", {routeData:x, userData:currentUser})

@@ -13,6 +13,7 @@ import RouteCommentsModal from "./routeComments/RouteCommentsModal"
 import {getAddressByRouteId} from "../databaseServices/AddressService";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 import {coordinatesExample} from "./Maps/MapFunctions";
+import {getRouteComments} from "../databaseServices/CommentService";
 
 const hardcodedUserComments = [
     {
@@ -31,11 +32,14 @@ export default function SingleRoute(props)
     const [address, setAddress] = useState(null);
     const [favorite, isFavorite] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
+    const [comments, setComments] = useState([]);
     // here we should fetch comments and add to array, maybe fetch username?
 
     const closeCommentsModal = () => {
         setModalVisible(false)
     };
+
+    const userData = props.navigation.getParam('userData', 'default value');
 
     if(data===null)
     {
@@ -49,8 +53,20 @@ export default function SingleRoute(props)
                 setAddress(r);
             }
         });
-
-
+        getRouteComments(routeData.id).then(r =>
+        {
+            const comments = r.map(
+                (x)=>{
+                    return(
+                        {
+                            UserId: x.username,
+                            Comment: x.comment,
+                        }
+                    )
+                }
+            );
+            setComments(comments);
+        });
     }
 
     const commentsIcon = {
@@ -62,17 +78,17 @@ export default function SingleRoute(props)
         name:favorite ? 'md-star' : 'md-star-outline',
         callback:()=>{
             if(favorite) {
-                removeRouteFromFavorites(userData.id, routeData.id).then();
+                removeRouteFromFavorites(userData.id, data.id).then();
             }else {
-                addRouteAsFavorite(userData.id, routeData.id).then();
+                addRouteAsFavorite(userData.id, data.id).then();
             }
-            isFavorite(!favorite)
+            isFavorite(!favorite);
         }
     };
 
     return (
         <View style={{flex: 1}}>
-            <RelappToolBar text = {data===null ? null : data.name}
+            <RelappToolBar text = {data===null ? null : data.title}
                            fontSize = {32}
                            callback = {()=>props.navigation.goBack()}
                            secondIcon = {favoriteIcon}
@@ -83,9 +99,9 @@ export default function SingleRoute(props)
                     {modalVisible === true &&
                         <View style={{width:"100%"}}>
                         <RouteCommentsModal
-                        modalVisible={true}
-                        stopShowingModal={()=>closeCommentsModal()}
-                        comments = {hardcodedUserComments}
+                            modalVisible={true}
+                            stopShowingModal={()=>closeCommentsModal()}
+                            comments = {comments}
                         />
                         </View>
                     }

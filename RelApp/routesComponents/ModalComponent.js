@@ -1,74 +1,54 @@
 import React, {useState, useEffect} from "react";
-import {Modal, Text, TouchableHighlight, View, Alert, StyleSheet} from 'react-native';
-import {MainColors, RelappHeader, Space} from "../components/stylingComponents";
+import {Modal, Text, TouchableHighlight, View, Alert, StyleSheet, TextInput} from 'react-native';
+import {MainColors, RelappHeader, RelappToolBar, Space} from "../components/stylingComponents";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 
-export function TransparentModal(props)
+export default function ModalComponent(props)
 {
-    const [modalVisible, setModalVisible] = useState(false);
-    useEffect(() => setModalVisible(props.setModalVisible), [props.setModalVisible]);
     return(
         <View>
             <Modal
                 animationType="slide"
                 transparent={true}
-                visible={modalVisible}
+                visible={props.visible}
             >
-                <View style={styles.transparentModalBody}/>
+                <RelappToolBar text = {props.header} callback = {()=>props.setModalVisible(!props.visible)}/>
+                <View style={styles.modalBody}>
+                    <RelappHeader text = {props.title} size = {16} />
+                    <Space size = {5}/>
+                    <TextInput
+                        placeholder = {props.defaultValue}
+                        textAlign={'center'}
+                        style={styles.textStyle}
+                        onChangeText={props.onChangeText}
+                    />
+                    <Space size = {5}/>
+                    <RelappButton style = {ButtonTypes().mediumButton} text = "Done" callback = {()=>{
+                        props.setModalVisible(!props.visible)
+                    }}/>
+                </View>
             </Modal>
         </View>
     )
 }
 
-export function MainModal(props)
-{
-    const [modalVisible, setModalVisible] = useState(false);
-    useEffect(() => setModalVisible(props.setModalVisible), [props.setModalVisible]);
-    return(
-        <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-        >
-            <View style={styles.modalBody}>
-                <Space size = {5}/>
-                <RelappHeader text = {props.header} size = {26}/>
-                <View style={styles.lineStyle}/>
-                <Space size = {10}/>
-                {props.content}
-                <Space size = {5}/>
-                <RelappButton style = {ButtonTypes().mediumButton} text = "Done" callback = {props.callback}/>
-            </View>
-        </Modal>
-    )
-}
-
 const styles = StyleSheet.create({
-    transparentModalBody: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.67)'
+    textStyle: {
+        height:'80%',
+        width:'95%',
+        backgroundColor:MainColors.backgroundColor,
+        borderColor: 'black',
+        borderWidth: 1.5,
+        borderRadius: 10,
     },
     modalBody: {
+        flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        width: '80%',
-        height: '80%',
-        top:'10%',
-        left:'10%',
         backgroundColor: MainColors.backgroundColor,
     },
-    lineStyle:{
-        borderColor: MainColors.greenColor,
-        borderStyle: 'dotted',
-            borderWidth: 1,
-        borderRadius: 1,
-        width: '80%',
-    },
-});
-
+})
 export const ModalStyles = StyleSheet.create({
     textView:{
         flexDirection: 'column',
