@@ -5,7 +5,7 @@ import uuid from 'react-native-uuid';
 export async function getRouteComments(routeId) {
   try {
     const comments = [];
-    const commentsSnapshot = db.collection(Collections.comments).where('routeId', '==', routeId);
+    const commentsSnapshot = await db.collection(Collections.comments).where('routeId', '==', routeId).get();
 
     commentsSnapshot.forEach(doc => {
       const data = doc.data();
@@ -18,6 +18,8 @@ export async function getRouteComments(routeId) {
 
       comments.push(comment);
     }) 
+
+    return comments;
   } catch (err) {
     console.log(err);
     throw err;

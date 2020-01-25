@@ -1,6 +1,7 @@
 import {View, Text, StyleSheet, TouchableOpacity, ScrollView} from "react-native";
 import React from "react";
 import {sendEmail} from '../../components/SendEmail';
+import {RelappToolBar} from "../../components/stylingComponents";
 
 export default function Help (props)
 {
@@ -17,44 +18,39 @@ export default function Help (props)
 
     return (
         <View style={styles.mainView}>
-          <View style={styles.headerView}>
-            <Text style={styles.MainHeaderText}>Help</Text>
-          </View>
-          <ScrollView contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
-            <View style={styles.grayContainer}>
-                <Text style={styles.header}>What is RelApp?</Text>
-                <Text style={styles.textStyle}> 
-                The app is created for those who are exhausted physically and mentally after their day at work
-                or for those who want to recharge their batteries, by taking a pause from all the routine of their lives, 
-                pausing all the social media for a bit and taking time for themselves
-                to think about everything without any disturbance during this process. 
-                During this time you can visit some nice places that were recommended by other users of the application.
-                </Text>
-                <Text style={styles.header}>What can I do with RelApp?</Text>
-                <Text style={styles.textStyle}> 
-                The app provides opportunity to challenge yourself by creating new routes, 
-                or selecting more and more difficult routes to walk.
-                </Text>
+            <View style={styles.headerView}>
+                <RelappToolBar 
+                    text = {"Help"}
+                    callback = {()=>props.callback()}
+                />
             </View>
+          
+            <ScrollView contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
+                <View style={styles.grayContainer}>
+                    <Text style={styles.header}>What is RelApp?</Text>
+                    <Text style={styles.textStyle}> 
+                    The app is created for those who are exhausted physically and mentally after their day at work
+                    or for those who want to recharge their batteries, by taking a pause from all the routine of their lives, 
+                    pausing all the social media for a bit and taking time for themselves
+                    to think about everything without any disturbance during this process. 
+                    During this time you can visit some nice places that were recommended by other users of the application.
+                    </Text>
+                    <Text style={styles.header}>What can I do with RelApp?</Text>
+                    <Text style={styles.textStyle}> 
+                    The app provides opportunity to challenge yourself by creating new routes, 
+                    or selecting more and more difficult routes to walk.
+                    </Text>
+                </View>
 
-            <View style ={{flexDirection: 'row', marginTop: 30}}>
-                <Text style={{color: '#4F4F4F', fontSize: 16}}>Didn't find the help you're looking for? </Text>
-                <TouchableOpacity
-                    style={{fontWeight: 'bold', color: '#4F4F4F', fontSize: 16}}
-                    onPress={() => handleContactUsBtn()}>
-                    <Text style={{fontSize: 15, color: '#4F4F4F', fontWeight: 'bold'}}>Contact us</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style ={{flexDirection: 'row', marginTop: 10}}>
-                <Text style={{color: '#4F4F4F', fontSize: 16}}>Back to </Text>
-                <TouchableOpacity
-                    style={{fontWeight: 'bold', color: '#4F4F4F', fontSize: 16}}
-                    onPress={() => props.callback()}>
-                    <Text style={{fontSize: 15, color: '#4F4F4F', fontWeight: 'bold'}}>Profile</Text>
-                </TouchableOpacity>
-            </View>
-          </ScrollView>
+                <View style ={{flexDirection: 'column', marginVertical: 30, alignItems: 'center'}}>
+                    <Text style={{color: '#4F4F4F', fontSize: 16}}>Didn't find the help you're looking for? </Text>
+                    <TouchableOpacity
+                        style={{fontWeight: 'bold', color: '#4F4F4F', fontSize: 16}}
+                        onPress={() => handleContactUsBtn()}>
+                        <Text style={{fontSize: 15, color: '#4F4F4F', fontWeight: 'bold'}}>Contact us</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
         </View>
     )
 }
@@ -62,11 +58,8 @@ export default function Help (props)
 export const styles = StyleSheet.create({
     headerView: {
         width: "100%",
-        backgroundColor: '#3CCD76',
-        alignItems: 'center',
-        justifyContent: 'center',
         height: "10%",
-        marginVertical: 15,
+        marginVertical: 10,
     },
     mainView:{
         alignItems: 'center',
