@@ -21,7 +21,7 @@ export default function StatisticsScreen(props)
                 <View style={styles.statsContainer}>
                     <View style={styles.circle}>
                         <Text>Steps</Text>
-                        <Text style={styles.statisticsTextFont}>{props.navigation.state.params.distance}</Text>
+                        <Text style={styles.statisticsTextFont}>{Math.round(props.navigation.state.params.distance)}</Text>
                     </View>
                     <View style={styles.circle}>
                         <Text>Duration</Text>
