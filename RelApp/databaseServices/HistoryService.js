@@ -45,7 +45,7 @@ export async function getHistoryByUserId(userId) {
   }
 }
 
-export async function insertHistoryRecord(completed, date, distance, duration, rating, routeId, userId) {
+export async function insertHistoryRecord(completed, date, distance, duration, rating, routeId, userId, routeTitle) {
   try {
     const id = uuid.v4();
     const fireStoreDate = firebase.firestore.Timestamp.fromDate(new Date(date.year, date.month, date.day));
@@ -56,8 +56,9 @@ export async function insertHistoryRecord(completed, date, distance, duration, r
       duration,
       rating,
       routeId,
-      userId
-    }
+      userId,
+      routeTitle
+    };
 
     await db.collection(Collections.history).doc(id).set(history);
 
