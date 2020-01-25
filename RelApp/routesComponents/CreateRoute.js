@@ -1,37 +1,27 @@
-import {View, ScrollView, StyleSheet, TextInput, TouchableOpacity, Text, Alert} from "react-native";
-import MapView from "react-native-maps";
-import React, {forwardRef, useImperativeHandle, useRef, useState} from "react";
-import ShowingMap from "./Maps/ShowingMap";
-import {
-    IconsComponent, RelappLogo, RelappToolBar,
-    Space
-} from "../components/stylingComponents";
-import AddDescription from "./AddDescription";
+import {View, ScrollView, Alert} from "react-native";
+import React, {useState} from "react";
+import {RelappToolBar, Space} from "../components/stylingComponents";
 import {RelappTextInput} from "../components/RelappTextInput";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
-import SelectMusic from "./SelectMusic";
-import {
-    AddressFields,
-    CreationModalButtons,
-    HorizontalSpace,
-    RouteHeader,
-    RouteStyles,
-} from "./RoutesStyles";
+import {AddressFields, CreationModalButtons, RouteHeader, RouteStyles,} from "./RoutesStyles";
 import InsertionMap from "./Maps/InsertionMap";
 import {insertRoute, updateRoute} from "../databaseServices/RouteService";
-import {getAddressByRouteId, insertAddressRecord, updateAddressRecord} from "../databaseServices/AddressService";
+import {insertAddressRecord, updateAddressRecord} from "../databaseServices/AddressService";
+import ModalComponent from "./ModalComponent";
 
 export default function CreateRoute(props)
 {
     const currentUser = props.navigation.getParam('currentUser', 'default value');
     const checkNavigation = props.navigation.getParam('route', 'default value');
-    let editRoute = null;
+    let oldRoute = null;
+    let oldAddress = null;
     if(checkNavigation!=='default value')
     {
-        editRoute = checkNavigation;
+        oldRoute = checkNavigation.route;
+        oldAddress= checkNavigation.address;
     }
 
-    const [musicModal, setMusicModalModal] = useState(false);
+    const [musicModal, setMusicModal] = useState(false);
     const [descriptionModal, setDescriptionModal] = useState(false);
     const [description, setDescription] = useState("");
     const [music, setMusic] = useState("");
@@ -50,12 +40,12 @@ export default function CreateRoute(props)
                     return {...x, index:index};
                 }
             );
-        console.log("___________updateRoute____________ ", editRoute);
-        if(editRoute===null) {
+        //console.log("___________updateRoute____________ ", editRoute);
+        if(oldRoute===null) {
             if (title !== "" && address.region !== "" && address.city !== ""
                 && description !== ""  && music !== ""
                 && address.country !== "" && coords !== []) {
-                insertRoute(description, title, currentUser.id,"www.example.com").then(r => {
+                insertRoute(description, title, currentUser.id,music).then(r => {
                         insertAddressRecord(address.city, address.region, address.country, r, coords).then(r => {
                                 props.navigation.navigate("Route");
                             }
@@ -66,11 +56,9 @@ export default function CreateRoute(props)
                 Alert.alert('Check data! ');
             }
         }else {
-            let oldRoute = editRoute.route;
-            let oldAddress = editRoute.address;
             let newRoute = {
                 id:oldRoute.id,
-                title: title==="" ?oldRoute.title : title,
+                title: title==="" ? oldRoute.title : title,
                 description: description==="" ? oldRoute.description : description,
                 address:{
                     id:oldAddress.id,
@@ -93,7 +81,7 @@ export default function CreateRoute(props)
 
     return (
         <View style={{flex: 1}}>
-            <RelappToolBar text = {editRoute === null ? "Create New" : "Edit Route"} callback = {()=>props.navigation.goBack()}/>
+            <RelappToolBar text = {oldRoute === null ? "Create New" : "Edit Route"} callback = {()=>props.navigation.goBack()}/>
             <View style={RouteStyles.container}>
                 <ScrollView>
                     <Space size = {20}/>
@@ -101,20 +89,20 @@ export default function CreateRoute(props)
                     <Space size = {20}/>
                     <View style={RouteStyles.centeredContainer}>
                         <RelappTextInput
-                            defaultValue = {editRoute === null ? "Title" : editRoute.route.title}
+                            defaultValue = {oldRoute === null ? "Title" : oldRoute.title}
                             onChangeText={(text)=>{setTitle(text)}}
                         />
                     </View>
                     <Space size = {20}/>
                     <AddressFields
-                        defaultValue = {editRoute === null ? null : editRoute.address}
+                        defaultValue = {oldAddress === null ? null : oldAddress}
                         ref={(ref) => {addressRef = ref;}} />
                     <Space size = {20}/>
                     <RouteHeader text = {"Select route locations"}/>
                     <Space size = {20}/>
                     <View style={RouteStyles.centeredContainer}>
                         <InsertionMap
-                            defaultValue = {editRoute === null ? null : editRoute.address.coordinates}
+                            defaultValue = {oldAddress === null ? null : oldAddress.coordinates}
                             ref={(ref) => {mapRef = ref;}}
                         />
                     </View>
@@ -124,7 +112,7 @@ export default function CreateRoute(props)
                             setDescriptionModal(!descriptionModal);
                         }}
                         musicCallback = {()=>{
-                            setMusicModalModal(!musicModal);
+                            setMusicModal(!musicModal);
                         }}/>
                     <Space size = {20}/>
                     <View style={RouteStyles.centeredContainer}>
@@ -133,14 +121,19 @@ export default function CreateRoute(props)
                     </View>
                     <Space size = {20}/>
                 </ScrollView>
-                <AddDescription
-                    defaultValue = {editRoute === null ? null : editRoute.route.description}
+                <ModalComponent header = {"Description"}
+                    title = {"Write short description about your route" }
+                    defaultValue = {oldRoute === null ? "Description" : oldRoute.description}
                     sendInfo = {setDescription}
-                    setModalVisible = {descriptionModal}/>
-                <SelectMusic
-                    setModalVisible = {musicModal}
-                    defaultValue = {editRoute === null ? null : null}
+                    visible = {descriptionModal}
+                    setModalVisible = {setDescriptionModal}
+                />
+                <ModalComponent header = {"Music"}
+                    title = {"Upload URL of the Spotify playlist"}
+                    defaultValue = {oldRoute === null ?  " Music URL " : oldRoute.playlistUrl}
                     sendInfo = {setMusic}
+                    visible = {musicModal}
+                    setModalVisible = {setMusicModal}
                 />
             </View>
         </View>
