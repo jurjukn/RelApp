@@ -1,17 +1,18 @@
-import {View, Text, StyleSheet, TouchableOpacity, Alert, Modal, TouchableHighlight} from "react-native";
+import {View, Text, StyleSheet, Alert, Modal} from "react-native";
 import React, {useState, useEffect} from "react";
 import ChangePassword from './modals/ChangePassword';
 import {getCurrentUser} from '../firebaseServices/Authentication';
 import {changeUserPassword} from '../firebaseServices/Authentication';
+import {ButtonTypes, RelappButton} from "../components/RelappButton";
 
 export default function UserInfo(){
     const [modalVisible, setModalVisible] = useState(false);
     const [currentUser, setCurrentUser] = useState({name: "", email: ""});
 
-    useEffect(() => {
+    if (currentUser.name === "" && currentUser.email === ""){
         getUser();
-    });
-
+    }
+    
     async function handleChangePassword (currentPassword, newPassword) {
         try {
             await changeUserPassword(currentPassword, newPassword);
@@ -63,11 +64,14 @@ export default function UserInfo(){
                     <Text style={styles.textStyle}> Email </Text>
                     <Text style={styles.userTextStyle}>{currentUser.email}</Text>
                 </View>
-                <TouchableOpacity  
-                    style={styles.buttonStyle}
-                    onPress={() =>  setModalVisible(true)}>
-                    <Text style={styles.buttonTextStyle}>Change password</Text>
-                </TouchableOpacity>
+                <View style={{alignItems:'center',justifyContent:'center'}}> 
+                    <RelappButton 
+                        style = {ButtonTypes().mediumButton} 
+                        text = "Change password" 
+                        callback = {()=> setModalVisible(true)}
+                    />
+                </View>
+                
             </View>
         </View>
     );
