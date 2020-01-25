@@ -4,7 +4,7 @@ import ChangePassword from './modals/ChangePassword';
 import {getCurrentUser} from '../firebaseServices/Authentication';
 import {changeUserPassword} from '../firebaseServices/Authentication';
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
-import {MainColors} from '../components/stylingComponents';
+import {MainColors, Space} from '../components/stylingComponents';
 
 export default function UserInfo(){
     const [modalVisible, setModalVisible] = useState(false);
@@ -71,6 +71,7 @@ export default function UserInfo(){
                         text = "Change password" 
                         callback = {()=> setModalVisible(true)}
                     />
+                    <Space size={15}/>
                 </View>
                 
             </View>
