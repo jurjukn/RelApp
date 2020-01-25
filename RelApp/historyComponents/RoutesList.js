@@ -10,7 +10,7 @@ export default RoutesList = ({userHistory}) => {
             data={userHistory}
             renderItem={({ item }) => 
                 <RouteStatistics 
-                    routeName={item.id} 
+                    routeName={item.routeTitle} 
                     date={item.date} 
                     time={item.duration} 
                     difficulty={9} 
