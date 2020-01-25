@@ -1,7 +1,6 @@
 import {View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, KeyboardAvoidingView} from "react-native";
 import React from "react";
-import {BasicStyles, DottedLine, RelappLogoMain, Space} from "../components/stylingComponents";
-import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {BasicStyles, DottedLine, RelappLogoMain, Space, MainColors} from "../components/stylingComponents";
 import {handleUserLogIn} from '../firebaseServices/Authentication';
 import {sendEmail} from "../components/SendEmail";
 
@@ -61,7 +60,7 @@ export default function SignIn(props){
                 <TouchableOpacity
                     style = {{marginStart: 150}}
                     onPress={() => handleForgotPasswordBtn()}>
-                    <Text style={{fontSize: 15, color: '#4F4F4F', fontWeight: 'bold'}}>FORGOT PASSWORD</Text>
+                    <Text style={{fontSize: 15, color: MainColors.textDarkGrey, fontWeight: 'bold'}}>FORGOT PASSWORD</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -82,11 +81,11 @@ export default function SignIn(props){
             </View>
 
             <View style ={{flexDirection: 'row', marginTop: 50}}>
-                <Text style={{color: '#4F4F4F', fontSize: 16}}>Don't have an account? </Text>
+                <Text style={{color: MainColors.textDarkGrey, fontSize: 16}}>Don't have an account? </Text>
                 <TouchableOpacity
-                    style={{fontWeight: 'bold', color: '#4F4F4F', fontSize: 16}}
+                    style={{fontWeight: 'bold', color: MainColors.textDarkGrey, fontSize: 16}}
                     onPress={() => props.navigation.navigate("SignUp")}>
-                    <Text style={{fontSize: 15, color: '#4F4F4F', fontWeight: 'bold'}}>Sign up</Text>
+                    <Text style={{fontSize: 15, color: MainColors.textDarkGrey, fontWeight: 'bold'}}>Sign up</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
@@ -94,8 +93,8 @@ export default function SignIn(props){
 }
 export const styles = StyleSheet.create({
     textInputStyle: {
-        borderColor: '#4F4F4F',
-        color: "#4F4F4F",
+        borderColor: MainColors.borders,
+        color: MainColors.textDarkGrey,
         borderStartWidth: 1,
         borderWidth: 2,
         width: "80%",
@@ -106,7 +105,7 @@ export const styles = StyleSheet.create({
     buttonStyle: {
         width: "90%",
         height: 40,
-        backgroundColor: '#3CCD76',
+        backgroundColor: MainColors.greenColor,
         borderRadius: 10,
         justifyContent: "center",
         alignItems: "center",

@@ -1,6 +1,7 @@
 import {View, Text, StyleSheet, TextInput, TouchableOpacity} from "react-native";
 import React, {useState} from "react";
-import {RelappToolBar} from "../../components/stylingComponents";
+import {RelappToolBar, MainColors} from "../../components/stylingComponents";
+import {ButtonTypes, RelappButton} from "../../components/RelappButton";
 
 export default function ChangePassword (props)
 {
@@ -37,11 +38,11 @@ export default function ChangePassword (props)
               </View>
             </View>
 
-            <TouchableOpacity  
-                style={styles.buttonStyle}
-                onPress={() => props.callback(password, newPassword)}>
-                <Text style={styles.buttonTextStyle}>Done</Text>
-            </TouchableOpacity>
+            <RelappButton 
+                style = {ButtonTypes().mediumButton} 
+                text = "Done" 
+                callback = {() => props.callback(password, newPassword)}
+            />
         
         </View>
     )
@@ -60,16 +61,16 @@ export const styles = StyleSheet.create({
     },
     headerText: {
       fontWeight: 'bold',
-      color: '#F2F2F2',
+      color: MainColors.textWhite,
       fontSize: 25,
     },
     grayContainer: {
-      backgroundColor: '#F4F4F4',
+      backgroundColor: MainColors.containerBackground,
       marginVertical: 80,
       width: "90%",
     },
     textStyle: {
-      color: "#4F4F4F", 
+      color: MainColors.textDarkGrey, 
       fontSize: 18, 
       marginEnd:'auto',
       marginVertical: 15,
@@ -79,26 +80,12 @@ export const styles = StyleSheet.create({
       height: "50%",
       borderRadius: 3,
       borderWidth: 1,
-      borderColor: '#333333',
+      borderColor: MainColors.borders,
       backgroundColor: 'white',
       alignItems: 'center',
       justifyContent: 'center',
       margin: 15,
       fontSize: 12,
-      color: "#4F4F4F",
+      color: MainColors.textDarkGrey,
     },
-    buttonStyle: {
-      width: "70%",
-      height: 40,
-      backgroundColor: '#3CCD76',
-      borderRadius: 10,
-      justifyContent: "center",
-      alignItems: "center",
-      marginVertical: 15,
-  },
-  buttonTextStyle: {
-      fontSize: 22,
-      color: "#F2F2F2",
-      fontWeight: 'bold'
-  },
 })
