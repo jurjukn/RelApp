@@ -17,6 +17,7 @@ export default function GoingScreen(props)
     const [checkPoints, setCheckPoints] = useState(false)
     const [currentRoute, setCurrentRoute] = useState(null)
     const [routeName, setRouteName] = useState("Undefined")
+    const [distance, setDistance] = useState(0)
 
     const [minutesCounter, setMinutesCounter] = useState('00')
     const [secondsCounter, setSecondsCounter] = useState('00')
@@ -47,6 +48,7 @@ export default function GoingScreen(props)
     }
     const handleCheckPointReached = () => {
         const newCheckPoint = checkPoints.shift()
+        setDistance(distance+newCheckPoint.distance)
         checkPoints.length === 0 ? (alert("You've completed this route")) : (setCurrentCheckPoint(newCheckPoint))
     }
     const handleRouteFinished = () => {
@@ -54,7 +56,7 @@ export default function GoingScreen(props)
             'StatisticsScreen',
             {
                 duration: {durationMinutes: minutesCounter, durationSeconds: secondsCounter},
-                distance: "5",
+                distance: distance,
                 route: currentRoute
             }
         )
