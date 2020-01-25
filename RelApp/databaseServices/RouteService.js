@@ -1,6 +1,7 @@
 import { firestore as db } from '../firebaseServices/Firebase';
 import { getCurrentUser } from '../firebaseServices/Authentication';
 import { Collections } from './Collections';
+import { deleteBatchQuery } from './DeleteInBatchService';
 import uuid from 'react-native-uuid';
 
 export async function getAllRoutes() {
@@ -50,6 +51,16 @@ function formatRoute(id, data, userId) {
 
 export async function deleteRoute(routeId) {
   try {
+    const deleteQueries = [
+      db.collection(Collections.history).where('routeId', '==', routeId),
+      db.collection(Collections.comments).where('routeId', '==', routeId),
+      db.collection(Collections.address).where('routeId', '==', routeId)
+    ];
+
+    deleteQueries.forEach(query => {
+      await deleteBatchQuery(db, query);
+    })
+
     await db.collection(Collections.routes).doc(routeId).delete();
   } catch (err) {
     console.error(err);
@@ -82,7 +93,7 @@ export async function insertRoute(description, title, ownerId, playlistUrl) {
     }
 
     await db.collection(Collections.routes).doc(id).set(route);
-
+  
     return id;
   } catch (err) {
     console.error(err);
