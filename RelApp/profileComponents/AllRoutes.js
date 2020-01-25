@@ -8,11 +8,14 @@ export default function AllRoutes(props){
     const [routesCreatedByUser, setRoutes] = useState([]);
     const [currentUserId, setCurrentUserId] = useState("");
 
-    useEffect(() => {
+    if(currentUserId === ""){
         getUserId();
-        getAllRoutesFromDb();
-    });
+    }
 
+    if(routesCreatedByUser.length === 0){
+        getAllRoutesFromDb();
+    } 
+    
     async function getUserId() {
         try {
             let data = await getCurrentUser();
