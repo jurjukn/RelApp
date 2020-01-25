@@ -11,7 +11,7 @@ const Description = (props)=>
             <RelappHeader text = {"Write short description about your route"} size = {16} />
             <Space size = {5}/>
             <TextInput
-                placeholder = {props.data === null ? "Description" : props.data}
+                placeholder = {props.defaultValue === null ? "Description" : props.defaultValue}
                 textAlign={'center'}
                 style={styles.textStyle}
                 onChangeText={props.onChangeText}
@@ -36,7 +36,7 @@ export default function AddDescription(props)
             <TransparentModal setModalVisible = {mainVisible}/>
             <MainModal content = {
                 <Description
-                    data = {props.data === null ? null : props.data}
+                    defaultValue = {props.defaultValue === null ? null : props.defaultValue}
                     onChangeText = {(text)=>{setText(text)}}
             />
             }
