@@ -1,14 +1,24 @@
 import {Text, View} from "react-native";
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, forwardRef, useImperativeHandle} from "react";
 import {MainColors} from '../../../../components/stylingComponents';
 
 
-export default function TimeCounter(props)
+export default function TimeCounter(props,ref)
 {
     const [timer, setTimer] = useState(null)
     const [minutesCounter, setMinutesCounter] = useState('00')
     const [secondsCounter, setSecondsCounter] = useState('00')
     const [startDisable, setStartDisable] = useState(false)
+
+    const getCurrentTime = ()=>{
+        return({durationMinutes:minutesCounter, durationSeconds:secondsCounter,})
+    };
+
+    useImperativeHandle(ref, () => ({
+        getTime: () => {
+            return getCurrentTime();
+        }
+    }));
 
     useEffect(() => {
         let timer = setInterval(() => {
@@ -20,9 +30,7 @@ export default function TimeCounter(props)
               num = '00';
             }
             setMinutesCounter(count.length == 1 ? '0' + count : count)
-            props.handleMinutesCounter(count.length == 1 ? '0' + count : count)
             setSecondsCounter(num.length == 1 ? '0' + num : num)
-            props.handleSecondsCounter(num.length == 1 ? '0' + num : num)
           }, 1000);
           setTimer(timer);
           setStartDisable(true)
@@ -38,4 +46,6 @@ export default function TimeCounter(props)
         </View>
     )
 }
+
+TimeCounter = forwardRef(TimeCounter);
 
