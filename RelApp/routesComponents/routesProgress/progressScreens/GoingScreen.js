@@ -16,6 +16,7 @@ export default function GoingScreen(props)
     const [checkPoints, setCheckPoints] = useState(false)
     const [currentRoute, setCurrentRoute] = useState(null)
     const [routeName, setRouteName] = useState("Undefined")
+    const [playlistUrl, setPlaylistUrl] = useState("")
     const [distance, setDistance] = useState(0)
 
     const [minutesCounter, setMinutesCounter] = useState('00')
@@ -25,6 +26,7 @@ export default function GoingScreen(props)
         const route = props.navigation.getParam('route', 'default value')
         setRouteName(route.title)
         setCurrentRoute(route)
+        setPlaylistUrl(route.playlistUrl)
 
         const checkPointss = mapRef.getSituation()
         checkPointss.forEach(function (element) {
@@ -67,7 +69,7 @@ export default function GoingScreen(props)
             />
             <View style={styles.container}>
             <View style={{flex:1, flexDirection:"row", alignItems: 'center', marginLeft: 80}}>
-                {currentRoute.playlistUrl !== "" &&
+                {playlistUrl !== "" &&
                 <View>
                     <TouchableOpacity onPress={()=>{Linking.openURL(currentRoute.playlistUrl)}}>
                         <Ionicons name="ios-musical-notes" size={60} color={MainColors.greenColor}/>
