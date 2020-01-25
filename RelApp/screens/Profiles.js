@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet, Modal} from "react-native";
 import React, {useState} from "react";
-import {RelappLogoForProfile, RelappToolBar} from "../components/stylingComponents";
+import {RelappToolBar, MainColors} from "../components/stylingComponents";
 import UserInfo from '../profileComponents/UserInfo';
 import AllRoutes from '../profileComponents/AllRoutes';
 import {handlerUserSignOut} from "../firebaseServices/Authentication";
@@ -61,13 +61,13 @@ export default function Profiles(props){
 export const styles = StyleSheet.create({
     textStyle: {
         fontWeight: 'bold',
-        color: "#4F4F4F",
+        color: MainColors.textDarkGrey,
         fontSize: 18,
         marginEnd:'auto',
         marginVertical: 15,
     },
     grayContainer: {
-        backgroundColor: '#F4F4F4',
+        backgroundColor: MainColors.containerBackground,
         margin: 10,
         alignItems: "center",
     },

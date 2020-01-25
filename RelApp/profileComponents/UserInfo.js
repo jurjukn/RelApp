@@ -1,9 +1,10 @@
 import {View, Text, StyleSheet, Alert, Modal} from "react-native";
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import ChangePassword from './modals/ChangePassword';
 import {getCurrentUser} from '../firebaseServices/Authentication';
 import {changeUserPassword} from '../firebaseServices/Authentication';
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
+import {MainColors, Space} from '../components/stylingComponents';
 
 export default function UserInfo(){
     const [modalVisible, setModalVisible] = useState(false);
@@ -70,6 +71,7 @@ export default function UserInfo(){
                         text = "Change password" 
                         callback = {()=> setModalVisible(true)}
                     />
+                    <Space size={15}/>
                 </View>
                 
             </View>
@@ -80,20 +82,20 @@ export default function UserInfo(){
 export const styles = StyleSheet.create({
     textStyle: {
         fontWeight: 'bold', 
-        color: "#4F4F4F", 
+        color: MainColors.textDarkGrey, 
         fontSize: 18, 
         marginEnd:'auto',
         marginVertical: 15,
     },
     userTextStyle: {
-        color: "#4F4F4F", 
+        color: MainColors.textDarkGrey, 
         fontSize: 18, 
         margin: 15,
     },
     buttonStyle: {
         width: "70%",
         height: 40,
-        backgroundColor: '#3CCD76',
+        backgroundColor: MainColors.greenColor,
         borderRadius: 10,
         justifyContent: "center",
         alignItems: "center",
@@ -102,11 +104,11 @@ export const styles = StyleSheet.create({
     },
     buttonTextStyle: {
         fontSize: 22,
-        color: "#F2F2F2",
+        color: MainColors.buttonTextStyle,
         fontWeight: 'bold'
     },
     grayContainer: {
-        backgroundColor: '#F4F4F4',
+        backgroundColor: MainColors.containerBackground,
         margin: 10,
     },
 })

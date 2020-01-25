@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, TouchableOpacity, ScrollView} from "react-native";
 import React from "react";
 import {sendEmail} from '../../components/SendEmail';
-import {RelappToolBar} from "../../components/stylingComponents";
+import {RelappToolBar, MainColors} from "../../components/stylingComponents";
 
 export default function Help (props)
 {
@@ -45,9 +45,9 @@ export default function Help (props)
                 <View style ={{flexDirection: 'column', marginVertical: 30, alignItems: 'center'}}>
                     <Text style={{color: '#4F4F4F', fontSize: 16}}>Didn't find the help you're looking for? </Text>
                     <TouchableOpacity
-                        style={{fontWeight: 'bold', color: '#4F4F4F', fontSize: 16}}
+                        style={{fontWeight: 'bold', color: MainColors.textDarkGrey, fontSize: 16}}
                         onPress={() => handleContactUsBtn()}>
-                        <Text style={{fontSize: 15, color: '#4F4F4F', fontWeight: 'bold'}}>Contact us</Text>
+                        <Text style={{fontSize: 15, color: MainColors.textDarkGrey, fontWeight: 'bold'}}>Contact us</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -68,22 +68,22 @@ export const styles = StyleSheet.create({
     },
     MainHeaderText: {
         fontWeight: 'bold',
-        color: '#F2F2F2',
+        color: MainColors.textWhite,
         fontSize: 25,
     },
     grayContainer: {
-        backgroundColor: '#F4F4F4',
+        backgroundColor: MainColors.containerBackground,
         marginVertical: 20,
         width: "90%",
     },
     textStyle: {
-        color: "#4F4F4F", 
+        color: MainColors.textDarkGrey, 
         fontSize: 18, 
         marginEnd:'auto',
         marginVertical: 15,
     },
     header: {
-        color: "#4F4F4F", 
+        color: MainColors.textDarkGrey, 
         fontSize: 20, 
         marginEnd:'auto',
         marginVertical: 15,

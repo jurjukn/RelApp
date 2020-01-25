@@ -6,13 +6,14 @@ import Constants from "expo-constants";
 
 export const MainColors = {
     greenColor: '#3CCD76',
-    textWhite:'#E8F1F2',
+    textWhite:'#F2F2F2',
     iconWhite:'#FFFFFF',
     containerBackground:'#F4F4F4',
-    iconGrey:'#B1B1B1',
+    iconGrey:'#333333',
     backgroundColor:'#FFFFFF',
     greyBackgroundColor:'#F1F1F1',
-
+    textDarkGrey: '#4F4F4F',
+    borders: '#333333',
 };
 
     export const TopSeparator = ()=> {
