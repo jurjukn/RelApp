@@ -40,11 +40,9 @@ export default function Routes(props)
                                     return(
                                         <View key = {index} style={styles.scrollElement}>
                                             <RouteItem data = {{routeData:x,currentUser}}
-                                                       callback = {()=>
-                                                       {
+                                                       callback = {()=> {
                                                            props.navigation.navigate("SingleRoute", {routeData:x, userData:currentUser})
-                                                       }
-                                                       }/>
+                                                       }}/>
                                             <Space size = {10} />
                                         </View>
                                     )
@@ -54,7 +52,10 @@ export default function Routes(props)
                     </ScrollView>
                 </View>
                 <Space size = {20}/>
-                <RelappButton style = {ButtonTypes().largeButton} text = "Create New" callback = {()=> props.navigation.navigate("CreateRoute")}/>
+                <RelappButton
+                    style = {ButtonTypes().largeButton}
+                    text = "Create New"
+                    callback = {()=> props.navigation.navigate("CreateRoute", {currentUser})}/>
                 <Space size = {20}/>
             </View>
         </View>

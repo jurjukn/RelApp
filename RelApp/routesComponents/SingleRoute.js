@@ -35,11 +35,11 @@ export default function SingleRoute(props)
 
     const closeCommentsModal = () => {
         setModalVisible(false)
-    }
+    };
 
     if(data===null)
     {
-        const routeData = props.navigation.getParam('routeData', 'default value')
+        const routeData = props.navigation.getParam('routeData', 'default value');
         setData(routeData);
         isFavorite(routeData.isFavorite);
         getAddressByRouteId(routeData.id).then(r=>
@@ -53,24 +53,19 @@ export default function SingleRoute(props)
 
     }
 
-    const selectIconName = () =>
-    {
-        if(favorite) {
-            return 'md-star'
-        }
-        else {
-            return 'md-star-outline'
-        }
-    }
-
     const commentsIcon = {
         name:"md-chatboxes",
         callback:()=>{setModalVisible(true)}
     };
 
     const favoriteIcon = {
-        name:selectIconName(),
+        name:favorite ? 'md-star' : 'md-star-outline',
         callback:()=>{
+            if(favorite) {
+                removeRouteFromFavorites(userData.id, routeData.id).then();
+            }else {
+                addRouteAsFavorite(userData.id, routeData.id).then();
+            }
             isFavorite(!favorite)
         }
     };
