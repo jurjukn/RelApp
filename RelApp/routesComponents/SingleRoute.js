@@ -110,7 +110,7 @@ export default function SingleRoute(props)
                             style = {ButtonTypes().largeButton}
                             text = "Start"
                             callback = {()=>{
-                                props.navigation.navigate("GoingScreen", {coordinates:address.coordinates})
+                                props.navigation.navigate("GoingScreen", {coordinates:address.coordinates, route: (data===null? null : data)})
                             }}
                         />
                     </View>

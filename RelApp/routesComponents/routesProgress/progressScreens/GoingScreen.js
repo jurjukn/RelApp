@@ -1,8 +1,7 @@
 import {ScrollView, StyleSheet, Text, View, Button} from "react-native";
-import {RelappHeader, RelappLogo, Space} from "./../../../components/stylingComponents"
+import {RelappToolBar} from "./../../../components/stylingComponents"
 import React, {useState, useEffect} from "react";
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
-import ProgramItem, {ProgressToolbar} from "./../RoutePregessStyles";
 import { Linking } from 'expo';
 import { Pedometer } from "expo-sensors";
 import ShowingMap from "../../Maps/ShowingMap";
@@ -14,6 +13,8 @@ export default function GoingScreen(props)
     const [currentCheckPoint, setCurrentCheckPoint] = useState(null)
     const [checkPointReached, setCheckPointReached] = useState(false)
     const [checkPoints, setCheckPoints] = useState(false)
+    const [currentRoute, setCurrentRoute] = useState(null)
+    const [routeName, setRouteName] = useState("Undefined")
 
     const [steps, setSteps] = useState(0)
     const [stepsAvailable, setStepsAvailable] = useState(null)
@@ -25,10 +26,14 @@ export default function GoingScreen(props)
 
     useEffect(() => {
         // subscribePedometer()
+        const route = props.navigation.getParam('route', 'default value')
+        setRouteName(route.name)
+        setCurrentRoute(route)
+
         const checkPoints = props.navigation.getParam('coordinates', 'default value')
         checkPoints.sort((a, b) => (a.index > b.index) ? 1 : -1)
         setCheckPoints(checkPoints)
-        const first = checkPoints.find(element => element.index === 0)
+        const first = checkPoints[0]
         setCurrentCheckPoint(first)
 
         let timer = setInterval(() => {
@@ -69,18 +74,6 @@ export default function GoingScreen(props)
         setSteps(result.steps)
     }
 
-    const handleSaveAndProceed = () => {
-        setStartDisable(false)
-        clearInterval(timer)
-        props.navigation.navigate(
-            'StatisticsScreen',
-            {
-                duration: {durationMinutes: minutesCounter, durationSeconds: secondsCounter},
-                distance: steps
-            }
-        )
-    }
-
     const coordinates = props.navigation.getParam('coordinates', 'default value');
     let mapRef = null;
 
@@ -92,28 +85,33 @@ export default function GoingScreen(props)
         setCheckPointReached(true)
     }
     const handleCheckPointReached = () => {
-
         const newCheckPoints = checkPoints.shift()
         setCheckPointReached(false)
         checkPoints.length === 0 ? (alert("You've completed this route")) : (setCurrentCheckPoint(newCheckPoints[0]))
     }
     const handleRouteFinished = () => {
+        console.log("Redirect to stats checkpts length " + checkPoints.length)
         setStartDisable(false)
         clearInterval(timer)
         props.navigation.navigate(
             'StatisticsScreen',
             {
                 duration: {durationMinutes: minutesCounter, durationSeconds: secondsCounter},
-                distance: steps
+                distance: steps,
+                route: currentRoute
             }
         )
     }
 
     return (
         <View style={{flex:1}}>
-            <RelappLogo callback = {()=>{props.navigation.navigate("BlockingScreen")}}/>
+            <View style={{flex: 1}}>
+                <RelappToolBar text = {routeName}
+                    fontSize = {32}
+                />
+            </View>
             <View style={styles.container}>
-                <ProgressToolbar header = {"Route IV"}/>
+                <ScrollView>
                 <RelappButton
                     style = {ButtonTypes().mediumButton}
                     text = "Recommended playlist"
@@ -124,26 +122,25 @@ export default function GoingScreen(props)
                 text = "Check points"
                 callback = {()=>{props.navigation.navigate("CheckPointsScreen",{CheckPoints: mapRef.getSituation()})}}
                 />
+                {/* } */}
+                {/* Here we will display current checkpoint */}
+                {/* { checkPoints.length !== 0 &&
+                    <CheckPoint />
+                } */}
                 <ShowingMap
                     ref={(ref) => {mapRef = ref;}}
                     markers = {coordinates}
                     finishCallback = {callbackWhenCheckpointIsReached}
                 />
-                <Text>{minutesCounter} : {secondsCounter}</Text>
                 <Text>Steps : {"" + steps}</Text>
-                {/* Here we will display current checkpoint */}
-                {/* { checkPoints.length !== 0 &&
-                    <CheckPoint />
-                } */}
                 {/* constraints when to show check in/finish button, later uncomment */}
                 {/* {checkPointReached && */}
-                    <RelappButton
+                <RelappButton
                     style = {ButtonTypes().mediumButton}
                     text = {checkPoints.length === 0? ("Finish") : ("Check In")}
                     callback = {checkPoints.length === 0? (()=>{handleRouteFinished()}) : (()=>{handleCheckPointReached()})}
-                    />
-                {/* } */}
-
+                />
+                </ScrollView>
             </View>
         </View>
     )
@@ -151,7 +148,7 @@ export default function GoingScreen(props)
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 5,
         backgroundColor: '#F0E6E6',
         alignItems: 'center',
         justifyContent: 'flex-start',

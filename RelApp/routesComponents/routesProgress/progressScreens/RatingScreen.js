@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {StyleSheet, View} from "react-native";
 import {AirbnbRating } from 'react-native-elements';
 
-import {RelappLogo} from "../../../components/stylingComponents"
+import {RelappLogo,RelappToolBar} from "../../../components/stylingComponents"
 
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
 import {ProgressToolbar} from "../RoutePregessStyles";
@@ -17,23 +17,27 @@ export default function StatisticsScreen(props)
     }
 
     function proceedToNextScreen(){
+        const duration = props.navigation.getParam('duration', 'default_value')
+        const route = props.navigation.getParam('route', 'default_value')
+        const distance = props.navigation.getParam('distance', 'default_value')
         props.navigation.navigate(
             "CommentScreen", 
             {
-                duration: props.navigation.state.params.duration, 
-                distance: props.navigation.state.params.distance,
-                rating: rating
+                duration: duration, 
+                distance: distance,
+                rating: rating,
+                route: route
             }
         )
     }
 
     return (
         <View style={{flex:1}}>
-            <RelappLogo callback = {()=>{props.navigation.navigate("StatisticsScreen")}}/> 
+            <RelappToolBar text = "Rate"
+                fontSize = {32}
+                callback = {()=>{props.navigation.goBack()}}
+            />
             <View style={styles.container}>
-                <View style={{flex:1}}>
-                    <ProgressToolbar header = {"Route IV"}/> 
-                </View>
                 <View style={styles.innerContainer}>
                     <AirbnbRating
                     count={5}

@@ -3,11 +3,6 @@ import React from "react";
 
 import CheckPoint from "./CheckPoint"
 
-//     "distance": 1801.3151932968408,
-//     "index": 0,
-//     "title": "Start !",
-
-
 export default CheckPointsList = ({checkPoints}) => {
 
     return (
@@ -15,12 +10,11 @@ export default CheckPointsList = ({checkPoints}) => {
         data={checkPoints}
         renderItem={({ item }) =>
             <CheckPoint
-               coordinates = { "distance " + item.distance}
-               type = { "title " + item.title}
-               visited = { "finished " + item.finished}
+               distance = {item.distance}
+               title = {item.title}
             />
         }
-        keyExtractor={item => item.index}
+        keyExtractor={item => item.title}
         />
     )
 }
