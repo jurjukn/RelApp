@@ -55,7 +55,7 @@ export async function updateRoute(description, name, playlistUrl, routeId) {
       playlistUrl
     };
 
-    await db.collection(Collections.routes).doc(routeId).update()
+    await db.collection(Collections.routes).doc(routeId).update(route);
   } catch (err) {
     console.error(err);
   }

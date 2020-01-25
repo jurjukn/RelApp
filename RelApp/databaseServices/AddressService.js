@@ -39,8 +39,15 @@ export async function insertAddressRecord(city, region, country, routeId, coordi
   }
 }
 
-export async function updateAddressRecord(addressId, address) {
+export async function updateAddressRecord(addressId, city, region, country, coordinates) {
   try {
+    const address = {
+      city,
+      region,
+      country,
+      coordinates
+    };
+
     await db.collection(Collections.address).doc(addressId).update(address);
   } catch (err) {
     console.error(err);
