@@ -28,14 +28,6 @@ export const MainColors = {
 export const Space = (props)=>{
     return <View style={{height: props.size,}}/>}
 
-//'#F0E6E6'
-//getting view wight
-// onLayout=
-//     {(event) => {
-//     const {x, y, width, height} = event.nativeEvent.layout;
-//     if(props.setDimension !== undefined)props.setDimension(width);
-// }}
-
 export function IconsComponent (props)
 {
     return(
@@ -60,7 +52,7 @@ export function RelappToolBar(props)
     return (
         <View style= {RelappToolBarStyles.container}>
             {props.callback !== undefined ?
-                <IconsComponent name = {"md-undo"}
+                <IconsComponent name = {"md-arrow-round-back"}
                                 style={RelappToolBarStyles.undoIcon}
                                 callback = {props.callback}
                                 iconWhite = {MainColors.iconWhite}/>

@@ -1,5 +1,6 @@
 import {View, Text, StyleSheet, TextInput, TouchableOpacity} from "react-native";
 import React, {useState} from "react";
+import {RelappToolBar} from "../../components/stylingComponents";
 
 export default function ChangePassword (props)
 {
@@ -8,44 +9,39 @@ export default function ChangePassword (props)
 
     return (
         <View style={styles.mainView}>
-          <View style={styles.headerView}>
-            <Text style={styles.headerText}>Change password</Text>
-          </View>
-          
-          <View style={styles.grayContainer}>
-            <View style={{flexDirection: "row"}}>
-                <Text style={styles.textStyle}>Current password </Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder=""
-                  secureTextEntry={true}
-                  onChangeText={(text) => setPassword(text)}
+            <View style={styles.headerView}>
+                <RelappToolBar 
+                    text = {"Change password"}
+                    callback = {()=>props.callback(password, newPassword)}
                 />
             </View>
-            <View style={{flexDirection: "row"}}>
-                <Text style={styles.textStyle}>New password </Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder=""
-                  secureTextEntry={true}
-                  onChangeText={(text) => setNewPassword(text)}
-                />
+            
+            <View style={styles.grayContainer}>
+              <View style={{flexDirection: "row"}}>
+                  <Text style={styles.textStyle}>Current password </Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder=""
+                    secureTextEntry={true}
+                    onChangeText={(text) => setPassword(text)}
+                  />
+              </View>
+              <View style={{flexDirection: "row"}}>
+                  <Text style={styles.textStyle}>New password </Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder=""
+                    secureTextEntry={true}
+                    onChangeText={(text) => setNewPassword(text)}
+                  />
+              </View>
             </View>
-          </View>
 
-          <TouchableOpacity  
-              style={styles.buttonStyle}
-              onPress={() => props.callback(password, newPassword)}>
-              <Text style={styles.buttonTextStyle}>Done</Text>
-          </TouchableOpacity>
-          <View style ={{flexDirection: 'row', marginTop: 50}}>
-              <Text style={{color: '#4F4F4F', fontSize: 16}}>Back to </Text>
-              <TouchableOpacity
-                  style={{fontWeight: 'bold', color: '#4F4F4F', fontSize: 16}}
-                  onPress={() => props.callback(password, newPassword)}>
-                  <Text style={{fontSize: 15, color: '#4F4F4F', fontWeight: 'bold'}}>Profile</Text>
-              </TouchableOpacity>
-          </View>
+            <TouchableOpacity  
+                style={styles.buttonStyle}
+                onPress={() => props.callback(password, newPassword)}>
+                <Text style={styles.buttonTextStyle}>Done</Text>
+            </TouchableOpacity>
         
         </View>
     )
@@ -54,11 +50,8 @@ export default function ChangePassword (props)
 export const styles = StyleSheet.create({
     headerView: {
         width: "100%",
-        backgroundColor: '#3CCD76',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: "13%",
-        marginVertical: 15,
+        height: "10%",
+        marginVertical: 10,
     },
     mainView:{
         alignItems: 'center',
