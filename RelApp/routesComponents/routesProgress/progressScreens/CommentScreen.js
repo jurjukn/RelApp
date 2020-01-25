@@ -3,6 +3,7 @@ import {RelappToolBar, MainColors} from "../../../components/stylingComponents"
 import React, {useState} from "react";
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
 import {getCurrentUser} from "./../../../firebaseServices/Authentication"
+import {insertHistoryRecord} from "./../../../databaseServices/HistoryService"
 
 function UselessTextInput(props) {
     return (
@@ -18,18 +19,20 @@ function UselessTextInput(props) {
 export default function CommentScreen(props)
 {
     const [value, onChangeText] = useState('');
+    const [userId, setUserId] = useState(null)
 
     async function addToHistory(routeHistory){
-        console.log("Here we add routeHistory to database")
         const user = await getCurrentUser()
-        console.log(user)
-        console.log(routeHistory)
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const yyyy = today.getFullYear();
+        const dateObject = {day: dd, month: mm, year: yyyy}
+        // await insertHistoryRecord(true, dateObject, routeHistory.distance, routeHistory.duration, routeHistory.rating, routeHistory.routeId, user.id)
     }
 
     function proceedToNextScreen(){
-        
         const historyObject = props.navigation.state.params
-        console.log(historyObject)
         addToHistory(
             {
                 duration: historyObject.duration, 
