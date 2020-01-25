@@ -76,7 +76,7 @@ export async function deleteRoute(routeId) {
       db.collection(Collections.address).where('routeId', '==', routeId)
     ];
 
-    deleteQueries.forEach(query => {
+    deleteQueries.forEach(async query => {
       await deleteBatchQuery(db, query);
     })
 
