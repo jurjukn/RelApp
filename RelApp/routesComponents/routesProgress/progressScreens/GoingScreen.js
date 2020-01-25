@@ -67,12 +67,15 @@ export default function GoingScreen(props)
             />
             <View style={styles.container}>
             <View style={{flex:1, flexDirection:"row", alignItems: 'center', marginLeft: 80}}>
-                <TouchableOpacity onPress={()=>{Linking.openURL('https://open.spotify.com/playlist/7fZUgTmUcN4KVRsRwadU2z')}}>
-                <Ionicons name="ios-musical-notes" size={60} color={MainColors.greenColor}/>
-                </TouchableOpacity>
+                {currentRoute.playlistUrl !== "" &&
+                <View>
+                    <TouchableOpacity onPress={()=>{Linking.openURL(currentRoute.playlistUrl)}}>
+                        <Ionicons name="ios-musical-notes" size={60} color={MainColors.greenColor}/>
+                    </TouchableOpacity>
+                </View>
+                }
                 <TimeCounter handleMinutesCounter={setMinutesCounter} handleSecondsCounter={setSecondsCounter} />
             </View>
-
             {checkPoints[0] !== undefined &&
                     <View style={{flex:2, width:"100%", padding:5, alignItems: 'center'}}>
                         <CheckPoint title={checkPoints[0].title} distance={checkPoints[0].distance} />
