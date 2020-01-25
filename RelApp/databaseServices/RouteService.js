@@ -47,6 +47,20 @@ function formatRoute(id, data, userId) {
   return route;
 }
 
+export async function updateRoute(description, name, playlistUrl, routeId) {
+  try {
+    const route = {
+      description,
+      name,
+      playlistUrl
+    };
+
+    await db.collection(Collections.routes).doc(routeId).update()
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export async function insertRoute(description, name, ownerId, playlistUrl) {
   try {
     const id = uuid.v4();
