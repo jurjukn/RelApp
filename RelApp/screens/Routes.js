@@ -39,7 +39,7 @@ export default function Routes(props)
                                 {
                                     return(
                                         <View key = {index} style={styles.scrollElement}>
-                                            <RouteItem data = {{...x,...currentUser}}
+                                            <RouteItem data = {{routeData:x,currentUser}}
                                                        callback = {()=>
                                                        {
                                                            props.navigation.navigate("SingleRoute", {routeData:x, userData:currentUser})
