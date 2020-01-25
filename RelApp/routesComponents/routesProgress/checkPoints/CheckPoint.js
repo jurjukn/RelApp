@@ -1,5 +1,6 @@
 import {View, Text, StyleSheet} from "react-native";
 import React from "react";
+import {MainColors} from '../../../components/stylingComponents';
 
 export default function CheckPoint({distance, title, Visited})
 {
@@ -10,7 +11,7 @@ export default function CheckPoint({distance, title, Visited})
             </View>
             <View style={Styles.secondView}>
                 <View>
-                    <Text>{distance} meters</Text>
+                    <Text style={{fontSize: 18, color: MainColors.textDarkGrey}}>{Math.round(distance)/1000} km</Text>
                 </View>
             </View>
         </View>
@@ -24,9 +25,9 @@ const Styles = StyleSheet.create({
         flexDirection: 'column',
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: 'black',
-        backgroundColor: '#FFDEAD',
-        marginBottom:5
+        borderColor: MainColors.borders,
+        backgroundColor: MainColors.containerBackground,
+        marginBottom: 20,
     },
     mainView:{
         width: '100%',
@@ -43,7 +44,7 @@ const Styles = StyleSheet.create({
     },
     textStyle:{
         fontWeight: 'bold',
-        color: 'white',
-        fontSize: 20,
+        color: MainColors.textDarkGrey,
+        fontSize: 22,
     },
 })

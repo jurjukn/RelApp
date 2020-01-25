@@ -1,5 +1,5 @@
-import {StyleSheet, View, TextInput} from "react-native";
-import {RelappToolBar} from "../../../components/stylingComponents"
+import {StyleSheet, View, TextInput, KeyboardAvoidingView} from "react-native";
+import {RelappToolBar, MainColors} from "../../../components/stylingComponents"
 import React, {useState} from "react";
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
 
@@ -9,13 +9,14 @@ function UselessTextInput(props) {
         {...props}
         editable
         maxLength={40}
+        style = {{fontSize: 20, color: MainColors.textDarkGrey}}
       />
     );
 }
 
 export default function CommentScreen(props)
 {
-    const [value, onChangeText] = useState('Please type your comment');
+    const [value, onChangeText] = useState('');
 
     function addToHistory(routeHistory){
         console.log("Here we add routeHistory to database")
@@ -38,7 +39,7 @@ export default function CommentScreen(props)
     }
 
     return (
-        <View style={{flex:1}}>
+        <KeyboardAvoidingView style={{flex:1}} behavior="padding" enabled>
             <RelappToolBar text = "Comment"
                 fontSize = {32}
                 callback = {()=>{props.navigation.goBack()}}
@@ -57,22 +58,22 @@ export default function CommentScreen(props)
                             multiline
                             numberOfLines={4}
                             onChangeText={text => onChangeText(text)}
-                            value={value}
+                            placeholder="Please type your comment"
                         />
                     </View>
                 </View>
                 <View style={styles.innerContainer}>
-                    <RelappButton style = {ButtonTypes().mediumButton} text = "Finish" callback = {()=>{proceedToNextScreen()}}/>
+                    <RelappButton style = {ButtonTypes().largeButton} text = "Finish" callback = {()=>{proceedToNextScreen()}}/>
                 </View>
             </View>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F0E6E6',
+        backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'flex-start',
         flexDirection: 'column',
