@@ -11,6 +11,7 @@ export function RelappTextInput(props)
             textAlign={'center'}
             style={SearchStyles.textStyle}
             onChangeText={props.onChangeText}
+            onSubmitEditing={props.submitEditing}
         />
     )
 }

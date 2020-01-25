@@ -5,7 +5,7 @@ import {MainColors, RelappLogo, RelappToolBar, Space} from "../components/stylin
 import {RouteItem} from "../routesComponents/RouteItem";
 import {RelappTextInput} from "../components/RelappTextInput";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
-import {getAllRoutes} from "../databaseServices/RouteService";
+import {getAllRoutes, searchRouteByTitle} from "../databaseServices/RouteService";
 import {getCurrentUser} from "../firebaseServices/Authentication";
 
 
@@ -21,7 +21,6 @@ export default function Routes(props)
             getCurrentUser().then(r=>setCurrentUser(r));
             getAllRoutes().then(r=>setRoutesArr(r));
         }
-        getAllRoutes().then(r=>{if(r!==routesArr) setRoutesArr(r)});
     });
 
 
@@ -30,7 +29,12 @@ export default function Routes(props)
             <RelappToolBar text = {"All Routes"}/>
             <View style={styles.container}>
                 <Space size = {30}/>
-                <RelappTextInput onChangeText = {(text)=>{setText(text)}}/>
+                <RelappTextInput
+                    submitEditing = {()=>{searchRouteByTitle(text).then(r => {
+                        setRoutesArr(r);
+                    })}}
+                    onChangeText = {(text)=>{setText(text)}
+                }/>
                 <Space size = {20}/>
                 <View style={styles.scrollbar}>
                     <ScrollView>
