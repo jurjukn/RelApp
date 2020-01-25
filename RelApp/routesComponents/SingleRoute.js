@@ -35,11 +35,11 @@ export default function SingleRoute(props)
 
     const closeCommentsModal = () => {
         setModalVisible(false)
-    }
+    };
 
     if(data===null)
     {
-        const routeData = props.navigation.getParam('routeData', 'default value')
+        const routeData = props.navigation.getParam('routeData', 'default value');
         setData(routeData);
         isFavorite(routeData.isFavorite);
         getAddressByRouteId(routeData.id).then(r=>

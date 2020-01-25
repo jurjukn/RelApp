@@ -23,6 +23,7 @@ const Description = (props)=>
 export default function AddDescription(props)
 {
     const [mainVisible, setMainVisible] = useState(true);
+    const [text, setText] = useState("");
     const ChangeState = ()=>{
         setMainVisible(!mainVisible);
     };
@@ -30,7 +31,6 @@ export default function AddDescription(props)
         //console.log("useEffect",props.setModalVisible);
         ChangeState();
     }, [props.setModalVisible]);
-    const [text, setText] = useState("");
     return (
         <View>
             <TransparentModal setModalVisible = {mainVisible}/>

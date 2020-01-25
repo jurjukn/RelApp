@@ -18,11 +18,12 @@ import {
     RouteStyles,
 } from "./RoutesStyles";
 import InsertionMap from "./Maps/InsertionMap";
-import {insertRoute} from "../databaseServices/RouteService";
-import {insertAddressRecord} from "../databaseServices/AddressService";
+import {insertRoute, updateRoute} from "../databaseServices/RouteService";
+import {getAddressByRouteId, insertAddressRecord, updateAddressRecord} from "../databaseServices/AddressService";
 
 export default function CreateRoute(props)
 {
+    const currentUser = props.navigation.getParam('currentUser', 'default value');
     const checkNavigation = props.navigation.getParam('route', 'default value');
     let editRoute = null;
     if(checkNavigation!=='default value')
@@ -33,6 +34,7 @@ export default function CreateRoute(props)
     const [musicModal, setMusicModalModal] = useState(false);
     const [descriptionModal, setDescriptionModal] = useState(false);
     const [description, setDescription] = useState("");
+    const [music, setMusic] = useState("");
     const [title, setTitle] =useState("");
 
     let mapRef = null;
@@ -40,8 +42,6 @@ export default function CreateRoute(props)
 
     const generateSendRequest = ()=>
     {
-        //console.log("-----------------------------------------------------------");
-        const ownerId = "YSyq7X6EstfICCEB8KMq2EDtjjS2";
         const address = addressRef.getSomething();
         const coords =
             mapRef.getMarkers().map(
@@ -52,10 +52,10 @@ export default function CreateRoute(props)
             );
 
         if(editRoute===null) {
-            if (title !== "" && address.region !== "" &&
-                address.city !== "" && description !== ""
+            if (title !== "" && address.region !== "" && address.city !== ""
+                && description !== ""  && music !== ""
                 && address.country !== "" && coords !== []) {
-                insertRoute(description, title, ownerId).then(r => {
+                insertRoute(description, title, currentUser.id,"www.example.com").then(r => {
                         insertAddressRecord(address.city, address.region, address.country, r, coords).then(r => {
                                 props.navigation.navigate("Route");
                             }
@@ -70,23 +70,26 @@ export default function CreateRoute(props)
                 title: title==="" ? editRoute.title : title,
                 description: description==="" ? editRoute.description : description,
                 address:{
-                    region:address.region === "" ? editRoute.address.region : address.region,
-                    country:address.country === "" ? editRoute.address.country : address.country,
-                    city:address.city === "" ? editRoute.address.city : address.city,
+                    id:"null",
+                    region: address.region === "" ? editRoute.address.region : address.region,
+                    country: address.country === "" ? editRoute.address.country : address.country,
+                    city: address.city === "" ? editRoute.address.city : address.city,
                 },
                 coordinates:coords,
+                playlistUrl:"www.example.com",
             };
-            console.log(newRoute);
-            // insertRoute(description, title, ownerId).then(r => {
-            //         insertAddressRecord(address.city, address.region, address.country, r, coords).then(r => {
-            //                 props.navigation.navigate("Route");
-            //             }
-            //         )
-            //     }
-            // )
+            //console.log("___________updateRoute____________ ", newRoute);
+            updateRoute(newRoute.description, newRoute.title, newRoute.playlistUrl, routeId).then(r =>
+                {
+                    updateAddressRecord(newRoute.address.id,
+                        newRoute.address.city, newRoute.address.region, country, coordinates).then();
+                }
+            )
+
 
         }
-    }
+    };
+
     return (
         <View style={{flex: 1}}>
             <RelappToolBar text = {editRoute === null ? "Create New" : "Edit Route"} callback = {()=>props.navigation.goBack()}/>
@@ -133,7 +136,11 @@ export default function CreateRoute(props)
                     defaultValue = {editRoute === null ? null : editRoute.description}
                     sendInfo = {setDescription}
                     setModalVisible = {descriptionModal}/>
-                <SelectMusic setModalVisible = {musicModal}/>
+                <SelectMusic
+                    setModalVisible = {musicModal}
+                    defaultValue = {editRoute === null ? null : null}
+                    sendInfo = {setMusic}
+                />
             </View>
         </View>
     )

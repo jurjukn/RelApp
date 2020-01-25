@@ -54,7 +54,10 @@ export default function Routes(props)
                     </ScrollView>
                 </View>
                 <Space size = {20}/>
-                <RelappButton style = {ButtonTypes().largeButton} text = "Create New" callback = {()=> props.navigation.navigate("CreateRoute")}/>
+                <RelappButton
+                    style = {ButtonTypes().largeButton}
+                    text = "Create New"
+                    callback = {()=> props.navigation.navigate("CreateRoute", {currentUser})}/>
                 <Space size = {20}/>
             </View>
         </View>
