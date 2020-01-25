@@ -1,13 +1,12 @@
-import {TouchableOpacity, StyleSheet, Text, View, Button} from "react-native";
+import {TouchableOpacity, StyleSheet, View} from "react-native";
 import {RelappToolBar} from "./../../../components/stylingComponents"
 import React, {useState, useEffect} from "react";
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
 import { Linking } from 'expo';
-import { Pedometer } from "expo-sensors";
 import ShowingMap from "../../Maps/ShowingMap";
 import CheckPoint from "../checkPoints/CheckPoint"
 import { Ionicons } from '@expo/vector-icons';
-
+import {MainColors} from '../../../components/stylingComponents';
 import TimeCounter from "./helpers/TimeCounter"
 
 export default function GoingScreen(props)
@@ -68,24 +67,26 @@ export default function GoingScreen(props)
                 fontSize = {32}
             />
             <View style={styles.container}>
-            <View style={{flex:1, flexDirection:"row"}}>
+            <View style={{flex:1, flexDirection:"row", alignItems: 'center', marginLeft: 80}}>
                 <TouchableOpacity onPress={()=>{Linking.openURL('https://open.spotify.com/playlist/7fZUgTmUcN4KVRsRwadU2z')}}>
-                 <Ionicons name="ios-musical-notes" size={80} color="green"/>
+                <Ionicons name="ios-musical-notes" size={60} color={MainColors.greenColor}/>
                 </TouchableOpacity>
+                <TimeCounter handleMinutesCounter={setMinutesCounter} handleSecondsCounter={setSecondsCounter} />
             </View>
-            { checkPoints[0] !== undefined &&
-                <View style={{flex:2, width:"100%", padding:5}}>
-                    <CheckPoint title={checkPoints[0].title} distance={checkPoints[0].distance} />
-                    <View style={{flex:1,flexDirection:"row"}}>
-                        <RelappButton
-                        style = {ButtonTypes().mediumButton}
-                        text = "Remaining check points"
-                        callback = {()=>{props.navigation.navigate("CheckPointsScreen",{CheckPoints: checkPoints})}}
-                        />
-                        <TimeCounter handleMinutesCounter={setMinutesCounter} handleSecondsCounter={setSecondsCounter} />
+
+            {checkPoints[0] !== undefined &&
+                    <View style={{flex:2, width:"100%", padding:5, alignItems: 'center'}}>
+                        <CheckPoint title={checkPoints[0].title} distance={checkPoints[0].distance} />
+                        <View style={{flex:1,flexDirection:"row"}}>
+                            <RelappButton
+                            style = {ButtonTypes().largeButton}
+                            text = "Remaining check points"
+                            callback = {()=>{props.navigation.navigate("CheckPointsScreen",{CheckPoints: checkPoints})}}
+                            />
+                        </View>
                     </View>
-                </View>
             }
+
             {/* <View style={{flex:4}}> */}
             <ShowingMap
                 ref={(ref) => {mapRef = ref;}}
@@ -95,9 +96,9 @@ export default function GoingScreen(props)
             {/* </View> */}
             {/* constraints when to show check in/finish button, later uncomment */}
             {/* {checkPointReached && */}
-            <View style={{flex:1, width:"100%", alignItems:"center"}}>
+            <View style={{flex:1, width:"100%", alignItems:"center", marginTop: 15}}>
                 <RelappButton
-                    style = {ButtonTypes().mediumButton}
+                    style = {ButtonTypes().largeButton}
                     text = {checkPoints.length === 0? ("Finish") : ("Check In")}
                     callback = {checkPoints.length === 0? (()=>{handleRouteFinished()}) : (()=>{handleCheckPointReached()})}
                 />   
@@ -123,11 +124,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'column',
     },
-
-        separationLine: {
-            width:"100%",
-            borderWidth: 2,
-            borderRadius: 2,
-        },
-
+    separationLine: {
+        width:"100%",
+        borderWidth: 2,
+        borderRadius: 2,
+    },
 })

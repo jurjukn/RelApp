@@ -59,4 +59,3 @@ export const ModalStyles = StyleSheet.create({
         backgroundColor: MainColors.containerBackground,
     },
 });
-

@@ -43,12 +43,12 @@ export default function StatisticsScreen(props)
                     count={5}
                     reviews={["Terrible ", "Bad ", "Good ", "Very Good ","Amazing "]}
                     defaultRating={1}
-                    size={30}
+                    size={40}
                     onFinishRating={ratingCompleted}
                     />
                 </View>
                 <View style={styles.innerContainer}>
-                    <RelappButton style = {ButtonTypes().mediumButton} text = "Next" callback = {()=>{proceedToNextScreen()}}/>
+                    <RelappButton style = {ButtonTypes().largeButton} text = "Next" callback = {()=>{proceedToNextScreen()}}/>
                 </View>
             </View>
         </View>
@@ -58,7 +58,7 @@ export default function StatisticsScreen(props)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F0E6E6',
+        backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'flex-start',
         flexDirection: 'column',

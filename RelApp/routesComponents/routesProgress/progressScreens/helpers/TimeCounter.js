@@ -1,5 +1,6 @@
 import {Text, View} from "react-native";
 import React, {useState, useEffect} from "react";
+import {MainColors} from '../../../../components/stylingComponents';
 
 
 export default function TimeCounter(props)
@@ -33,7 +34,7 @@ export default function TimeCounter(props)
 
     return (
         <View style={{flex:1, alignItems:"center"}}>
-            <Text>{minutesCounter} : {secondsCounter}</Text>
+            <Text style={{color: MainColors.greenColor, fontWeight: 'bold', fontSize:30}}>{minutesCounter} : {secondsCounter}</Text>
         </View>
     )
 }
