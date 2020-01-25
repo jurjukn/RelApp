@@ -41,6 +41,7 @@ function formatRoute(id, data, userId) {
     title: data.title,
     description: data.description,
     ownerId: data.ownerId,
+    playlistUrl: data.playlistUrl,
     isFavorite: isFavorite
   };
 
