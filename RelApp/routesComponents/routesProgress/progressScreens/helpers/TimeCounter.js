@@ -32,7 +32,7 @@ export default function TimeCounter(props)
     }, [minutesCounter, secondsCounter])
 
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, alignItems:"center"}}>
             <Text>{minutesCounter} : {secondsCounter}</Text>
         </View>
     )
