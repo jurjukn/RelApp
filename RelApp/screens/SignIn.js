@@ -79,26 +79,6 @@ export default function SignIn(props){
             <View style={{width: "100%", alignItems: "center"}}>
                 <Space size = {20}/>
                 <DottedLine/>
-                <Text style={{fontSize: 20, color: "#4F4F4F"}}>OR</Text>
-                <DottedLine/>
-
-                <View style={{flexDirection: "row", marginTop: 10}}>
-                    <TouchableOpacity style ={{start:-120}} onPress={() => Alert.alert('GMAIL login pressed')}>
-                        <MaterialCommunityIcons
-                            name={"email-outline"}
-                            size={45}
-                            color={"gray"}
-                        />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style ={{start: 120}}  onPress={() => Alert.alert('FB login pressed')}>
-                        <MaterialCommunityIcons
-                            name={"facebook"}
-                            size={45}
-                            color={"gray"}
-                        />
-                    </TouchableOpacity>
-                </View>
             </View>
 
             <View style ={{flexDirection: 'row', marginTop: 50}}>

@@ -13,9 +13,7 @@ export function Route(props)
     async function handleEditRouteBtn() {
         try {
             let data = await getAddressByRouteId(props.data.id);
-            let address = {city: data.city, country: data.country, region: data.region};
-            let coordinates = data.coordinates;
-            const route = {title: props.data.name, description: props.data.description, coordinates: coordinates, address: address}
+            const route = {route: props.data, address: data}
             props.navigation.navigate("CreateRoute", {route})
         } catch (err) {
             console.log(err);
