@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
 import {getCurrentUser} from "./../../../firebaseServices/Authentication"
 import {insertHistoryRecord} from "./../../../databaseServices/HistoryService"
+import {insertRouteComment} from "./../../../databaseServices/CommentService"
 
 function UselessTextInput(props) {
     return (
@@ -25,15 +26,18 @@ export default function CommentScreen(props)
         const user = await getCurrentUser()
         const today = new Date();
         const dd = String(today.getDate()).padStart(2, '0');
-        const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); 
         const yyyy = today.getFullYear();
         const dateObject = {day: dd, month: mm, year: yyyy}
-        await insertHistoryRecord(true, 
+        await insertHistoryRecord(
+            true, 
             dateObject, 
             routeHistory.distance, 
             routeHistory.duration, 
             routeHistory.rating, 
-            routeHistory.routeId, user.id);
+            routeHistory.routeId, user.id
+        );
+        await insertRouteComment(routeHistory.comments, user.name, routeHistory.routeId)
     }
 
     function proceedToNextScreen(){

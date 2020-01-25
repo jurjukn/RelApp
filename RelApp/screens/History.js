@@ -7,6 +7,7 @@ import UserStatistics from "./../historyComponents/UserStatistics"
 import RoutesList from "./../historyComponents/RoutesList"
 
 import {getHistoryByUserId} from './../databaseServices/HistoryService'
+import {getCurrentUser} from "./../firebaseServices/Authentication"
 
 
 export default function History (props) {
@@ -16,7 +17,10 @@ export default function History (props) {
     useEffect(() => {
         try{
         const fetchData = async () => {
-            const value = await getHistoryByUserId("UserId1")
+            const user = await getCurrentUser()
+            console.log(user)
+            const value = await getHistoryByUserId(user.id)
+            console.log(value)
             if(value.length!==0){
                 console.log(value)
                 setUserHistory(value)
