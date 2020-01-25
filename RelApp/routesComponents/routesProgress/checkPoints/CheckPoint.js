@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet} from "react-native";
 import React from "react";
 
-export default function CheckPoint({distance, title})
+export default function CheckPoint({distance, title, Visited})
 {
     return (
         <View style={Styles.customView}>
