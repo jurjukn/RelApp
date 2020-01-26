@@ -2,6 +2,9 @@ import {StyleSheet, View, TextInput, KeyboardAvoidingView} from "react-native";
 import {RelappToolBar, MainColors} from "../../../components/stylingComponents"
 import React, {useState} from "react";
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
+import {getCurrentUser} from "./../../../firebaseServices/Authentication"
+import {insertHistoryRecord} from "./../../../databaseServices/HistoryService"
+import {insertRouteComment} from "./../../../databaseServices/CommentService"
 
 function UselessTextInput(props) {
     return (
@@ -17,22 +20,38 @@ function UselessTextInput(props) {
 export default function CommentScreen(props)
 {
     const [value, onChangeText] = useState('');
+    const [userId, setUserId] = useState(null)
 
-    function addToHistory(routeHistory){
-        console.log("Here we add routeHistory to database")
-        console.log(routeHistory)
+    async function addToHistory(routeHistory){
+        const user = await getCurrentUser()
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); 
+        const yyyy = today.getFullYear();
+        const dateObject = {day: dd, month: mm, year: yyyy}
+        await insertHistoryRecord(
+            true, 
+            dateObject, 
+            routeHistory.distance, 
+            routeHistory.duration, 
+            routeHistory.rating, 
+            routeHistory.routeId, 
+            user.id,
+            routeHistory.routeTitle
+        );
+        await insertRouteComment(routeHistory.comments, user.name, routeHistory.routeId)
     }
 
     function proceedToNextScreen(){
         const historyObject = props.navigation.state.params
-        console.log(historyObject)
         addToHistory(
             {
                 duration: historyObject.duration, 
                 distance: historyObject.distance, 
                 rating: historyObject.rating, 
                 comments: value,
-                routeId: historyObject.route.id
+                routeId: historyObject.route.id,
+                routeTitle: historyObject.route.title
             }
         )
         props.navigation.navigate("Tabs")

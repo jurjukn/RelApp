@@ -36,7 +36,7 @@ export default function GoingScreen(props)
     };
     const handleRouteFinished = () => {
         let time = timeRef.getTime();
-       let distance = getDistance();
+        let distance = getDistance();
         props.navigation.navigate(
             'StatisticsScreen',
             {
@@ -58,7 +58,7 @@ export default function GoingScreen(props)
                 <ScrollView>
                     <View style={{flex:1, flexDirection:"row", alignItems: 'center', marginLeft: 80}}>
                         <TouchableOpacity onPress={()=>{Linking.openURL('https://open.spotify.com/playlist/7fZUgTmUcN4KVRsRwadU2z')}}>
-                        <Ionicons name="ios-musical-notes" size={60} color={MainColors.greenColor}/>
+                            <Ionicons name="ios-musical-notes" size={60} color={MainColors.greenColor}/>
                         </TouchableOpacity>
                         <TimeCounter ref={(ref) => {timeRef = ref;}} />
                     </View>
@@ -70,9 +70,9 @@ export default function GoingScreen(props)
                                 distance={currentPoints.length <= index ? getDistance() : currentPoints[index].distance} />
                             <View style={{flex:1,flexDirection:"row"}}>
                                 <RelappButton
-                                        style = {ButtonTypes().largeButton}
-                                        text = "Remaining check points"
-                                        callback = {()=>{props.navigation.navigate("CheckPointsScreen",{CheckPoints: currentPoints.slice(index)})}}
+                                    style = {ButtonTypes().largeButton}
+                                    text = "Remaining check points"
+                                    callback = {()=>{props.navigation.navigate("CheckPointsScreen",{CheckPoints: currentPoints.slice(index)})}}
                                 />
                             </View>
                         </View>
@@ -96,7 +96,7 @@ export default function GoingScreen(props)
                                 text={currentPoints.length === index ? ("Finish") : ("Check In")}
                                 callback={
                                     currentPoints.length === index ? (() => {handleRouteFinished()})
-                                    : (() => {setIndex(index+1)})}
+                                        : (() => {setIndex(index+1)})}
                             />
                         </View>
                         :null}

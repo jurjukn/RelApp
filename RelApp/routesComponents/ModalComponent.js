@@ -12,6 +12,7 @@ export default function ModalComponent(props)
                 transparent={true}
                 visible={props.visible}
             >
+                <Space size = {15}/>
                 <RelappToolBar text = {props.header} callback = {()=>props.setModalVisible(!props.visible)}/>
                 <View style={styles.modalBody}>
                     <RelappHeader text = {props.title} size = {16} />

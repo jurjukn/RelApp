@@ -1,4 +1,4 @@
-import { firestore as db } from '../firebaseServices/Firebase';
+import firebase, { firestore as db } from '../firebaseServices/Firebase';
 import { Collections } from './Collections';
 import uuid from 'react-native-uuid';
 
@@ -45,18 +45,20 @@ export async function getHistoryByUserId(userId) {
   }
 }
 
-export async function insertHistoryRecord(completed, date, distance, duration, rating, routeId, userId) {
+export async function insertHistoryRecord(completed, date, distance, duration, rating, routeId, userId, routeTitle) {
   try {
     const id = uuid.v4();
+    const fireStoreDate = firebase.firestore.Timestamp.fromDate(new Date(date.year, date.month, date.day));
     const history = {
       completed,
-      date,
+      date: fireStoreDate,
       distance,
       duration,
       rating,
       routeId,
-      userId
-    }
+      userId,
+      routeTitle
+    };
 
     await db.collection(Collections.history).doc(id).set(history);
 
