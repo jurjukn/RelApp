@@ -20,7 +20,6 @@ function UselessTextInput(props) {
 export default function CommentScreen(props)
 {
     const [value, onChangeText] = useState('');
-    const [userId, setUserId] = useState(null)
 
     async function addToHistory(routeHistory){
         const user = await getCurrentUser()
