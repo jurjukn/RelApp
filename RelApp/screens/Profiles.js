@@ -1,14 +1,18 @@
 import {View, Text, StyleSheet, Modal} from "react-native";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {RelappToolBar, MainColors} from "../components/stylingComponents";
 import UserInfo from '../profileComponents/UserInfo';
 import AllRoutes from '../profileComponents/AllRoutes';
 import {handlerUserSignOut} from "../firebaseServices/Authentication";
 import Help from "../profileComponents/modals/Help";
 import {getAllRoutes} from "../databaseServices/RouteService";
+import {getCurrentUser} from '../firebaseServices/Authentication';
 
 export default function Profiles(props){
     const [modalVisible, setModalVisible] = useState(false);
+    const [routesCreatedByUser, setRoutes] = useState([]);
+    const [currentUserId, setCurrentUserId] = useState("");
+
     const helpIcon = {
         name:"md-help-circle",
         callback:()=>{setModalVisible(true)}
@@ -21,8 +25,40 @@ export default function Profiles(props){
 
     const refreshIcon = {
         name:"md-refresh",
-        callback:()=>{}
+        callback:()=>{getRoutes()}
     };
+
+    useEffect(() => {
+        if(currentUserId === ""){
+            getUserId();
+        }
+        if(routesCreatedByUser.length === 0){
+            getRoutes();
+        }
+    });
+
+    async function getUserId() {
+        try {
+            let data = await getCurrentUser();
+            setCurrentUserId(data.id);
+        } catch (err) {
+            console.log(err);
+        }     
+    }
+
+    async function getRoutes() {
+        try {
+            let data = await getAllRoutes();
+            getRoutesCreatedByUser(data);
+        } catch (err) {
+            console.log(err);
+        }     
+    }
+
+    const getRoutesCreatedByUser = (allRoutes) => {
+        setRoutes(allRoutes.filter(item => item.ownerId === currentUserId))
+        
+    }
 
     async function signOut() {
         try {
@@ -60,7 +96,7 @@ export default function Profiles(props){
             <View style={{margin: 10}}>
                 <Text style={styles.textStyle}>Routes created by me</Text>
             </View>
-            <AllRoutes navigation = {props.navigation}/>
+            <AllRoutes navigation = {props.navigation} routesCreatedByUser = {routesCreatedByUser}/>
         </View>
     );
 }

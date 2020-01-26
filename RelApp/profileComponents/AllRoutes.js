@@ -1,46 +1,11 @@
 import {View, StyleSheet, ScrollView} from "react-native";
-import React, {useState} from "react";
+import React from "react";
 import {Route} from "./Route";
-import {getAllRoutes} from '../databaseServices/RouteService';
-import {getCurrentUser} from '../firebaseServices/Authentication';
 import {MainColors} from '../components/stylingComponents';
 
 export default function AllRoutes(props){
-    const [routesCreatedByUser, setRoutes] = useState([]);
-    const [currentUserId, setCurrentUserId] = useState("");
+    let routesCreatedByUser = props.routesCreatedByUser;
 
-    if(currentUserId === ""){
-        getUserId();
-    }
-
-    if(routesCreatedByUser.length === 0){
-        getAllRoutesFromDb();
-    } 
-    
-    async function getUserId() {
-        try {
-            let data = await getCurrentUser();
-            setCurrentUserId(data.id);
-        } catch (err) {
-            console.log(err);
-        }     
-    }
-
-    async function getAllRoutesFromDb() {
-        try {
-            let data = await getAllRoutes();
-            getRoutesCreatedByUser(data);
-        } catch (err) {
-            console.log(err);
-        }     
-    }
-
-    const getRoutesCreatedByUser = (allRoutes) => {
-        if (routesCreatedByUser.length === 0) {
-            setRoutes(allRoutes.filter(item => item.ownerId === currentUserId))
-        }
-    }
-    
     return (
         <View style={styles.grayContainer}>
             <ScrollView>
@@ -73,5 +38,8 @@ export const styles = StyleSheet.create({
         backgroundColor: MainColors.containerBackground,
         margin: 10,
         alignItems: "center",
+        justifyContent: 'center',
+        flexDirection: 'column',
+        flex: 1,
     },
 })
