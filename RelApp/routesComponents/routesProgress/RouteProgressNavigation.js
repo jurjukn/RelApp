@@ -1,6 +1,4 @@
-import {createSwitchNavigator} from "react-navigation";
 import {createStackNavigator} from "react-navigation-stack";
-import Routes from "../../screens/Routes";
 import GoingScreen from "./progressScreens/GoingScreen"
 import StatisticsScreen from "./progressScreens/StatisticsScreen"
 import RatingScreen from "./progressScreens/RatingScreen"

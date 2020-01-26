@@ -1,7 +1,7 @@
 import {View, StyleSheet} from "react-native";
 import React, {useEffect, useState} from "react";
 
-import {RelappToolBar, Space} from "../components/stylingComponents";
+import {MainColors, RelappToolBar, Space} from "../components/stylingComponents";
 import {RelappTextInput} from "../components/RelappTextInput";
 import UserStatistics from "./../historyComponents/UserStatistics"
 import RoutesList from "./../historyComponents/RoutesList"
@@ -56,7 +56,7 @@ export default function History (props) {
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: MainColors.backgroundColor,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     listContainer: {
         flex: 4,
         width:'100%',
-        backgroundColor: '#F1F1F1',
+        backgroundColor: MainColors.greyBackgroundColor,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',

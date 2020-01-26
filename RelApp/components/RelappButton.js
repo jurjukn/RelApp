@@ -22,7 +22,7 @@ export const ButtonTypes = ()=>
             largeButton:{buttonStyle:ButtonStyles.button, textStyle:ButtonStyles.buttonText},
         }
     )
-}
+};
 
 const ButtonStyles = StyleSheet.create({
     button: {
@@ -65,4 +65,4 @@ const ButtonStyles = StyleSheet.create({
         fontSize: 17,
         textAlign: 'center',
     },
-})
+});

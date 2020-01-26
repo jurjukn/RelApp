@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TextInput,} from "react-native";
 import {MainColors} from "./stylingComponents";
 
 export function RelappTextInput(props)

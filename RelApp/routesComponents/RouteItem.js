@@ -1,6 +1,6 @@
-import {View, Text, StyleSheet, TextInput, TouchableOpacity} from "react-native";
+import {View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import React, {useState} from "react";
-import {IconsComponent, MainColors, Space} from "../components/stylingComponents";
+import {IconsComponent, MainColors} from "../components/stylingComponents";
 import {addRouteAsFavorite, removeRouteFromFavorites} from "../databaseServices/RouteService";
 
 export function RouteItem(props)
@@ -76,4 +76,4 @@ export const RouteItemStyles = StyleSheet.create({
         color: 'black',
         fontSize: 20,
     },
-})
+});

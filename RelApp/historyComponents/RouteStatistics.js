@@ -1,5 +1,6 @@
 import {View, Text, StyleSheet} from "react-native";
 import React from "react";
+import {MainColors} from "../components/stylingComponents";
 
 export default function RouteStatistics({routeName, date, time, distance, difficulty, myRate})
 {
@@ -8,11 +9,11 @@ export default function RouteStatistics({routeName, date, time, distance, diffic
         const h = Math.floor(d / 3600);
         const m = Math.floor(d % 3600 / 60);
         const s = Math.floor(d % 3600 % 60);
-    
+
         const hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
         const mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
         const sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-        return hDisplay + mDisplay + sDisplay; 
+        return hDisplay + mDisplay + sDisplay;
     }
 
     return (
@@ -46,7 +47,7 @@ const Styles = StyleSheet.create({
         width: 330,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: '#333333',
+        borderColor: MainColors.iconGrey,
         backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
@@ -67,11 +68,11 @@ const Styles = StyleSheet.create({
     },
     title:{
         fontWeight: 'bold',
-        color: '#333333',
+        color: MainColors.iconGrey,
         fontSize: 20,
     },
     text:{
-        color: '#333333',
+        color: MainColors.iconGrey,
         fontSize: 15,
         marginLeft: 15,
         marginBottom: 5,

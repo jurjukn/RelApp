@@ -1,23 +1,8 @@
 import {IconsComponent, MainColors, Space} from "../components/stylingComponents";
-import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {Ionicons} from "@expo/vector-icons";
-import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
+import {ScrollView, StyleSheet, Text, View} from "react-native";
+import React, {forwardRef, useImperativeHandle, useState} from "react";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 import {RelappMiniTextInput} from "../components/RelappTextInput";
-
-export function RouteStart (props)
-{
-    return(
-        <View style={{...styles.locationContainer, justifyContent: 'flex-start',}}>
-            <RelappButton style = {ButtonTypes().smallButton} text = "Start"
-                          callback = {props.callback}/>
-            <IconsComponent name = {props.favorite()} style={{...styles.iconView, left:'200%'}}
-                            callback = {props.isFavorite}/>
-            <IconsComponent name = {"md-chatboxes"} style={{...styles.iconView, left:'300%'}}
-                            callback = {props.showComents}/>
-        </View>
-    )
-}
 
 export function RouteDescription (props)
 {
@@ -104,7 +89,7 @@ export function AddressFields(props, ref) {
                 city:city,
             }
         )
-    }
+    };
 
     useImperativeHandle(ref, () => ({
         getSomething: () => {
@@ -189,10 +174,10 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: 18,
     },
-})
+});
 
 export const RouteStyles = StyleSheet.create({
     container: styles.container,
     centeredContainer: styles.locationContainer,
     text: styles.text,
-})
+});
