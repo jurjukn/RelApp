@@ -5,7 +5,7 @@ import {RelappTextInput} from "../components/RelappTextInput";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 import {AddressFields, CreationModalButtons, RouteHeader, RouteStyles,} from "./RoutesStyles";
 import InsertionMap from "./Maps/InsertionMap";
-import {insertRoute, updateRoute} from "../databaseServices/RouteService";
+import {getAllRoutes, insertRoute, updateRoute} from "../databaseServices/RouteService";
 import {insertAddressRecord, updateAddressRecord} from "../databaseServices/AddressService";
 import ModalComponent from "./ModalComponent";
 
@@ -46,6 +46,7 @@ export default function CreateRoute(props)
                 && address.country !== "" && coords !== []) {
                 insertRoute(description, title, currentUser.id,music).then(r => {
                         insertAddressRecord(address.city, address.region, address.country, r, coords).then(r => {
+                                Alert.alert('Route created ! ');
                                 props.navigation.navigate("Route");
                             }
                         )
@@ -71,7 +72,12 @@ export default function CreateRoute(props)
             updateRoute(newRoute.description, newRoute.title, newRoute.playlistUrl, newRoute.id).then(r =>
                 {
                     updateAddressRecord(newRoute.address.id, newRoute.address.city,
-                        newRoute.address.region, newRoute.address.country, newRoute.coordinates).then();
+                        newRoute.address.region, newRoute.address.country, newRoute.coordinates).then(r=>
+                        {
+                            Alert.alert('Route update ! ');
+                            props.navigation.navigate("Route");
+                        }
+                    );
                 }
             )
        }
@@ -114,7 +120,8 @@ export default function CreateRoute(props)
                         }}/>
                     <Space size = {20}/>
                     <View style={RouteStyles.centeredContainer}>
-                        <RelappButton style = {ButtonTypes().largeButton} text = "Create New"
+                        <RelappButton style = {ButtonTypes().largeButton}
+                                      text = {oldRoute===null ? "Create New" :  "Update Old"}
                                       callback = {()=>{generateSendRequest()}}/>
                     </View>
                     <Space size = {20}/>
@@ -123,6 +130,7 @@ export default function CreateRoute(props)
                     title = {"Write short description about your route" }
                     defaultValue = {oldRoute === null ? "Description" : oldRoute.description}
                     sendInfo = {setDescription}
+                    value = {description}
                     visible = {descriptionModal}
                     setModalVisible = {setDescriptionModal}
                 />
@@ -131,6 +139,7 @@ export default function CreateRoute(props)
                     defaultValue = {oldRoute === null ?  " Music URL " : oldRoute.playlistUrl}
                     sendInfo = {setMusic}
                     visible = {musicModal}
+                    value = {music}
                     setModalVisible = {setMusicModal}
                 />
             </View>

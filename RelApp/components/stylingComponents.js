@@ -34,7 +34,7 @@ export function IconsComponent (props)
     return(
         <View style={props.style}>
             <TouchableOpacity  onPress={props.callback}>
-                <Ionicons name={props.name} size={30} color={props.iconWhite === undefined ? 'black' : props.iconWhite} />
+                <Ionicons name={props.name} size={32} color={props.iconWhite === undefined ? 'black' : props.iconWhite} />
             </TouchableOpacity>
         </View>
     )
@@ -77,11 +77,21 @@ export function RelappToolBar(props)
             {props.thirdIcon !== undefined ?
                 <IconsComponent name = {props.thirdIcon.name} style={{
                     position: 'absolute',
-                    right:     35,
+                    right:     40,
                     top:      15,
                     }}
                                 iconWhite = {MainColors.iconWhite}
                                 callback = {props.thirdIcon.callback}
+                /> : null}
+
+            {props.fourthIcon !== undefined ?
+                <IconsComponent name = {props.fourthIcon.name} style={{
+                    position: 'absolute',
+                    right:     80,
+                    top:      15,
+                }}
+                                iconWhite = {MainColors.iconWhite}
+                                callback = {props.fourthIcon.callback}
                 /> : null}
 
         </View>

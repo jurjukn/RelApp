@@ -18,10 +18,11 @@ export default function ModalComponent(props)
                     <RelappHeader text = {props.title} size = {16} />
                     <Space size = {5}/>
                     <TextInput
+                        value={props.value}
                         placeholder = {props.defaultValue}
                         textAlign={'center'}
                         style={styles.textStyle}
-                        onChangeText={props.onChangeText}
+                        onChangeText={(text)=>{props.sendInfo(text)}}
                     />
                     <Space size = {5}/>
                     <RelappButton style = {ButtonTypes().mediumButton} text = "Done" callback = {()=>{
