@@ -40,6 +40,6 @@ Note: Not all features that are in the prototype are going to be implemented.
 TBA
 
 ## Responsibilities
-Deimantas Gedgaudas - database services (Firebase)
+Deimantas Gedgaudas - database services (Firebase).
 Aurelija Čygaitė, Marius Kriukovas, Jurgis Juknevičius - application itself. Aurelija was mainly responsible for Sign up/in screens and Profile tab, Marius - Routes tab, Jurgis - History tab and starting a route screens. However, we helped each other with issues, so we were involved in other's responsibilities.
 
