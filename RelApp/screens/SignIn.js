@@ -18,16 +18,6 @@ export default function SignIn(props){
           }
     };
 
-    async function handleSignInTest() {
-        try {
-            await handleUserLogIn('cygaurelija@gmail.com', 'aurelija'); 
-            props.navigation.navigate("Tabs");
-          } catch (err) {
-            alert("Incorrect email or password");
-            throw err;
-          }
-    };
-
     const handleForgotPasswordBtn = () => {
         sendEmail(
             'cygaurelija@gmail.com',
@@ -67,11 +57,6 @@ export default function SignIn(props){
                     style={styles.buttonStyle}
                     onPress={() => handleSignIn()}>
                     <Text style={styles.buttonTextStyle}>Sign In</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.buttonStyle}
-                    onPress={() => handleSignInTest()}>
-                    <Text style={styles.buttonTextStyle}>Auto Sign In (For testing)</Text>
                 </TouchableOpacity>
             </View>
 
