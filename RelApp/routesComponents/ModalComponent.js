@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import {Modal, Text, TouchableHighlight, View, Alert, StyleSheet, TextInput} from 'react-native';
+import React from "react";
+import {Modal, View, Alert, StyleSheet, TextInput} from 'react-native';
 import {MainColors, RelappHeader, RelappToolBar, Space} from "../components/stylingComponents";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 
@@ -10,23 +10,23 @@ export default function ModalComponent(props)
             <Modal
                 animationType="slide"
                 transparent={true}
-                visible={props.visible}
+                visible={props.modalControls.visible}
             >
                 <Space size = {15}/>
-                <RelappToolBar text = {props.header} callback = {()=>props.setModalVisible(!props.visible)}/>
+                <RelappToolBar text = {props.info.header} callback = {()=>props.modalControls.setModalVisible(!props.modalControls.visible)}/>
                 <View style={styles.modalBody}>
-                    <RelappHeader text = {props.title} size = {16} />
+                    <RelappHeader text = {props.info.title} size = {16} />
                     <Space size = {5}/>
                     <TextInput
                         value={props.value}
-                        placeholder = {props.defaultValue}
+                        placeholder = {props.info.defaultValue}
                         textAlign={'center'}
                         style={styles.textStyle}
                         onChangeText={(text)=>{props.sendInfo(text)}}
                     />
                     <Space size = {5}/>
                     <RelappButton style = {ButtonTypes().mediumButton} text = "Done" callback = {()=>{
-                        props.setModalVisible(!props.visible)
+                        props.modalControls.setModalVisible(!props.modalControls.visible)
                     }}/>
                 </View>
             </Modal>
@@ -49,15 +49,5 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: MainColors.backgroundColor,
-    },
-})
-export const ModalStyles = StyleSheet.create({
-    textView:{
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '80%',
-        height: '80%',
-        backgroundColor: MainColors.containerBackground,
     },
 });

@@ -1,30 +1,14 @@
-import {View, ScrollView, StyleSheet, TextInput, TouchableOpacity, Text} from "react-native";
-import MapView from "react-native-maps";
+import {View, ScrollView,} from "react-native";
 import React, {useState} from "react";
 import ShowingMap from "./Maps/ShowingMap";
-import {
-    IconsComponent,
-    RelappLogo, RelappToolBar,
-    Space
-} from "../components/stylingComponents";
-import {RouteAddress, RouteDescription, RouteHeader, RouteStart, RouteStyles} from "./RoutesStyles";
-import {addRouteAsFavorite, getRouteById, removeRouteFromFavorites} from "../databaseServices/RouteService";
+import {RelappToolBar, Space} from "../components/stylingComponents";
+import {RouteAddress, RouteDescription, RouteStyles} from "./RoutesStyles";
+import {addRouteAsFavorite, removeRouteFromFavorites} from "../databaseServices/RouteService";
 import RouteCommentsModal from "./routeComments/RouteCommentsModal"
 import {getAddressByRouteId} from "../databaseServices/AddressService";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
-import {coordinatesExample} from "./Maps/MapFunctions";
 import {getRouteComments} from "../databaseServices/CommentService";
 
-const hardcodedUserComments = [
-    {
-        UserId: "Rapolas ",
-        Comment: "Veri gud veri naisVeri gud veri naisVeri gud veri naisVeri gud veri naisVeri gud veri naisVeri gud veri nais "
-    },
-    {
-        UserId: "Leopoldas ",
-        Comment: "Veri bad veri gud"
-    }
-];
 
 export default function SingleRoute(props)
 {
@@ -33,7 +17,6 @@ export default function SingleRoute(props)
     const [favorite, isFavorite] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [comments, setComments] = useState([]);
-    // here we should fetch comments and add to array, maybe fetch username?
 
     const closeCommentsModal = () => {
         setModalVisible(false)

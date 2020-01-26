@@ -1,13 +1,8 @@
 import {View, Text, StyleSheet} from "react-native";
 import MapView from "react-native-maps";
 import React, {useState, useEffect, useRef, useImperativeHandle, forwardRef,} from "react";
-import {Marker} from "react-native-maps";
-import { Linking } from 'expo';
-import {
-    coordinatesExample, CreateInitialRegionByCurrentLocation, createInitialRegionFromCord, DefaultInitialRegion,
-} from "./MapFunctions";
+import {CreateInitialRegionByCurrentLocation, createInitialRegionFromCord, DefaultInitialRegion} from "./MapFunctions";
 import MyMarker from "./MyMarker";
-import {AddressFields} from "../RoutesStyles";
 
 
 export default function InsertionMap(props,ref)

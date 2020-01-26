@@ -1,24 +1,17 @@
 import {View, Text, StyleSheet} from "react-native";
 import MapView from "react-native-maps";
 import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
-import {Marker} from "react-native-maps";
 import { Linking } from 'expo';
-import * as Location from 'expo-location';
-import * as Permissions from 'expo-permissions';
 import {
     checkPermissions,
-    coordinatesExample,
-    CreateInitialRegionByCurrentLocation, createInitialRegionFromCord, DefaultInitialRegion,
+    createInitialRegionFromCord,
     generateTitle,
-    getCurrentCoordinates, getDistance,
-    InitialRegion,
-    selectColor
+    getDistance,
 } from "./MapFunctions";
 import MyMarker from "./MyMarker";
 
 const OpenInGoogleMaps = (lat, lon)=>
 {
-    //console.log("OpenInGoogleMap");
     const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
     const latLng = `${lat},${lon}`;
     const label = 'Custom Label';
@@ -38,7 +31,6 @@ export default function ShowingMap(props, ref)
     const currentInit = {latitude: 0.0, longitude:  0.0,};
     const [currentCoordinates, setCurrentCoordinates] = useState(currentInit);
 
-    const finishedRoutes = [];
     const UpdateDistance = 10;//metres
     const Precision = 100;
 

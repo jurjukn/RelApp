@@ -25,7 +25,7 @@ export default function AllRoutes(props)
                 setFavRoutes(props.allRoutes.filter(item => item.isFavorite === true));
             }
         }
-    }
+    };
 
     return (
         <View style={styles.scrollbar}>
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
 
-})
+});

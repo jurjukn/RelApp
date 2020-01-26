@@ -1,6 +1,5 @@
 import {View, StyleSheet} from "react-native";
 import React, {useState,useEffect} from "react";
-import ShowingMap from "../routesComponents/Maps/ShowingMap";
 import {MainColors, RelappToolBar, Space} from "../components/stylingComponents";
 import {RelappTextInput} from "../components/RelappTextInput";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
@@ -47,7 +46,6 @@ export default function Routes(props)
                 <Space size = {20}/>
                 <RelappButton
                     style = {ButtonTypes().mediumButton}
-                    text = "Show favorites"
                     text = {favorites === true ? "Show all routes": "Show favorites"}
                     callback = {()=> handleFilter()}
                 />

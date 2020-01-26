@@ -1,4 +1,3 @@
-import {createSwitchNavigator} from "react-navigation";
 import Routes from "../screens/Routes";
 import CreateRoute from "./CreateRoute";
 import {createStackNavigator} from "react-navigation-stack";

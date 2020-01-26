@@ -65,17 +65,6 @@ export const createInitialRegionFromCord = (coord)=>
 export const getDistance = (coord1,coord2)=>{return distanceCoordinates(coord1.latitude, coord1.longitude,
     coord2.latitude, coord2.longitude, "K")};
 
-export const coordinatesExample = ()=>
-{
-    return(
-        [
-            {latitude: 46.4906700, longitude:  11.3398200,},
-            {latitude: 46.9906700, longitude:  11.9398200,},
-            {latitude: 47.4906700, longitude:  12.3398200,},
-        ]
-    )
-}
-
 export const DefaultInitialRegion = ()=> {
     return (
         {
@@ -85,7 +74,7 @@ export const DefaultInitialRegion = ()=> {
             longitudeDelta: 0.5,
         }
     )
-}
+};
 
 
 export const CreateInitialRegionByCurrentLocation = async () => {

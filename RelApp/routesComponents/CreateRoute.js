@@ -5,7 +5,7 @@ import {RelappTextInput} from "../components/RelappTextInput";
 import {ButtonTypes, RelappButton} from "../components/RelappButton";
 import {AddressFields, CreationModalButtons, RouteHeader, RouteStyles,} from "./RoutesStyles";
 import InsertionMap from "./Maps/InsertionMap";
-import {getAllRoutes, insertRoute, updateRoute} from "../databaseServices/RouteService";
+import {insertRoute, updateRoute} from "../databaseServices/RouteService";
 import {insertAddressRecord, updateAddressRecord} from "../databaseServices/AddressService";
 import ModalComponent from "./ModalComponent";
 
@@ -82,6 +82,17 @@ export default function CreateRoute(props)
             )
        }
     };
+    const musicModalInfo ={
+        header:"Music",
+        title:"Upload URL of the Spotify playlist",
+        defaultValue: oldRoute === null ?  " Music URL " : oldRoute.playlistUrl,
+    };
+    const descriptionModalInfo ={
+        header: "Description",
+        title: "Write short description about your route",
+        defaultValue: oldRoute === null ? "Description" : oldRoute.description,
+    };
+
 
     return (
         <View style={{flex: 1}}>
@@ -126,21 +137,17 @@ export default function CreateRoute(props)
                     </View>
                     <Space size = {20}/>
                 </ScrollView>
-                <ModalComponent header = {"Description"}
-                    title = {"Write short description about your route" }
-                    defaultValue = {oldRoute === null ? "Description" : oldRoute.description}
+                <ModalComponent
+                    info = {descriptionModalInfo}
+                    modalControls = {{visible:descriptionModal, setModalVisible:setDescriptionModal }}
                     sendInfo = {setDescription}
                     value = {description}
-                    visible = {descriptionModal}
-                    setModalVisible = {setDescriptionModal}
                 />
-                <ModalComponent header = {"Music"}
-                    title = {"Upload URL of the Spotify playlist"}
-                    defaultValue = {oldRoute === null ?  " Music URL " : oldRoute.playlistUrl}
+                <ModalComponent
+                    info = {musicModalInfo}
+                    modalControls = {{visible:musicModal, setModalVisible:setMusicModal }}
                     sendInfo = {setMusic}
-                    visible = {musicModal}
                     value = {music}
-                    setModalVisible = {setMusicModal}
                 />
             </View>
         </View>
