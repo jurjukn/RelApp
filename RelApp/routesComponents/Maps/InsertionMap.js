@@ -54,6 +54,7 @@ export default function InsertionMap(props,ref)
     const randomKey = Math.random()*1000;
     return (
         <MapView style={styles.mapStyle}
+                 provider = {"google"}
                  showsUserLocation={true}
                  followUserLocation={true}
                  initialRegion={initialRegion}

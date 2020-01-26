@@ -5,6 +5,7 @@ import UserInfo from '../profileComponents/UserInfo';
 import AllRoutes from '../profileComponents/AllRoutes';
 import {handlerUserSignOut} from "../firebaseServices/Authentication";
 import Help from "../profileComponents/modals/Help";
+import {getAllRoutes} from "../databaseServices/RouteService";
 
 export default function Profiles(props){
     const [modalVisible, setModalVisible] = useState(false);
@@ -12,25 +13,30 @@ export default function Profiles(props){
         name:"md-help-circle",
         callback:()=>{setModalVisible(true)}
     };
-    
+
     const logoutIcon = {
         name:"md-log-out",
         callback:()=>{signOut()}
     };
-    
+
+    const refreshIcon = {
+        name:"md-refresh",
+        callback:()=>{}
+    };
+
     async function signOut() {
         try {
             data = await handlerUserSignOut()
             props.navigation.navigate("SignIn")
         } catch (err) {
             console.log(err);
-        }     
+        }
     }
 
     const handleCallback = () =>{
         setModalVisible(!modalVisible)
     }
-    
+
     return (
         <View style={{flex: 1}}>
             <Modal
@@ -48,6 +54,7 @@ export default function Profiles(props){
             <RelappToolBar text = {"Profile"}
                            secondIcon = {helpIcon}
                            thirdIcon = {logoutIcon}
+                           fourthIcon = {refreshIcon}
             />
             <UserInfo/>
             <View style={{margin: 10}}>

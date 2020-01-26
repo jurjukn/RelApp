@@ -90,6 +90,7 @@ export default function ShowingMap(props, ref)
 
     return (
         <MapView style={styles.mapStyle}
+                 provider = {"google"}
                  showsUserLocation={true}
                  followUserLocation={true}
                  onUserLocationChange = {(props)=>
