@@ -24,12 +24,18 @@ export default function Routes(props)
     });
 
     const handleFilter = () => {
-        setFavorites(!favorites);   
+        setFavorites(!favorites);
     }
+    const refreshIcon = {
+        name:"md-refresh",
+        callback:()=>{ getAllRoutes().then(r=>setRoutesArr(r));}
+    };
 
     return (
         <View style={{flex: 1}}>
-            <RelappToolBar text = {"All Routes"}/>
+            <RelappToolBar text = {"All Routes"}
+                           secondIcon = {refreshIcon}
+            />
             <View style={styles.container}>
                 <Space size = {30}/>
                 <RelappTextInput
@@ -46,9 +52,9 @@ export default function Routes(props)
                     callback = {()=> handleFilter()}
                 />
                 <Space size = {20}/>
-                <AllRoutes 
-                    navigation={props.navigation} 
-                    allRoutes={routesArr} 
+                <AllRoutes
+                    navigation={props.navigation}
+                    allRoutes={routesArr}
                     favorites={favorites}
                     currentUser={currentUser}
                 />

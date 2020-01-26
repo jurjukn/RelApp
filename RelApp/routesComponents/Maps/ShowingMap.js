@@ -60,25 +60,25 @@ export default function ShowingMap(props, ref)
 
     const countAllDistances = (current)=>
     {
-        const last = markers.length;
+        if(markers===null)return null;
         const answer =
         markers.map(
             (x,index)=>{
                 const distance = getDistance(current,x)*1000;
-                const title = generateTitle(index,last);
+                const title = generateTitle(index, markers.length);
+                let checkPoint = {
+                    index:index,
+                    title:title,
+                    distance: distance,
+                };
                 if(distance<Precision)
                 {
-                    props.finishCallback(title,index);
+                    if(props.requireUpdate === true) props.finishCheckpoint(checkPoint);
                 }
-                return (
-                    {
-                        index:index,
-                        title:title,
-                        distance: distance,
-                    }
-                );
+                return (checkPoint);
             }
         );
+        if(props.requireUpdate === true) props.getConstantUpdate(answer);
         return answer;
     };
 
@@ -96,6 +96,7 @@ export default function ShowingMap(props, ref)
                  {
                      const current = props.nativeEvent.coordinate;
                      const distance = getDistance(current,currentCoordinates) * 1000;
+                     countAllDistances(current);
                      if(distance>=UpdateDistance)
                      {
                          setCurrentCoordinates(current);

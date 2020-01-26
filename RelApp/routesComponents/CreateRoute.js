@@ -40,7 +40,6 @@ export default function CreateRoute(props)
                     return {...x, index:index};
                 }
             );
-        //console.log("___________updateRoute____________ ", editRoute);
         if(oldRoute===null) {
             if (title !== "" && address.region !== "" && address.city !== ""
                 && description !== ""  && music !== ""
@@ -69,7 +68,6 @@ export default function CreateRoute(props)
                 coordinates:coords,
                 playlistUrl:oldRoute.playlistUrl,
             };
-            //console.log("___________updateRoute____________ ", newRoute);
             updateRoute(newRoute.description, newRoute.title, newRoute.playlistUrl, newRoute.id).then(r =>
                 {
                     updateAddressRecord(newRoute.address.id, newRoute.address.city,
