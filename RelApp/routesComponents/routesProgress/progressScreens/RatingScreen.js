@@ -1,18 +1,14 @@
 import React, {useState} from "react";
 import {StyleSheet, View} from "react-native";
 import {AirbnbRating } from 'react-native-elements';
-
-import {RelappLogo,RelappToolBar} from "../../../components/stylingComponents"
-
+import {RelappToolBar} from "../../../components/stylingComponents"
 import {ButtonTypes, RelappButton} from "../../../components/RelappButton";
-import {ProgressToolbar} from "../RoutePregessStyles";
 
 export default function StatisticsScreen(props)
 {
     const [rating, setRating] = useState(0)
 
     function ratingCompleted(rating) {
-        //console.log("Rating is: " + rating)
         setRating(rating)
     }
 

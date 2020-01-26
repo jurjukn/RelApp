@@ -89,7 +89,6 @@ export default function GoingScreen(props)
                             markers = {routeInformation.RouteCoordinates}
                             requireUpdate = {true}
                             finishCheckpoint = {(checkPoint)=>{
-                                console.log(checkPoint);
                                 //setIndex(index+1)
                             }}
                             getConstantUpdate = {(newInfo)=>{setCurrentPoints(newInfo)}}
