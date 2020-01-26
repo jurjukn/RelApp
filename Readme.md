@@ -22,7 +22,7 @@ Whole app consists of 3 tabs: <br/>
     2.2. In the routes tab it is possible to create new route. <br/>
     2.3. Routes tab has search posibility (optional feature). <br/>
     2.4. Routes tab contains filter which enables to see current user created routes (optional feature). <br/>
-    2.5. In Routes tab user can "Start" a route and check in at route's checkpoints. After all checkpoints are completed, user can see      statistics, rate and write comments about the route. 
+    2.5. In Routes tab user can "Start" a route and check in at route's checkpoints. To check in at a checkpoints the device location has to be near the checkpoint. For now this functionality is commentented for testing purposes. After all checkpoints are completed, user can see      statistics, rate and write comments about the route. 
 
   3. Profile <br/>
     3.1. Profile tab shows general information of the current user. <br/>
