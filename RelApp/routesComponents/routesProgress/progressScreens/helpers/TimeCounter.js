@@ -22,7 +22,7 @@ export default function TimeCounter(props,ref)
 
     useEffect(() => {
         let timer = setInterval(() => {
-            var num = (Number(secondsCounter) + 1).toString(),
+            let num = (Number(secondsCounter) + 1).toString(),
               count = minutesCounter;
 
             if (Number(secondsCounter) == 59) {

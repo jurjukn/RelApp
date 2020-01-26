@@ -10,9 +10,9 @@ import {ProgressToolbar} from "../RoutePregessStyles";
 export default function StatisticsScreen(props)
 {
     const [rating, setRating] = useState(0)
-    
+
     function ratingCompleted(rating) {
-        console.log("Rating is: " + rating)
+        //console.log("Rating is: " + rating)
         setRating(rating)
     }
 
@@ -21,9 +21,9 @@ export default function StatisticsScreen(props)
         const route = props.navigation.getParam('route', 'default_value')
         const distance = props.navigation.getParam('distance', 'default_value')
         props.navigation.navigate(
-            "CommentScreen", 
+            "CommentScreen",
             {
-                duration: duration, 
+                duration: duration,
                 distance: distance,
                 rating: rating,
                 route: route
@@ -64,9 +64,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     innerContainer: {
-        flex:1, 
-        width:"100%", 
-        alignItems:"center", 
+        flex:1,
+        width:"100%",
+        alignItems:"center",
         justifyContent:"center",
         padding:10
     },

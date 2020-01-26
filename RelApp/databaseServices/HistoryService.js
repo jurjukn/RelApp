@@ -35,10 +35,10 @@ export async function getHistoryByUserId(userId) {
         id: doc.id,
         date: formatDate(date),
       };
-      
+
       historyList.push(history);
     })
-    
+
     return historyList;
   } catch (err) {
     console.error(err);
@@ -91,8 +91,8 @@ function formatDate(date) {
 
   if (day < 10) day = "0" + day;
   if (month < 10) month = "0" + month;
-  
+
   const time = day + '-' + month + '-' + year;
-  console.log(time);
+  //console.log(time);
   return time;
 }
